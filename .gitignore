@@ -2,6 +2,4 @@ node_modules/
 .next/
 out/
 .env
-.env*.local
-*.mp4
-!public/images/portfolio/Cinematic/Teaser.mp4
+.env.local
