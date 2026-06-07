@@ -16,9 +16,9 @@ const Footer = () => {
   ]
 
   const socialLinks = [
-    { icon: Instagram, href: '#', label: 'Instagram' },
+    { icon: Instagram, href: 'https://www.instagram.com/sidography.co.in?igsh=MTh2OWViYnl5YTk2Yg==', label: 'Instagram' },
     { icon: Facebook, href: '#', label: 'Facebook' },
-    { icon: MessageCircle, href: '#', label: 'WhatsApp' },
+    { icon: MessageCircle, href: 'https://wa.me/919637577691', label: 'WhatsApp' },
   ]
 
   return (
