@@ -128,6 +128,7 @@ export default function PortfolioGallery({ categories, allImages }: PortfolioGal
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-110"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  unoptimized={true}
                 />
               )}
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
@@ -199,6 +200,7 @@ export default function PortfolioGallery({ categories, allImages }: PortfolioGal
                   fill
                   className="object-contain"
                   priority
+                  unoptimized={true}
                 />
               )}
             </motion.div>
