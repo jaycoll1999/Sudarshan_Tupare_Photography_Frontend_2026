@@ -79,7 +79,7 @@ const Contact = () => {
   ]
 
   const socialLinks = [
-    { icon: Instagram, href: 'https://instagram.com/sudarshanphotography', label: 'Instagram' },
+    { icon: Instagram, href: 'https://www.instagram.com/sidography.co.in?igsh=MTh2OWViYnl5YTk2Yg==', label: 'Instagram' },
     { icon: Facebook, href: 'https://facebook.com/sudarshanphotography', label: 'Facebook' },
     { icon: MessageCircle, href: 'https://wa.me/9196375 77691', label: 'WhatsApp' }
   ]

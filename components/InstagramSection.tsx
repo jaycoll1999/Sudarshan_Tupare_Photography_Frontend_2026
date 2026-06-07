@@ -72,13 +72,13 @@ export default function InstagramSection() {
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             <a
-              href="https://instagram.com/sudarshanphotography"
+              href="https://www.instagram.com/sidography.co.in?igsh=MTh2OWViYnl5YTk2Yg=="
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-white text-black font-semibold px-8 py-3.5 rounded-full hover:scale-105 hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-pink-500 hover:to-purple-600 hover:text-white transition-all duration-300 shadow-lg shadow-white/5"
             >
               <Instagram size={20} />
-              <span>Follow @sudarshanphotography</span>
+              <span>Follow @sidography.co.in</span>
             </a>
           </motion.div>
         </div>
