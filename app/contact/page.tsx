@@ -81,7 +81,7 @@ const Contact = () => {
   const socialLinks = [
     { icon: Instagram, href: 'https://www.instagram.com/sidography.co.in?igsh=MTh2OWViYnl5YTk2Yg==', label: 'Instagram' },
     { icon: Facebook, href: 'https://facebook.com/sudarshanphotography', label: 'Facebook' },
-    { icon: MessageCircle, href: 'https://wa.me/9196375 77691', label: 'WhatsApp' }
+    { icon: MessageCircle, href: 'https://wa.me/919637577691', label: 'WhatsApp' }
   ]
 
   if (isSubmitted) {
