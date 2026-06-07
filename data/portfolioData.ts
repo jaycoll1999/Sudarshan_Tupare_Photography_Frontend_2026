@@ -1,0 +1,52 @@
+export const portfolioCategories = [
+  {
+    id: 'babyshoot',
+    title: 'Baby Shoot',
+    folder: 'Babyshoot',
+    description: 'Capturing precious little moments',
+    coverImage: '/images/portfolio/Babyshoot/DSC_3219ED.webp',
+  },
+  {
+    id: 'candid',
+    title: 'Candid',
+    folder: 'Candid',
+    description: 'Real moments, real emotions',
+    coverImage: '/images/portfolio/Candid/DSC_0489ED.webp',
+  },
+  {
+    id: 'cinematic',
+    title: 'Cinematic',
+    folder: 'Cinematic',
+    description: 'Cinematic storytelling through lens',
+    coverImage: '',
+    isVideo: true,
+  },
+  {
+    id: 'engagement',
+    title: 'Engagement',
+    folder: 'Engagement',
+    description: 'Love stories before the big day',
+    coverImage: '/images/portfolio/Engagement/DSC08038ED.webp',
+  },
+  {
+    id: 'maternity',
+    title: 'Maternity Shoot',
+    folder: 'Maternity Shoot',
+    description: 'Celebrating new life and motherhood',
+    coverImage: '/images/portfolio/Maternity%20Shoot/DSC_7991ED.webp',
+  },
+  {
+    id: 'model',
+    title: 'Model Photoshoot',
+    folder: 'Model Photoshoot',
+    description: 'Fashion and model photography',
+    coverImage: '/images/portfolio/Model%20Photoshoot/_MG_6917ED.webp',
+  },
+  {
+    id: 'pre-wedding',
+    title: 'Pre Wedding',
+    folder: 'Pre Wedding',
+    description: 'Romance before the wedding bells',
+    coverImage: '/images/portfolio/Pre%20Wedding/DSC_0196ED.webp',
+  },
+];
