@@ -26,7 +26,7 @@ const Services = () => {
         'USB drive with all photos'
       ],
       popular: true,
-      image: '/api/placeholder/600/400'
+      image: '/images/portfolio/Engagement/DSC04622ED.webp'
     },
     {
       id: 2,
@@ -44,7 +44,7 @@ const Services = () => {
         'Social media ready content'
       ],
       popular: false,
-      image: '/api/placeholder/600/400'
+      image: '/images/portfolio/Pre%20Wedding/DSC_0196ED.webp'
     },
     {
       id: 3,
@@ -62,7 +62,7 @@ const Services = () => {
         'Print release'
       ],
       popular: false,
-      image: '/api/placeholder/600/400'
+      image: '/images/portfolio/Model%20Photoshoot/_MG_6917ED.webp'
     },
     {
       id: 4,
@@ -80,7 +80,7 @@ const Services = () => {
         'Online gallery within 48 hours'
       ],
       popular: false,
-      image: '/api/placeholder/600/400'
+      image: '/images/portfolio/Candid/DSC_0489ED.webp'
     }
   ]
 
@@ -88,22 +88,26 @@ const Services = () => {
     {
       title: 'Cinematic Videography',
       description: 'Professional video coverage with cinematic editing and drone footage available.',
-      price: 'Starting at ₹75,000'
+      price: 'Starting at ₹75,000',
+      image: '/images/portfolio/Cinematic/clent%202.mp4'
     },
     {
       title: 'Photo Albums',
       description: 'Custom-designed luxury photo albums with premium materials and craftsmanship.',
-      price: 'Starting at ₹15,000'
+      price: 'Starting at ₹15,000',
+      image: '/images/portfolio/Candid/DSC_3380ED.webp'
     },
     {
       title: 'Destination Wedding',
       description: 'Travel photography services for destination weddings and international events.',
-      price: 'Custom Quote'
+      price: 'Custom Quote',
+      image: '/images/portfolio/Pre%20Wedding/SID_1830ED.webp'
     },
     {
       title: 'Drone Photography',
       description: 'Aerial photography and videography for stunning overhead shots.',
-      price: 'Starting at ₹20,000'
+      price: 'Starting at ₹20,000',
+      image: '/images/portfolio/drone_couple_shot.png'
     }
   ]
 
@@ -240,10 +244,30 @@ const Services = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="glass-effect p-6 rounded-lg"
+                className="glass-effect p-6 rounded-lg flex flex-col"
               >
+                <div className="relative h-48 w-full rounded-lg overflow-hidden mb-4">
+                  {service.image.endsWith('.mp4') ? (
+                    <video
+                      src={service.image}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <Image
+                      src={service.image}
+                      alt={service.title}
+                      fill
+                      className="object-cover"
+                      unoptimized
+                    />
+                  )}
+                </div>
                 <h3 className="font-serif text-xl font-semibold text-white mb-3">{service.title}</h3>
-                <p className="text-gray-400 mb-4 text-sm">{service.description}</p>
+                <p className="text-gray-400 mb-4 text-sm flex-grow">{service.description}</p>
                 <p className="text-gold font-semibold">{service.price}</p>
               </motion.div>
             ))}
