@@ -109,6 +109,11 @@ const Home = () => {
                   unoptimized
                 />
               ) : (
+                <style>{`
+                  @media (max-width: 768px) {
+                    .video-mask { mask-image: none !important; -webkit-mask-image: none !important; }
+                  }
+                `}</style>
                 <div className="flex w-full h-full">
                   {(heroMedia[currentMediaIndex].sources as string[]).map((src, i) => {
                     let mask = 'linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)'
@@ -123,7 +128,7 @@ const Home = () => {
                         loop
                         muted
                         playsInline
-                        className="w-1/3 h-full object-cover"
+                        className={`h-full object-cover video-mask ${i === 1 ? 'w-full md:w-1/3' : 'hidden md:block md:w-1/3'}`}
                         style={{ maskImage: mask, WebkitMaskImage: mask }}
                       />
                     )
