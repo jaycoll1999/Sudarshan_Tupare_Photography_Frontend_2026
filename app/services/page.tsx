@@ -44,7 +44,8 @@ const Services = () => {
         'Social media ready content'
       ],
       popular: false,
-      image: '/images/portfolio/Pre%20Wedding/DSC_0196ED.webp'
+      image: '/images/portfolio/Pre%20Wedding/DSC_0196ED.webp',
+      imagePosition: 'object-[50%_30%]'
     },
     {
       id: 3,
@@ -144,8 +145,9 @@ const Services = () => {
                 key={service.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -8 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className={`relative rounded-2xl overflow-hidden ${
+                className={`group relative rounded-2xl overflow-hidden transition-shadow duration-500 hover:shadow-[0_8px_30px_rgba(212,175,55,0.15)] ${
                   service.popular ? 'ring-2 ring-gold' : ''
                 }`}
               >
@@ -176,12 +178,12 @@ const Services = () => {
                   </div>
 
                   {/* Service Image */}
-                  <div className="relative h-48 rounded-lg overflow-hidden mb-6">
+                  <div className="relative h-64 rounded-lg overflow-hidden mb-6">
                     <Image
                       src={service.image}
                       alt={service.title}
                       fill
-                      className="object-cover"
+                      className={`object-cover transition-transform duration-700 group-hover:scale-110 ${service.imagePosition || 'object-center'}`}
                       unoptimized
                     />
                   </div>
@@ -243,8 +245,9 @@ const Services = () => {
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -8 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="glass-effect p-6 rounded-lg flex flex-col"
+                className="group glass-effect p-6 rounded-lg flex flex-col transition-shadow duration-500 hover:shadow-[0_8px_30px_rgba(212,175,55,0.15)]"
               >
                 <div className="relative h-48 w-full rounded-lg overflow-hidden mb-4">
                   {service.image.endsWith('.mp4') ? (
@@ -254,14 +257,14 @@ const Services = () => {
                       loop
                       muted
                       playsInline
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   ) : (
                     <Image
                       src={service.image}
                       alt={service.title}
                       fill
-                      className="object-cover"
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
                       unoptimized
                     />
                   )}

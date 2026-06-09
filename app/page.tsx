@@ -1,6 +1,7 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect } from 'react'
 import { ArrowRight, Camera, Heart, Star, Calendar, MapPin } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -11,32 +12,53 @@ import FeaturedWork from '@/components/FeaturedWork'
 import InstagramSection from '@/components/InstagramSection'
 
 const Home = () => {
+  const [currentMediaIndex, setCurrentMediaIndex] = useState(0)
 
+  const heroMedia = [
+    { type: 'image', src: '/images/sudarshan_hero.jpeg' },
+    { type: 'videos', sources: [
+      '/images/sid_thsirt_vdieo.mp4',
+      '/images/sid_11.mp4',
+      '/images/Sid_tradional_video.mp4'
+    ]}
+  ]
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentMediaIndex((prev) => (prev + 1) % heroMedia.length)
+    }, 6000)
+    return () => clearInterval(timer)
+  }, [])
 
   const services = [
     {
       icon: Camera,
       title: 'Wedding Photography',
       description: 'Capture your special day with artistic vision and technical excellence.',
-      price: 'Starting at ₹50,000'
+      price: 'Starting at ₹50,000',
+      image: '/images/portfolio/Engagement/DSC04622ED.webp'
     },
     {
       icon: Heart,
       title: 'Pre-wedding Shoot',
       description: 'Beautiful pre-wedding moments that tell your love story.',
-      price: 'Starting at ₹25,000'
+      price: 'Starting at ₹25,000',
+      image: '/images/portfolio/Pre%20Wedding/DSC_0196ED.webp',
+      imagePosition: 'object-[50%_30%]'
     },
     {
       icon: Star,
       title: 'Portrait Sessions',
       description: 'Professional portraits that capture your unique personality.',
-      price: 'Starting at ₹15,000'
+      price: 'Starting at ₹15,000',
+      image: '/images/portfolio/Model%20Photoshoot/_MG_6917ED.webp'
     },
     {
       icon: Calendar,
       title: 'Event Coverage',
       description: 'Comprehensive event photography for corporate and private events.',
-      price: 'Starting at ₹30,000'
+      price: 'Starting at ₹30,000',
+      image: '/images/portfolio/Candid/DSC_0489ED.webp'
     }
   ]
 
@@ -64,13 +86,55 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-charcoal">
       <Navbar />
-      
+
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-charcoal/50 to-charcoal" />
+      <section className="relative h-screen flex items-end justify-center overflow-hidden pb-32">
+        <div className="absolute inset-0 z-0 bg-black">
+          <AnimatePresence mode="popLayout">
+            <motion.div
+              key={currentMediaIndex}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.5 }}
+              className="absolute inset-0"
+            >
+              {heroMedia[currentMediaIndex].type === 'image' ? (
+                <Image
+                  src={heroMedia[currentMediaIndex].src as string}
+                  alt="Sudarshan Tupare Photography"
+                  fill
+                  className="object-cover object-[50%_15%]"
+                  priority
+                  unoptimized
+                />
+              ) : (
+                <div className="flex w-full h-full">
+                  {(heroMedia[currentMediaIndex].sources as string[]).map((src, i) => {
+                    let mask = 'linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)'
+                    if (i === 0) mask = 'linear-gradient(to right, black 0%, black 85%, transparent 100%)'
+                    if (i === 2) mask = 'linear-gradient(to right, transparent 0%, black 15%, black 100%)'
+                    
+                    return (
+                      <video
+                        key={i}
+                        src={src}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="w-1/3 h-full object-cover"
+                        style={{ maskImage: mask, WebkitMaskImage: mask }}
+                      />
+                    )
+                  })}
+                </div>
+              )}
+            </motion.div>
+          </AnimatePresence>
+          <div className="absolute inset-0 bg-gradient-to-b from-charcoal/80 via-transparent to-charcoal z-10" />
         </div>
-        
+
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -86,7 +150,7 @@ const Home = () => {
             Sudarshan Tupare
             <span className="block text-gold text-3xl md:text-4xl mt-2">Photography</span>
           </motion.h1>
-          
+
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -95,7 +159,7 @@ const Home = () => {
           >
             Capturing Timeless Moments
           </motion.p>
-          
+
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -111,11 +175,11 @@ const Home = () => {
             </Link>
           </motion.div>
         </motion.div>
-        
+
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white"
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white z-20"
         >
           <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
             <div className="w-1 h-3 bg-white/50 rounded-full mt-2 animate-bounce" />
@@ -149,12 +213,22 @@ const Home = () => {
                 key={service.title}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -8 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="glass-effect p-6 rounded-lg hover:scale-105 transition-transform duration-300"
+                className="group glass-effect p-6 rounded-lg flex flex-col transition-shadow duration-500 hover:shadow-[0_8px_30px_rgba(212,175,55,0.15)]"
               >
+                <div className="relative h-64 w-full rounded-lg overflow-hidden mb-6">
+                  <Image
+                    src={service.image}
+                    alt={service.title}
+                    fill
+                    className={`object-cover transition-transform duration-700 group-hover:scale-110 ${service.imagePosition || 'object-center'}`}
+                    unoptimized
+                  />
+                </div>
                 <service.icon className="w-12 h-12 text-gold mb-4" />
                 <h3 className="font-serif text-xl font-semibold text-white mb-3">{service.title}</h3>
-                <p className="text-gray-400 mb-4 text-sm">{service.description}</p>
+                <p className="text-gray-400 mb-4 text-sm flex-grow">{service.description}</p>
                 <p className="text-gold font-semibold">{service.price}</p>
               </motion.div>
             ))}
