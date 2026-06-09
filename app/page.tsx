@@ -109,31 +109,33 @@ const Home = () => {
                   unoptimized
                 />
               ) : (
-                <style>{`
-                  @media (max-width: 768px) {
-                    .video-mask { mask-image: none !important; -webkit-mask-image: none !important; }
-                  }
-                `}</style>
-                <div className="flex w-full h-full">
-                  {(heroMedia[currentMediaIndex].sources as string[]).map((src, i) => {
-                    let mask = 'linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)'
-                    if (i === 0) mask = 'linear-gradient(to right, black 0%, black 85%, transparent 100%)'
-                    if (i === 2) mask = 'linear-gradient(to right, transparent 0%, black 15%, black 100%)'
-                    
-                    return (
-                      <video
-                        key={i}
-                        src={src}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className={`h-full object-cover video-mask ${i === 1 ? 'w-full md:w-1/3' : 'hidden md:block md:w-1/3'}`}
-                        style={{ maskImage: mask, WebkitMaskImage: mask }}
-                      />
-                    )
-                  })}
-                </div>
+                <>
+                  <style>{`
+                    @media (max-width: 768px) {
+                      .video-mask { mask-image: none !important; -webkit-mask-image: none !important; }
+                    }
+                  `}</style>
+                  <div className="flex w-full h-full">
+                    {(heroMedia[currentMediaIndex].sources as string[]).map((src, i) => {
+                      let mask = 'linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)'
+                      if (i === 0) mask = 'linear-gradient(to right, black 0%, black 85%, transparent 100%)'
+                      if (i === 2) mask = 'linear-gradient(to right, transparent 0%, black 15%, black 100%)'
+                      
+                      return (
+                        <video
+                          key={i}
+                          src={src}
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          className={`h-full object-cover video-mask ${i === 1 ? 'w-full md:w-1/3' : 'hidden md:block md:w-1/3'}`}
+                          style={{ maskImage: mask, WebkitMaskImage: mask }}
+                        />
+                      )
+                    })}
+                  </div>
+                </>
               )}
             </motion.div>
           </AnimatePresence>
