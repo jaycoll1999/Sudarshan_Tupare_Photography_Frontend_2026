@@ -30,25 +30,44 @@ const Contact = () => {
     e.preventDefault()
     setIsSubmitting(true)
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    
-    setIsSubmitting(false)
-    setIsSubmitted(true)
-    
-    // Store contact data (in real app, this would go to a database)
-    console.log('Contact form submitted:', formData)
-    
-    // Reset form after 5 seconds
-    setTimeout(() => {
-      setIsSubmitted(false)
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
-      })
-    }, 5000)
+    try {
+      const payload = {
+        name: formData.name,
+        email: formData.email,
+        message: `Subject: ${formData.subject}\n\n${formData.message}`
+      };
+
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const response = await fetch(`${API_URL}/contact/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit contact message');
+      }
+
+      setIsSubmitted(true)
+      
+      // Reset form after 5 seconds
+      setTimeout(() => {
+        setIsSubmitted(false)
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: ''
+        })
+      }, 5000)
+    } catch (error) {
+      console.error('Error submitting contact message:', error);
+      alert('There was an error sending your message. Please try again or contact us via WhatsApp.');
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const contactInfo = [
@@ -206,7 +225,7 @@ const Contact = () => {
                     onChange={handleInputChange}
                     required
                     className="w-full px-4 py-3 bg-black/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
-                    placeholder="John Doe"
+                    placeholder="Enter your full name"
                   />
                 </div>
 
@@ -222,7 +241,7 @@ const Contact = () => {
                     onChange={handleInputChange}
                     required
                     className="w-full px-4 py-3 bg-black/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
-                    placeholder="john@example.com"
+                    placeholder="Enter your email address"
                   />
                 </div>
 
@@ -238,7 +257,7 @@ const Contact = () => {
                     onChange={handleInputChange}
                     required
                     className="w-full px-4 py-3 bg-black/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
-                    placeholder="Wedding Photography Inquiry"
+                    placeholder="Enter the subject"
                   />
                 </div>
 

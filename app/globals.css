@@ -40,6 +40,12 @@
   .image-hover {
     @apply transition-all duration-500 hover:scale-105 hover:brightness-110;
   }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    opacity: 1;
+    cursor: pointer;
+  }
 }
 
 @layer utilities {

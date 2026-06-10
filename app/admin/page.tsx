@@ -1,12 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Camera, Upload, Trash2, Eye, LogOut, Users, Calendar, Image as ImageIcon, Lock, Mail, Check, X, Plus } from 'lucide-react'
+import { Camera, Upload, Trash2, Eye, LogOut, Users, Calendar, Image as ImageIcon, Lock, Mail, Check, X, Plus, MessageSquare } from 'lucide-react'
 import Image from 'next/image'
 
 const Admin = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [token, setToken] = useState('')
   const [loginData, setLoginData] = useState({ email: '', password: '' })
   const [loginError, setLoginError] = useState('')
   const [activeTab, setActiveTab] = useState('bookings')
@@ -16,32 +16,10 @@ const Admin = () => {
     description: ''
   })
 
-  // Mock data
-  const [bookings, setBookings] = useState([
-    {
-      id: 1,
-      name: 'Priya Sharma',
-      email: 'priya@example.com',
-      phone: '+91 98765 43210',
-      eventType: 'Wedding Photography',
-      eventDate: '2024-03-15',
-      location: 'Mumbai',
-      status: 'pending',
-      createdAt: '2024-01-15'
-    },
-    {
-      id: 2,
-      name: 'Rahul Verma',
-      email: 'rahul@example.com',
-      phone: '+91 87654 32109',
-      eventType: 'Portrait Session',
-      eventDate: '2024-02-20',
-      location: 'Delhi',
-      status: 'confirmed',
-      createdAt: '2024-01-10'
-    }
-  ])
-
+  const [bookings, setBookings] = useState<any[]>([])
+  const [contacts, setContacts] = useState<any[]>([])
+  
+  // Mock data for gallery
   const [gallery, setGallery] = useState([
     {
       id: 1,
@@ -61,25 +39,75 @@ const Admin = () => {
 
   const categories = ['Wedding', 'Portrait', 'Events', 'Pre-wedding']
 
-  const handleLogin = (e: React.FormEvent) => {
+  useEffect(() => {
+    // Check local storage for token on mount
+    const savedToken = localStorage.getItem('adminToken')
+    if (savedToken) {
+      setToken(savedToken)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (token) {
+      fetchData()
+    }
+  }, [token])
+
+  const fetchData = async () => {
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    try {
+      const [bookingsRes, contactsRes] = await Promise.all([
+        fetch(`${API_URL}/booking/`, { headers: { Authorization: `Bearer ${token}` } }),
+        fetch(`${API_URL}/contact/`, { headers: { Authorization: `Bearer ${token}` } })
+      ]);
+
+      if (bookingsRes.ok) {
+        const data = await bookingsRes.json()
+        setBookings(data)
+      }
+      if (contactsRes.ok) {
+        const data = await contactsRes.json()
+        setContacts(data)
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error)
+    }
+  }
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Mock authentication (in real app, this would be a proper API call)
-    if (loginData.email === 'sudarshantupare@gmail.com' && loginData.password === 'admin123') {
-      setIsLoggedIn(true)
-      setLoginError('')
-    } else {
-      setLoginError('Invalid credentials. Please try again.')
+    setLoginError('')
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    
+    try {
+      const response = await fetch(`${API_URL}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(loginData)
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        setToken(data.access_token)
+        localStorage.setItem('adminToken', data.access_token)
+      } else {
+        setLoginError('Invalid credentials. Please try again.')
+      }
+    } catch (error) {
+      console.error('Login error:', error)
+      setLoginError('Server error. Ensure backend is running.')
     }
   }
 
   const handleLogout = () => {
-    setIsLoggedIn(false)
+    setToken('')
+    localStorage.removeItem('adminToken')
     setLoginData({ email: '', password: '' })
   }
 
   const handleUpload = (e: React.FormEvent) => {
     e.preventDefault()
-    // Mock upload (in real app, this would upload to a server)
+    // Mock upload
     const newImage = {
       id: gallery.length + 1,
       title: uploadData.title,
@@ -95,13 +123,29 @@ const Admin = () => {
     setGallery(gallery.filter(img => img.id !== id))
   }
 
-  const updateBookingStatus = (id: number, status: string) => {
-    setBookings(bookings.map(booking => 
-      booking.id === id ? { ...booking, status } : booking
-    ))
+  const updateBookingStatus = async (id: number, status: string) => {
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    try {
+      const response = await fetch(`${API_URL}/booking/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ status })
+      })
+
+      if (response.ok) {
+        setBookings(bookings.map(booking => 
+          booking.id === id ? { ...booking, status } : booking
+        ))
+      }
+    } catch (error) {
+      console.error('Error updating status:', error)
+    }
   }
 
-  if (!isLoggedIn) {
+  if (!token) {
     return (
       <div className="min-h-screen bg-charcoal flex items-center justify-center px-4">
         <motion.div
@@ -170,14 +214,6 @@ const Admin = () => {
                 Sign In
               </button>
             </form>
-
-            <div className="mt-6 p-4 bg-gold/10 rounded-lg">
-              <p className="text-gold text-sm text-center">
-                Demo Credentials:<br />
-                Email: sudarshantupare@gmail.com<br />
-                Password: admin123
-              </p>
-            </div>
           </div>
         </motion.div>
       </div>
@@ -198,7 +234,7 @@ const Admin = () => {
               </div>
             </div>
             <button
-              onClick={handleLogout}
+               onClick={handleLogout}
               className="flex items-center gap-2 px-4 py-2 bg-red-500/10 text-red-400 rounded-lg hover:bg-red-500/20 transition-colors"
             >
               <LogOut className="w-4 h-4" />
@@ -213,6 +249,7 @@ const Admin = () => {
         <div className="flex flex-wrap gap-2 mb-8">
           {[
             { id: 'bookings', label: 'Bookings', icon: Calendar },
+            { id: 'messages', label: 'Contact Messages', icon: MessageSquare },
             { id: 'gallery', label: 'Gallery', icon: ImageIcon },
             { id: 'upload', label: 'Upload', icon: Upload }
           ].map((tab) => (
@@ -249,9 +286,9 @@ const Admin = () => {
                   <thead>
                     <tr className="border-b border-gray-700">
                       <th className="text-left py-3 px-4 text-gray-300 font-medium">Name</th>
-                      <th className="text-left py-3 px-4 text-gray-300 font-medium">Email</th>
-                      <th className="text-left py-3 px-4 text-gray-300 font-medium">Event Type</th>
-                      <th className="text-left py-3 px-4 text-gray-300 font-medium">Date</th>
+                      <th className="text-left py-3 px-4 text-gray-300 font-medium">Contact</th>
+                      <th className="text-left py-3 px-4 text-gray-300 font-medium">Event Type & Date</th>
+                      <th className="text-left py-3 px-4 text-gray-300 font-medium">Details</th>
                       <th className="text-left py-3 px-4 text-gray-300 font-medium">Status</th>
                       <th className="text-left py-3 px-4 text-gray-300 font-medium">Actions</th>
                     </tr>
@@ -260,13 +297,23 @@ const Admin = () => {
                     {bookings.map((booking) => (
                       <tr key={booking.id} className="border-b border-gray-800">
                         <td className="py-3 px-4 text-white">{booking.name}</td>
-                        <td className="py-3 px-4 text-gray-300">{booking.email}</td>
-                        <td className="py-3 px-4 text-gray-300">{booking.eventType}</td>
-                        <td className="py-3 px-4 text-gray-300">{booking.eventDate}</td>
+                        <td className="py-3 px-4 text-gray-300">
+                          <div className="text-sm">{booking.email}</div>
+                          <div className="text-sm">{booking.phone}</div>
+                        </td>
+                        <td className="py-3 px-4 text-gray-300">
+                          <div className="font-medium">{booking.event_type}</div>
+                          <div className="text-sm">{booking.event_date}</div>
+                        </td>
+                        <td className="py-3 px-4 text-gray-300 max-w-xs whitespace-pre-wrap text-sm">
+                          {booking.message}
+                        </td>
                         <td className="py-3 px-4">
                           <span className={`px-3 py-1 rounded-full text-xs font-medium ${
                             booking.status === 'confirmed' 
                               ? 'bg-green-500/20 text-green-400'
+                              : booking.status === 'cancelled'
+                              ? 'bg-red-500/20 text-red-400'
                               : 'bg-yellow-500/20 text-yellow-400'
                           }`}>
                             {booking.status}
@@ -292,6 +339,59 @@ const Admin = () => {
                         </td>
                       </tr>
                     ))}
+                    {bookings.length === 0 && (
+                      <tr>
+                        <td colSpan={6} className="text-center py-6 text-gray-500">No bookings found</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Messages Tab */}
+        {activeTab === 'messages' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="glass-effect rounded-2xl p-6">
+              <h2 className="font-serif text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                <MessageSquare className="w-6 h-6 text-gold" />
+                Contact Inquiries
+              </h2>
+              
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-gray-700">
+                      <th className="text-left py-3 px-4 text-gray-300 font-medium">Name</th>
+                      <th className="text-left py-3 px-4 text-gray-300 font-medium">Email</th>
+                      <th className="text-left py-3 px-4 text-gray-300 font-medium w-1/2">Message Details</th>
+                      <th className="text-left py-3 px-4 text-gray-300 font-medium">Date Received</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {contacts.map((contact) => (
+                      <tr key={contact.id} className="border-b border-gray-800">
+                        <td className="py-3 px-4 text-white font-medium">{contact.name}</td>
+                        <td className="py-3 px-4 text-gray-300">{contact.email}</td>
+                        <td className="py-3 px-4 text-gray-300 max-w-md whitespace-pre-wrap text-sm">
+                          {contact.message}
+                        </td>
+                        <td className="py-3 px-4 text-gray-400 text-sm">
+                          {new Date(contact.created_at).toLocaleString()}
+                        </td>
+                      </tr>
+                    ))}
+                    {contacts.length === 0 && (
+                      <tr>
+                        <td colSpan={4} className="text-center py-6 text-gray-500">No messages found</td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>
@@ -416,7 +516,6 @@ const Admin = () => {
                       type="file"
                       className="hidden"
                       accept="image/*"
-                      // In real app, handle file upload
                     />
                   </div>
                 </div>

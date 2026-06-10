@@ -51,29 +51,51 @@ const Booking = () => {
     e.preventDefault()
     setIsSubmitting(true)
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    
-    setIsSubmitting(false)
-    setIsSubmitted(true)
-    
-    // Store booking data (in real app, this would go to a database)
-    console.log('Booking submitted:', formData)
-    
-    // Reset form after 5 seconds
-    setTimeout(() => {
-      setIsSubmitted(false)
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        eventType: '',
-        eventDate: '',
-        eventLocation: '',
-        message: '',
-        package: ''
-      })
-    }, 5000)
+    try {
+      const payload = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        event_type: formData.eventType,
+        event_date: formData.eventDate,
+        message: `Location: ${formData.eventLocation}\nPackage: ${formData.package}\nMessage: ${formData.message}`
+      };
+
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const response = await fetch(`${API_URL}/booking/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit booking');
+      }
+
+      setIsSubmitted(true)
+      
+      // Reset form after 5 seconds
+      setTimeout(() => {
+        setIsSubmitted(false)
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          eventType: '',
+          eventDate: '',
+          eventLocation: '',
+          message: '',
+          package: ''
+        })
+      }, 5000)
+    } catch (error) {
+      console.error('Error submitting booking:', error);
+      alert('There was an error submitting your booking. Please try again or contact us directly.');
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleWhatsAppBooking = () => {
@@ -189,7 +211,7 @@ const Booking = () => {
                     onChange={handleInputChange}
                     required
                     className="w-full px-4 py-3 bg-black/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
-                    placeholder="John Doe"
+                    placeholder="Enter your full name"
                   />
                 </div>
                 
@@ -205,7 +227,7 @@ const Booking = () => {
                     onChange={handleInputChange}
                     required
                     className="w-full px-4 py-3 bg-black/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
-                    placeholder="john@example.com"
+                    placeholder="Enter your email address"
                   />
                 </div>
               </div>
@@ -223,7 +245,7 @@ const Booking = () => {
                     onChange={handleInputChange}
                     required
                     className="w-full px-4 py-3 bg-black/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
-                    placeholder="+91 96375 77691"
+                    placeholder="Enter your phone number"
                   />
                 </div>
                 
@@ -276,7 +298,7 @@ const Booking = () => {
                     onChange={handleInputChange}
                     required
                     className="w-full px-4 py-3 bg-black/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
-                    placeholder="Mumbai, India"
+                    placeholder="Enter event location"
                   />
                 </div>
               </div>
