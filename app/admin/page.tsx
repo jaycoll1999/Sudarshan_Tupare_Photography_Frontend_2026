@@ -2,14 +2,15 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Camera, Upload, Trash2, Eye, LogOut, Users, Calendar, Image as ImageIcon, Lock, Mail, Check, X, Plus, MessageSquare } from 'lucide-react'
+import { Camera, Upload, Trash2, Eye, LogOut, Users, Calendar, Image as ImageIcon, Lock, Mail, Check, X, Plus, MessageSquare, UserCircle, Activity, BarChart, Shield, Clock } from 'lucide-react'
 import Image from 'next/image'
 
 const Admin = () => {
   const [token, setToken] = useState('')
   const [loginData, setLoginData] = useState({ email: '', password: '' })
   const [loginError, setLoginError] = useState('')
-  const [activeTab, setActiveTab] = useState('bookings')
+  const [activeTab, setActiveTab] = useState('profile')
+  const [adminProfile, setAdminProfile] = useState<any>(null)
   const [uploadData, setUploadData] = useState({
     title: '',
     category: 'Babyshoot',
@@ -44,18 +45,23 @@ const Admin = () => {
   const fetchData = async () => {
     const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
     try {
-      const [bookingsRes, contactsRes, galleryRes] = await Promise.all([
+      const [bookingsRes, contactsRes, galleryRes, profileRes] = await Promise.all([
         fetch(`${API_URL}/booking/`, { headers: { Authorization: `Bearer ${token}` } }),
         fetch(`${API_URL}/contact/`, { headers: { Authorization: `Bearer ${token}` } }),
-        fetch(`${API_URL}/portfolio/`, { headers: { Authorization: `Bearer ${token}` } })
+        fetch(`${API_URL}/portfolio/`, { headers: { Authorization: `Bearer ${token}` } }),
+        fetch(`${API_URL}/auth/me`, { headers: { Authorization: `Bearer ${token}` } })
       ]);
 
-      if (bookingsRes.status === 401 || contactsRes.status === 401 || galleryRes.status === 401) {
+      if (bookingsRes.status === 401 || contactsRes.status === 401 || galleryRes.status === 401 || profileRes.status === 401) {
         handleLogout();
         alert('Session expired or invalid token. Please log in again.');
         return;
       }
 
+      if (profileRes.ok) {
+        const data = await profileRes.json()
+        setAdminProfile(data)
+      }
       if (bookingsRes.ok) {
         const data = await bookingsRes.json()
         setBookings(data)
@@ -320,6 +326,7 @@ const Admin = () => {
         {/* Navigation Tabs */}
         <div className="flex flex-wrap gap-2 mb-8">
           {[
+            { id: 'profile', label: 'Dashboard', icon: UserCircle },
             { id: 'bookings', label: 'Bookings', icon: Calendar },
             { id: 'messages', label: 'Contact Messages', icon: MessageSquare },
             { id: 'gallery', label: 'Gallery', icon: ImageIcon },
@@ -339,6 +346,141 @@ const Admin = () => {
             </button>
           ))}
         </div>
+
+        {/* Profile / Dashboard Tab */}
+        {activeTab === 'profile' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="space-y-6"
+          >
+            {/* Top Row: Profile Details & Metrics */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              
+              {/* Profile Card */}
+              <div className="glass-effect rounded-2xl p-6 lg:col-span-1 border border-gold/10 relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-4 opacity-10">
+                  <Shield className="w-24 h-24 text-gold" />
+                </div>
+                <h2 className="font-serif text-xl font-bold text-white mb-6 flex items-center gap-2 relative z-10">
+                  <UserCircle className="w-6 h-6 text-gold" />
+                  Admin Profile
+                </h2>
+                {adminProfile ? (
+                  <div className="space-y-4 relative z-10">
+                    <div>
+                      <p className="text-gray-400 text-sm">Email Address</p>
+                      <p className="text-white font-medium text-lg">{adminProfile.email}</p>
+                    </div>
+                    <div>
+                      <p className="text-gray-400 text-sm">Role Status</p>
+                      <span className="inline-flex items-center px-3 py-1 mt-1 rounded-full text-xs font-medium bg-gold/10 text-gold border border-gold/20 uppercase tracking-wider">
+                        {adminProfile.role}
+                      </span>
+                    </div>
+                    <div>
+                      <p className="text-gray-400 text-sm">Account Created</p>
+                      <p className="text-gray-300">{new Date(adminProfile.created_at).toLocaleDateString()}</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="animate-pulse space-y-4">
+                    <div className="h-10 bg-gray-700/50 rounded w-full"></div>
+                    <div className="h-10 bg-gray-700/50 rounded w-2/3"></div>
+                  </div>
+                )}
+              </div>
+
+              {/* Metrics Cards */}
+              <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <div className="glass-effect rounded-2xl p-6 border border-white/5 flex flex-col justify-center">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center">
+                      <Calendar className="w-6 h-6 text-blue-400" />
+                    </div>
+                    <span className="text-3xl font-bold text-white">{bookings.length}</span>
+                  </div>
+                  <h3 className="text-gray-400 font-medium">Total Bookings</h3>
+                  <p className="text-xs text-green-400 mt-2 flex items-center gap-1"><Activity className="w-3 h-3" /> Active requests</p>
+                </div>
+
+                <div className="glass-effect rounded-2xl p-6 border border-white/5 flex flex-col justify-center">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center">
+                      <MessageSquare className="w-6 h-6 text-purple-400" />
+                    </div>
+                    <span className="text-3xl font-bold text-white">{contacts.length}</span>
+                  </div>
+                  <h3 className="text-gray-400 font-medium">Inquiries</h3>
+                  <p className="text-xs text-green-400 mt-2 flex items-center gap-1"><Activity className="w-3 h-3" /> Messages received</p>
+                </div>
+
+                <div className="glass-effect rounded-2xl p-6 border border-white/5 flex flex-col justify-center">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 bg-gold/10 rounded-xl flex items-center justify-center">
+                      <ImageIcon className="w-6 h-6 text-gold" />
+                    </div>
+                    <span className="text-3xl font-bold text-white">{gallery.length}</span>
+                  </div>
+                  <h3 className="text-gray-400 font-medium">Gallery Photos</h3>
+                  <p className="text-xs text-gold mt-2 flex items-center gap-1"><Activity className="w-3 h-3" /> Portfolio size</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Activity Feed */}
+            <div className="glass-effect rounded-2xl p-6 border border-white/5">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="font-serif text-xl font-bold text-white flex items-center gap-2">
+                  <Activity className="w-6 h-6 text-gold" />
+                  Recent System Activity
+                </h2>
+              </div>
+              
+              <div className="space-y-4">
+                {/* Dynamically build activity feed by merging and sorting bookings and contacts */}
+                {[
+                  ...bookings.map(b => ({ type: 'booking', date: new Date(b.created_at || Date.now()), data: b })),
+                  ...contacts.map(c => ({ type: 'contact', date: new Date(c.created_at || Date.now()), data: c }))
+                ]
+                .sort((a, b) => b.date.getTime() - a.date.getTime())
+                .slice(0, 5)
+                .map((activity, idx) => (
+                  <div key={idx} className="flex items-start gap-4 p-4 rounded-xl bg-black/20 hover:bg-black/40 transition-colors border border-white/5">
+                    <div className={`p-3 rounded-lg shrink-0 ${activity.type === 'booking' ? 'bg-blue-500/10 text-blue-400' : 'bg-purple-500/10 text-purple-400'}`}>
+                      {activity.type === 'booking' ? <Calendar className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
+                    </div>
+                    <div className="flex-grow">
+                      <div className="flex justify-between items-start mb-1">
+                        <h4 className="text-white font-medium">
+                          {activity.type === 'booking' 
+                            ? `New Booking Request from ${activity.data.name}`
+                            : `New Inquiry from ${activity.data.name}`}
+                        </h4>
+                        <span className="text-xs text-gray-500 flex items-center gap-1 shrink-0 ml-4">
+                          <Clock className="w-3 h-3" />
+                          {activity.date.toLocaleDateString()}
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-400 line-clamp-1">
+                        {activity.type === 'booking' 
+                          ? `${activity.data.event_type} on ${activity.data.event_date}`
+                          : activity.data.message}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+                
+                {bookings.length === 0 && contacts.length === 0 && (
+                  <div className="text-center py-8 text-gray-500 border border-dashed border-gray-700 rounded-xl">
+                    No recent activity found.
+                  </div>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        )}
 
         {/* Bookings Tab */}
         {activeTab === 'bookings' && (

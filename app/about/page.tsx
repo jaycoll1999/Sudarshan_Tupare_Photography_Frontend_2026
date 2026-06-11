@@ -20,7 +20,7 @@ const About = () => {
       name: 'Sudarshan Tupare',
       role: 'Founder & Lead Photographer',
       bio: 'With over 8 years of experience in photography, Sudarshan specializes in wedding and portrait photography. His artistic vision and technical excellence have earned him numerous awards and recognition in the industry.',
-      image: '/api/placeholder/400/400',
+      image: '/images/sudarshan_hero.jpeg',
       specialties: ['Wedding Photography', 'Portrait Photography', 'Event Coverage']
     }
   ]
@@ -29,17 +29,20 @@ const About = () => {
     {
       icon: Heart,
       title: 'Passion',
-      description: 'We are passionate about capturing the beauty and emotion in every moment, turning ordinary scenes into extraordinary memories.'
+      description: 'We are passionate about capturing the beauty and emotion in every moment, turning ordinary scenes into extraordinary memories.',
+      image: '/images/portfolio/Pre%20Wedding/Dual-Expo-01.webp'
     },
     {
       icon: Camera,
       title: 'Excellence',
-      description: 'We maintain the highest standards of quality in every aspect of our work, from composition to post-processing.'
+      description: 'We maintain the highest standards of quality in every aspect of our work, from composition to post-processing.',
+      image: '/images/portfolio/Babyshoot/DSC_3364ED.webp'
     },
     {
       icon: Users,
       title: 'Client Focus',
-      description: 'Your vision is our priority. We work closely with you to understand your needs and deliver beyond expectations.'
+      description: 'Your vision is our priority. We work closely with you to understand your needs and deliver beyond expectations.',
+      image: '/images/portfolio/Candid/DSC_3497ED.webp'
     }
   ]
 
@@ -50,14 +53,15 @@ const About = () => {
       {/* Hero Section */}
       <section className="relative h-96 flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-charcoal/70 to-charcoal" />
           <Image
-            src="/api/placeholder/1920/600"
+            src="/images/sudarshan_hero.jpeg"
             alt="About hero background"
             fill
-            className="object-cover"
+            className="object-cover object-[50%_15%]"
             unoptimized
           />
+          <div className="absolute inset-0 bg-black/50" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-charcoal/50 to-charcoal" />
         </div>
         
         <motion.div
@@ -110,10 +114,10 @@ const About = () => {
               className="relative h-96 lg:h-full min-h-[400px] rounded-2xl overflow-hidden"
             >
               <Image
-                src="/api/placeholder/600/800"
+                src="/images/sudarshan_hero.jpeg"
                 alt="About us image"
                 fill
-                className="object-cover"
+                className="object-cover object-[50%_15%]"
                 unoptimized
               />
             </motion.div>
@@ -172,76 +176,150 @@ const About = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {teamMembers.map((member, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="glass-effect p-8 rounded-2xl text-center"
-              >
-                <div className="relative w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden">
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    fill
-                    className="object-cover"
-                    unoptimized
-                  />
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Left: Profile Card */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className="lg:col-span-1 glass-effect p-8 rounded-2xl text-center"
+            >
+              <div className="relative w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden border-4 border-gold/20">
+                <Image
+                  src={teamMembers[0].image}
+                  alt={teamMembers[0].name}
+                  fill
+                  className="object-cover object-[50%_15%]"
+                  unoptimized
+                />
+              </div>
+              <h3 className="font-serif text-2xl font-bold text-white mb-2">{teamMembers[0].name}</h3>
+              <p className="text-gold font-medium mb-4">{teamMembers[0].role}</p>
+              <p className="text-gray-300 mb-6 text-sm leading-relaxed">{teamMembers[0].bio}</p>
+              <div className="flex flex-wrap gap-2 justify-center">
+                {teamMembers[0].specialties.map((specialty, specIndex) => (
+                  <span
+                    key={specIndex}
+                    className="px-3 py-1 bg-gold/10 text-gold rounded-full text-xs font-medium"
+                  >
+                    {specialty}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Right: Photography Style */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="lg:col-span-2 glass-effect p-8 md:p-12 rounded-2xl flex flex-col justify-center"
+            >
+              <h3 className="font-serif text-3xl md:text-4xl font-bold text-white mb-6">
+                My <span className="text-gradient">Photography Style</span>
+              </h3>
+              <div className="space-y-6 text-gray-300 leading-relaxed text-lg">
+                <p>
+                  For me, photography is an art of observation. It's about finding something interesting in an ordinary place. I've found it has little to do with the things you see and everything to do with the way you see them.
+                </p>
+                <p>
+                  My signature style blends cinematic lighting with authentic, candid moments. Whether it's the nervous excitement before a wedding or the quiet intimacy of a portrait session, I strive to create timeless images that transport you back to exactly how you felt in that moment.
+                </p>
+              </div>
+
+              <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-gold/10 rounded-xl">
+                    <Camera className="w-6 h-6 text-gold" />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-semibold mb-1 text-lg">Cinematic Vision</h4>
+                    <p className="text-sm text-gray-400">Using light and shadow to create dramatic, movie-like aesthetics.</p>
+                  </div>
                 </div>
-                <h3 className="font-serif text-2xl font-bold text-white mb-2">{member.name}</h3>
-                <p className="text-gold font-medium mb-4">{member.role}</p>
-                <p className="text-gray-300 mb-6 text-sm leading-relaxed">{member.bio}</p>
-                <div className="flex flex-wrap gap-2 justify-center">
-                  {member.specialties.map((specialty, specIndex) => (
-                    <span
-                      key={specIndex}
-                      className="px-3 py-1 bg-gold/10 text-gold rounded-full text-xs font-medium"
-                    >
-                      {specialty}
-                    </span>
-                  ))}
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-gold/10 rounded-xl">
+                    <Heart className="w-6 h-6 text-gold" />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-semibold mb-1 text-lg">Candid Moments</h4>
+                    <p className="text-sm text-gray-400">Capturing raw, unposed emotions as they naturally unfold.</p>
+                  </div>
                 </div>
-              </motion.div>
-            ))}
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Values Section */}
-      <section className="py-20 px-4 bg-black/30">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
-          >
-            <h2 className="font-serif text-4xl md:text-5xl font-bold text-white mb-4">
-              Our <span className="text-gradient">Values</span>
-            </h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              The principles that guide our work and relationships
-            </p>
-          </motion.div>
+      <section className="py-24 px-4 bg-black/40 relative overflow-hidden">
+        {/* Subtle background glow */}
+        <div className="absolute top-1/2 left-1/4 w-[600px] h-[600px] bg-gold/5 rounded-full blur-[120px] pointer-events-none -translate-y-1/2" />
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            
+            {/* Left: Section Header & Main Image */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className="lg:col-span-1 flex flex-col h-full"
+            >
+              <div className="mb-8">
+                <h2 className="font-serif text-4xl md:text-5xl font-bold text-white mb-4">
+                  Our <span className="text-gradient">Values</span>
+                </h2>
+                <p className="text-gray-400 text-lg">
+                  The principles that guide our work and relationships
+                </p>
+              </div>
+              
+              <div className="relative w-full flex-grow min-h-[400px] rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+                <Image
+                  src="/images/portfolio/Maternity%20Shoot/DSC_8031ED.webp"
+                  alt="Our Values"
+                  fill
+                  className="object-cover hover:scale-105 transition-transform duration-700"
+                  unoptimized
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+              </div>
+            </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {values.map((value, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="text-center"
-              >
-                <div className="p-4 bg-gold/10 rounded-full w-16 h-16 mx-auto mb-6 flex items-center justify-center">
-                  <value.icon className="w-8 h-8 text-gold" />
-                </div>
-                <h3 className="font-serif text-xl font-bold text-white mb-4">{value.title}</h3>
-                <p className="text-gray-300">{value.description}</p>
-              </motion.div>
-            ))}
+            {/* Right: Values List with Images */}
+            <div className="lg:col-span-2 flex flex-col justify-center space-y-6">
+              {values.map((value, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: 30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.15 }}
+                  className="glass-effect p-6 rounded-2xl flex flex-col sm:flex-row gap-6 items-center sm:items-start group hover:bg-white/5 transition-colors duration-300"
+                >
+                  {/* Image Thumbnail */}
+                  <div className="relative w-full sm:w-48 h-48 sm:h-36 shrink-0 rounded-xl overflow-hidden border border-white/10">
+                    <Image
+                      src={value.image}
+                      alt={value.title}
+                      fill
+                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      unoptimized
+                    />
+                    <div className="absolute top-2 left-2 p-2 bg-black/60 backdrop-blur-md rounded-lg">
+                      <value.icon className="w-5 h-5 text-gold" />
+                    </div>
+                  </div>
+                  
+                  {/* Text Content */}
+                  <div className="flex-grow text-center sm:text-left sm:py-2">
+                    <h3 className="font-serif text-2xl font-bold text-white mb-3 group-hover:text-gold transition-colors">{value.title}</h3>
+                    <p className="text-gray-300 leading-relaxed">{value.description}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -265,21 +343,45 @@ const About = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { name: 'Canon EOS R5', type: 'Primary Camera' },
-              { name: 'Sony A7R IV', type: 'Secondary Camera' },
-              { name: 'Various Lenses', type: '24mm to 200mm' },
-              { name: 'Professional Lighting', type: 'Studio & Portable' }
+              { 
+                name: 'Canon EOS R5', 
+                type: 'Primary Camera',
+                image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=800'
+              },
+              { 
+                name: 'Sony A7R IV', 
+                type: 'Secondary Camera',
+                image: 'https://images.unsplash.com/photo-1516724562728-afc824a36e84?auto=format&fit=crop&q=80&w=800'
+              },
+              { 
+                name: 'Various Lenses', 
+                type: '24mm to 200mm',
+                image: '/images/camera_lenses.png'
+              },
+              { 
+                name: 'Professional Lighting', 
+                type: 'Studio & Portable',
+                image: '/images/studio_lighting.png'
+              }
             ].map((equipment, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="glass-effect p-6 rounded-lg text-center"
+                className="glass-effect p-6 rounded-xl text-center group"
               >
-                <Camera className="w-12 h-12 text-gold mx-auto mb-4" />
-                <h3 className="font-semibold text-white mb-2">{equipment.name}</h3>
-                <p className="text-gray-400 text-sm">{equipment.type}</p>
+                <div className="relative w-full h-48 mb-6 rounded-lg overflow-hidden border border-white/10">
+                  <Image
+                    src={equipment.image}
+                    alt={equipment.name}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    unoptimized
+                  />
+                </div>
+                <h3 className="font-semibold text-white mb-2 text-lg">{equipment.name}</h3>
+                <p className="text-gold text-sm font-medium">{equipment.type}</p>
               </motion.div>
             ))}
           </div>
