@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
     if (stats.isDirectory()) {
       const files = safeReadDir(folderPath);
       files.forEach(file => {
-        if (/\.(jpg|jpeg|png|webp)$/i.test(file)) {
+        if (/\.(jpg|jpeg|png|webp|mp4|webm|mov)$/i.test(file)) {
           allImages.push({
             src: `/images/portfolio/${folder}/${file}`,
             category: folder.replace(/_/g, ' ')

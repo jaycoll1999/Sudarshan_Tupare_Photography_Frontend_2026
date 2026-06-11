@@ -12,32 +12,20 @@ const Admin = () => {
   const [activeTab, setActiveTab] = useState('bookings')
   const [uploadData, setUploadData] = useState({
     title: '',
-    category: 'Wedding',
+    category: 'Babyshoot',
     description: ''
   })
+  const [uploadFile, setUploadFile] = useState<File | null>(null)
+  const [isUploading, setIsUploading] = useState(false)
 
   const [bookings, setBookings] = useState<any[]>([])
   const [contacts, setContacts] = useState<any[]>([])
   
-  // Mock data for gallery
-  const [gallery, setGallery] = useState([
-    {
-      id: 1,
-      title: 'Romantic Sunset Wedding',
-      category: 'Wedding',
-      image: '/api/placeholder/400/300',
-      uploadedAt: '2024-01-15'
-    },
-    {
-      id: 2,
-      title: 'Professional Headshot',
-      category: 'Portrait',
-      image: '/api/placeholder/400/300',
-      uploadedAt: '2024-01-14'
-    }
-  ])
+  // Data for gallery
+  const [gallery, setGallery] = useState<any[]>([])
+  const [selectedGalleryCategory, setSelectedGalleryCategory] = useState('All')
 
-  const categories = ['Wedding', 'Portrait', 'Events', 'Pre-wedding']
+  const categories = ['Babyshoot', 'Candid', 'Cinematic', 'Engagement', 'Maternity Shoot', 'Model Photoshoot', 'Pre Wedding']
 
   useEffect(() => {
     // Check local storage for token on mount
@@ -56,10 +44,17 @@ const Admin = () => {
   const fetchData = async () => {
     const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
     try {
-      const [bookingsRes, contactsRes] = await Promise.all([
+      const [bookingsRes, contactsRes, galleryRes] = await Promise.all([
         fetch(`${API_URL}/booking/`, { headers: { Authorization: `Bearer ${token}` } }),
-        fetch(`${API_URL}/contact/`, { headers: { Authorization: `Bearer ${token}` } })
+        fetch(`${API_URL}/contact/`, { headers: { Authorization: `Bearer ${token}` } }),
+        fetch(`${API_URL}/portfolio/`, { headers: { Authorization: `Bearer ${token}` } })
       ]);
+
+      if (bookingsRes.status === 401 || contactsRes.status === 401 || galleryRes.status === 401) {
+        handleLogout();
+        alert('Session expired or invalid token. Please log in again.');
+        return;
+      }
 
       if (bookingsRes.ok) {
         const data = await bookingsRes.json()
@@ -68,6 +63,28 @@ const Admin = () => {
       if (contactsRes.ok) {
         const data = await contactsRes.json()
         setContacts(data)
+      }
+      if (galleryRes.ok) {
+        const backendData = await galleryRes.json()
+        
+        try {
+          const liveRes = await fetch('/api/portfolio');
+          if (liveRes.ok) {
+            const liveData = await liveRes.json();
+            const mappedLiveData = liveData.map((img: any, index: number) => ({
+              id: `live-${index}`,
+              title: img.src.split('/').pop() || 'Live Image',
+              category: img.category,
+              image_url: img.src,
+              created_at: new Date().toISOString()
+            }));
+            setGallery([...backendData, ...mappedLiveData]);
+          } else {
+            setGallery(backendData);
+          }
+        } catch (e) {
+          setGallery(backendData);
+        }
       }
     } catch (error) {
       console.error('Error fetching data:', error)
@@ -105,22 +122,77 @@ const Admin = () => {
     setLoginData({ email: '', password: '' })
   }
 
-  const handleUpload = (e: React.FormEvent) => {
+  const handleUpload = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Mock upload
-    const newImage = {
-      id: gallery.length + 1,
-      title: uploadData.title,
-      category: uploadData.category,
-      image: '/api/placeholder/400/300',
-      uploadedAt: new Date().toISOString().split('T')[0]
+    if (!uploadFile) {
+      alert('Please select an image file to upload.');
+      return;
     }
-    setGallery([newImage, ...gallery])
-    setUploadData({ title: '', category: 'Wedding', description: '' })
+
+    setIsUploading(true);
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    
+    try {
+      // 1. Upload image to /upload/
+      const formData = new FormData();
+      formData.append('file', uploadFile);
+      
+      const uploadRes = await fetch(`${API_URL}/upload/`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData
+      });
+      
+      if (!uploadRes.ok) throw new Error('Failed to upload image file');
+      const uploadResult = await uploadRes.json();
+      
+      // 2. Create portfolio entry
+      const portfolioRes = await fetch(`${API_URL}/portfolio/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          title: uploadData.title,
+          category: uploadData.category,
+          image_url: uploadResult.url
+        })
+      });
+
+      if (!portfolioRes.ok) throw new Error('Failed to save portfolio entry');
+      const newPortfolio = await portfolioRes.json();
+      
+      setGallery([newPortfolio, ...gallery]);
+      setUploadData({ title: '', category: 'Babyshoot', description: '' });
+      setUploadFile(null);
+      alert('Successfully uploaded!');
+    } catch (error) {
+      console.error('Upload error:', error);
+      alert('Failed to upload image. Ensure backend is running and Cloudinary is configured in .env');
+    } finally {
+      setIsUploading(false);
+    }
   }
 
-  const handleDeleteImage = (id: number) => {
-    setGallery(gallery.filter(img => img.id !== id))
+  const handleDeleteImage = async (id: number | string) => {
+    if (typeof id === 'string' && id.startsWith('live-')) {
+      alert('Local live images cannot be deleted from the admin panel.');
+      return;
+    }
+
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    try {
+      const response = await fetch(`${API_URL}/portfolio/${id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (response.ok) {
+        setGallery(gallery.filter(img => img.id !== id))
+      }
+    } catch (error) {
+      console.error('Error deleting image:', error)
+    }
   }
 
   const updateBookingStatus = async (id: number, status: string) => {
@@ -412,34 +484,80 @@ const Admin = () => {
                 Gallery Management
               </h2>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {gallery.map((item) => (
-                  <div key={item.id} className="glass-effect rounded-lg overflow-hidden">
-                    <div className="aspect-video relative">
-                      <Image
-                        src={item.image}
-                        alt={item.title}
-                        fill
-                        className="object-cover"
-                        unoptimized
-                      />
-                    </div>
-                    <div className="p-4">
-                      <h3 className="text-white font-semibold mb-2">{item.title}</h3>
-                      <p className="text-gray-400 text-sm mb-3">{item.category}</p>
-                      <div className="flex justify-between items-center">
-                        <span className="text-gray-500 text-xs">{item.uploadedAt}</span>
-                        <button
-                          onClick={() => handleDeleteImage(item.id)}
-                          className="p-2 bg-red-500/10 text-red-400 rounded hover:bg-red-500/20 transition-colors"
-                          title="Delete"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
+              <div className="space-y-8">
+                {/* Category Tabs */}
+                <div className="flex flex-wrap gap-2">
+                  {['All', ...Array.from(new Set(gallery.map(item => item.category)))].map(category => (
+                    <button
+                      key={category}
+                      onClick={() => setSelectedGalleryCategory(category)}
+                      className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                        selectedGalleryCategory === category
+                          ? 'bg-gold text-charcoal scale-105'
+                          : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                      }`}
+                    >
+                      {category}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Filtered Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {gallery
+                    .filter(item => selectedGalleryCategory === 'All' || item.category === selectedGalleryCategory)
+                    .map((item) => (
+                    <div key={item.id} className="glass-effect rounded-lg overflow-hidden">
+                      <div className="aspect-video relative">
+                        {(item.image_url || item.image).match(/\.(mp4|webm|mov)$/i) ? (
+                          <video
+                            src={item.image_url || item.image}
+                            className="w-full h-full object-cover"
+                            muted
+                            playsInline
+                            controls
+                          />
+                        ) : (
+                          <Image
+                            src={item.image_url || item.image}
+                            alt={item.title}
+                            fill
+                            className="object-cover"
+                            unoptimized
+                          />
+                        )}
+                      </div>
+                      <div className="p-4">
+                        <h3 className="text-white font-semibold mb-2">{item.title}</h3>
+                        <p className="text-gray-400 text-sm mb-3">{item.category}</p>
+                        <div className="flex justify-between items-center">
+                          <span className="text-gray-500 text-xs">
+                            {item.created_at ? new Date(item.created_at).toLocaleDateString() : item.uploadedAt}
+                          </span>
+                          <button
+                            onClick={() => handleDeleteImage(item.id)}
+                            className="p-2 bg-red-500/10 text-red-400 rounded hover:bg-red-500/20 transition-colors"
+                            title="Delete"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
                       </div>
                     </div>
+                  ))}
+                </div>
+
+                {gallery.length === 0 && (
+                  <div className="text-center py-12 text-gray-500">
+                    No images found in the gallery. Use the Upload tab to add some.
                   </div>
-                ))}
+                )}
+                
+                {gallery.length > 0 && gallery.filter(item => selectedGalleryCategory === 'All' || item.category === selectedGalleryCategory).length === 0 && (
+                  <div className="text-center py-12 text-gray-500">
+                    No images found for this category.
+                  </div>
+                )}
               </div>
             </div>
           </motion.div>
@@ -505,27 +623,31 @@ const Admin = () => {
                 </div>
 
                 <div>
-                  <label className="block text-white font-medium mb-2">
+                  <div className="block text-white font-medium mb-2">
                     Upload Image
-                  </label>
-                  <div className="border-2 border-dashed border-gray-600 rounded-lg p-8 text-center hover:border-gold transition-colors cursor-pointer">
+                  </div>
+                  <label className="border-2 border-dashed border-gray-600 rounded-lg p-8 text-center hover:border-gold transition-colors cursor-pointer block">
                     <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                    <p className="text-gray-300 mb-2">Click to upload or drag and drop</p>
+                    <p className="text-gray-300 mb-2">
+                      {uploadFile ? uploadFile.name : 'Click to select an image'}
+                    </p>
                     <p className="text-gray-500 text-sm">PNG, JPG, GIF up to 10MB</p>
                     <input
                       type="file"
                       className="hidden"
                       accept="image/*"
+                      onChange={(e) => setUploadFile(e.target.files?.[0] || null)}
                     />
-                  </div>
+                  </label>
                 </div>
 
                 <button
                   type="submit"
-                  className="btn-primary inline-flex items-center"
+                  disabled={isUploading}
+                  className={`btn-primary inline-flex items-center ${isUploading ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
                   <Plus className="w-5 h-5 mr-2" />
-                  Upload Photo
+                  {isUploading ? 'Uploading...' : 'Upload Photo'}
                 </button>
               </form>
             </div>

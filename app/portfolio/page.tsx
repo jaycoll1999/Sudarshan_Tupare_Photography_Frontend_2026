@@ -39,7 +39,21 @@ export const metadata = {
   description: 'Explore our professional photography portfolio across various styles and occasions.',
 }
 
-export default function PortfolioPage() {
+async function getBackendPortfolio() {
+  try {
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    const res = await fetch(`${API_URL}/portfolio/`, { cache: 'no-store' });
+    if (res.ok) {
+      return await res.json();
+    }
+  } catch (error) {
+    console.error('Error fetching backend portfolio:', error);
+  }
+  return [];
+}
+
+export default async function PortfolioPage() {
+  const backendData = await getBackendPortfolio();
   const categoriesWithImages = portfolioCategories.map(cat => ({
     ...cat,
     images: getImagesFromFolder(cat.folder),
@@ -54,7 +68,13 @@ export default function PortfolioPage() {
     cat.videos.map(vid => ({ src: vid, category: cat.title, type: 'video' as const }))
   )
 
-  const allMedia = [...allImages, ...allVideos]
+  const backendMedia = backendData.map((item: any) => ({
+    src: item.image_url,
+    category: item.category === 'Babyshoot' ? 'Baby Shoot' : item.category,
+    type: item.image_url.match(/\.(mp4|webm|mov)$/i) ? 'video' as const : 'image' as const
+  }))
+
+  const allMedia = [...allImages, ...allVideos, ...backendMedia]
 
   return (
     <main className="min-h-screen bg-charcoal">
