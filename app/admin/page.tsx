@@ -254,7 +254,7 @@ const Admin = () => {
                     value={loginData.email}
                     onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
                     className="w-full pl-10 pr-4 py-3 bg-black/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
-                    placeholder="sudarshantupare@gmail.com"
+                    placeholder="Enter your email"
                     required
                   />
                 </div>
