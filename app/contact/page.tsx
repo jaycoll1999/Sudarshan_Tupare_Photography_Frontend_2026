@@ -37,7 +37,7 @@ const Contact = () => {
         message: `Subject: ${formData.subject}\n\n${formData.message}`
       };
 
-      const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://sudarshan-tupare-photography-backend-2026.onrender.com';
+      const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://sudarshan-tupare-photography-backend-2026.onrender.com';
       const response = await fetch(`${API_URL}/contact/`, {
         method: 'POST',
         headers: {

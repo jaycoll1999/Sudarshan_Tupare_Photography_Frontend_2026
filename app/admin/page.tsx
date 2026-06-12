@@ -43,7 +43,7 @@ const Admin = () => {
   }, [token])
 
   const fetchData = async () => {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://sudarshan-tupare-photography-backend-2026.onrender.com';
+    const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://sudarshan-tupare-photography-backend-2026.onrender.com';
     try {
       const [bookingsRes, contactsRes, galleryRes, profileRes] = await Promise.all([
         fetch(`${API_URL}/booking/`, { headers: { Authorization: `Bearer ${token}` } }),
@@ -100,7 +100,7 @@ const Admin = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoginError('')
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://sudarshan-tupare-photography-backend-2026.onrender.com';
+    const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://sudarshan-tupare-photography-backend-2026.onrender.com';
     
     try {
       const response = await fetch(`${API_URL}/auth/login`, {
@@ -136,7 +136,7 @@ const Admin = () => {
     }
 
     setIsUploading(true);
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://sudarshan-tupare-photography-backend-2026.onrender.com';
+    const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://sudarshan-tupare-photography-backend-2026.onrender.com';
     
     try {
       // 1. Upload image to /upload/
@@ -187,7 +187,7 @@ const Admin = () => {
       return;
     }
 
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://sudarshan-tupare-photography-backend-2026.onrender.com';
+    const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://sudarshan-tupare-photography-backend-2026.onrender.com';
     try {
       const response = await fetch(`${API_URL}/portfolio/${id}`, {
         method: 'DELETE',
@@ -202,7 +202,7 @@ const Admin = () => {
   }
 
   const updateBookingStatus = async (id: number, status: string) => {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://sudarshan-tupare-photography-backend-2026.onrender.com';
+    const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://sudarshan-tupare-photography-backend-2026.onrender.com';
     try {
       const response = await fetch(`${API_URL}/booking/${id}`, {
         method: 'PUT',
