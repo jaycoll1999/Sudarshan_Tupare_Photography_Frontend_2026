@@ -41,7 +41,7 @@ export const metadata = {
 
 async function getBackendPortfolio() {
   try {
-    const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://sudarshan-tupare-photography-backend-2026.onrender.com';
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
     const res = await fetch(`${API_URL}/portfolio/`, { cache: 'no-store' });
     if (res.ok) {
       return await res.json();

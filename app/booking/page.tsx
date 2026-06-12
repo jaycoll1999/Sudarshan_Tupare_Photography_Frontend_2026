@@ -61,7 +61,7 @@ const Booking = () => {
         message: `Location: ${formData.eventLocation}\nPackage: ${formData.package}\nMessage: ${formData.message}`
       };
 
-      const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://sudarshan-tupare-photography-backend-2026.onrender.com';
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
       const response = await fetch(`${API_URL}/booking/`, {
         method: 'POST',
         headers: {
