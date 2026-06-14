@@ -76,8 +76,8 @@ export default function PortfolioGallery({ categories, allImages }: PortfolioGal
             onClick={() => setSelectedCategory(tab.title)}
             className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
               selectedCategory === tab.title
-                ? 'bg-gold text-charcoal scale-105'
-                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-700'
+                ? 'bg-gold text-charcoal shadow-sm shadow-gold/20 scale-105'
+                : 'bg-white/60 dark:bg-white/5 text-slate-700 dark:text-slate-300 border border-black/5 dark:border-white/5 hover:bg-black/5 dark:hover:bg-white/10'
             }`}
           >
             {tab.title}
@@ -88,7 +88,7 @@ export default function PortfolioGallery({ categories, allImages }: PortfolioGal
       {/* Empty State */}
       {filteredImages.length === 0 && (
         <div className="text-center py-20">
-          <p className="text-gray-600 dark:text-gray-400 text-lg">No photos found in this category yet.</p>
+          <p className="text-slate-500 dark:text-slate-400 text-lg">No photos found in this category yet.</p>
         </div>
       )}
 
@@ -110,14 +110,14 @@ export default function PortfolioGallery({ categories, allImages }: PortfolioGal
                 <>
                   <video
                     src={media.src}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-[1200ms] cubic-bezier(0.16, 1, 0.3, 1) group-hover:scale-105"
                     muted
                     playsInline
                     preload="metadata"
                   />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="w-16 h-16 rounded-full bg-white dark:bg-black/60 flex items-center justify-center backdrop-blur-sm border border-white/20">
-                      <Play className="text-gray-900 dark:text-white ml-1" size={28} fill="white" />
+                      <Play className="text-slate-800 dark:text-white ml-1" size={28} fill="white" />
                     </div>
                   </div>
                 </>
@@ -126,13 +126,13 @@ export default function PortfolioGallery({ categories, allImages }: PortfolioGal
                   src={media.src}
                   alt={`${media.category} - Portfolio ${index + 1}`}
                   fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="object-cover transition-transform duration-[1200ms] cubic-bezier(0.16, 1, 0.3, 1) group-hover:scale-105"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   unoptimized={true}
                 />
               )}
-              <div className="absolute inset-0 bg-white dark:bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <span className="text-gray-900 dark:text-white font-medium text-lg border-b-2 border-gold pb-1">
+              <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <span className="text-white font-medium text-lg border-b-2 border-gold pb-1">
                   {media.category}
                 </span>
               </div>
@@ -152,14 +152,14 @@ export default function PortfolioGallery({ categories, allImages }: PortfolioGal
             onClick={() => setSelectedImageIndex(null)}
           >
             <button
-              className="absolute top-5 right-5 text-gray-900 dark:text-white p-2 hover:bg-white/10 rounded-full transition-colors z-50"
+              className="absolute top-5 right-5 text-slate-800 dark:text-white p-2 hover:bg-white/10 rounded-full transition-colors z-50"
               onClick={() => setSelectedImageIndex(null)}
             >
               <X size={32} />
             </button>
 
             <button
-              className="absolute left-5 text-gray-900 dark:text-white p-2 hover:bg-white/10 rounded-full transition-colors z-50"
+              className="absolute left-5 text-slate-800 dark:text-white p-2 hover:bg-white/10 rounded-full transition-colors z-50"
               onClick={(e) => {
                 e.stopPropagation()
                 setSelectedImageIndex(selectedImageIndex > 0 ? selectedImageIndex - 1 : filteredImages.length - 1)
@@ -169,7 +169,7 @@ export default function PortfolioGallery({ categories, allImages }: PortfolioGal
             </button>
 
             <button
-              className="absolute right-5 text-gray-900 dark:text-white p-2 hover:bg-white/10 rounded-full transition-colors z-50"
+              className="absolute right-5 text-slate-800 dark:text-white p-2 hover:bg-white/10 rounded-full transition-colors z-50"
               onClick={(e) => {
                 e.stopPropagation()
                 setSelectedImageIndex(selectedImageIndex < filteredImages.length - 1 ? selectedImageIndex + 1 : 0)

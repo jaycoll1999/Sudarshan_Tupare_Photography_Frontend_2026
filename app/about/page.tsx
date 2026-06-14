@@ -47,7 +47,7 @@ const About = () => {
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-charcoal">
+    <div className="min-h-screen bg-slate-50/50 dark:bg-charcoal">
       <Navbar />
       
       {/* Hero Section */}
@@ -89,10 +89,10 @@ const About = () => {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="font-serif text-4xl font-bold text-gray-900 dark:text-white mb-6">
+              <h2 className="font-serif text-4xl font-bold text-slate-800 dark:text-white tracking-tight mb-6">
                 Our <span className="text-gradient">Story</span>
               </h2>
-              <div className="space-y-4 text-gray-700 dark:text-gray-300">
+              <div className="space-y-4 text-slate-600 dark:text-slate-300">
                 <p>
                   Founded in 2020, Sidography Photography & Films began as a passion project driven by a love for capturing life's most precious moments. What started as a hobby quickly evolved into a professional photography studio dedicated to excellence.
                 </p>
@@ -127,7 +127,7 @@ const About = () => {
       </section>
 
       {/* Achievements */}
-      <section className="py-20 px-4 bg-gray-100/50 dark:bg-black/30">
+      <section className="py-20 px-4 bg-slate-100/30 dark:bg-black/15">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -135,10 +135,10 @@ const About = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            <h2 className="font-serif text-4xl md:text-5xl font-bold text-slate-800 dark:text-white tracking-tight mb-4">
               Our <span className="text-gradient">Achievements</span>
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
+            <p className="text-slate-500 dark:text-slate-400 text-lg max-w-2xl mx-auto">
               Numbers that speak volumes about our dedication and expertise
             </p>
           </motion.div>
@@ -153,7 +153,7 @@ const About = () => {
                 className="text-center"
               >
                 <div className="text-5xl font-bold text-gold mb-2">{achievement.number}</div>
-                <p className="text-gray-700 dark:text-gray-300">{achievement.label}</p>
+                <p className="text-slate-600 dark:text-slate-300">{achievement.label}</p>
               </motion.div>
             ))}
           </div>
@@ -169,10 +169,10 @@ const About = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            <h2 className="font-serif text-4xl md:text-5xl font-bold text-slate-800 dark:text-white tracking-tight mb-4">
               Meet the <span className="text-gradient">Photographer</span>
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
+            <p className="text-slate-500 dark:text-slate-400 text-lg max-w-2xl mx-auto">
               The creative mind behind the lens
             </p>
           </motion.div>
@@ -183,7 +183,7 @@ const About = () => {
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className="lg:col-span-1 bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-8 rounded-2xl text-center"
+              className="lg:col-span-1 bg-white/80 dark:bg-black/30 backdrop-blur-xl border border-black/[0.03] dark:border-white/5 shadow-[0_8px_30px_rgb(0,0,0,0.02)] p-8 rounded-2xl text-center"
             >
               <div className="relative w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden border-4 border-gold/20">
                 <Image
@@ -194,9 +194,9 @@ const About = () => {
                   unoptimized
                 />
               </div>
-              <h3 className="font-serif text-2xl font-bold text-gray-900 dark:text-white mb-2">{teamMembers[0].name}</h3>
+              <h3 className="font-serif text-2xl font-bold text-slate-800 dark:text-white mb-2">{teamMembers[0].name}</h3>
               <p className="text-gold font-medium mb-4">{teamMembers[0].role}</p>
-              <p className="text-gray-700 dark:text-gray-300 mb-6 text-sm leading-relaxed">{teamMembers[0].bio}</p>
+              <p className="text-slate-600 dark:text-slate-300 mb-6 text-sm leading-relaxed">{teamMembers[0].bio}</p>
               <div className="flex flex-wrap gap-2 justify-center">
                 {teamMembers[0].specialties.map((specialty, specIndex) => (
                   <span
@@ -214,12 +214,12 @@ const About = () => {
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="lg:col-span-2 bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-8 md:p-12 rounded-2xl flex flex-col justify-center"
+              className="lg:col-span-2 bg-white/80 dark:bg-black/30 backdrop-blur-xl border border-black/[0.03] dark:border-white/5 shadow-[0_8px_30px_rgb(0,0,0,0.02)] p-8 md:p-12 rounded-2xl flex flex-col justify-center"
             >
-              <h3 className="font-serif text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
+              <h3 className="font-serif text-3xl md:text-4xl font-bold text-slate-800 dark:text-white mb-6">
                 My <span className="text-gradient">Photography Style</span>
               </h3>
-              <div className="space-y-6 text-gray-700 dark:text-gray-300 leading-relaxed text-lg">
+              <div className="space-y-6 text-slate-600 dark:text-slate-300 leading-relaxed text-lg">
                 <p>
                   For me, photography is an art of observation. It's about finding something interesting in an ordinary place. I've found it has little to do with the things you see and everything to do with the way you see them.
                 </p>
@@ -234,8 +234,8 @@ const About = () => {
                     <Camera className="w-6 h-6 text-gold" />
                   </div>
                   <div>
-                    <h4 className="text-gray-900 dark:text-white font-semibold mb-1 text-lg">Cinematic Vision</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Using light and shadow to create dramatic, movie-like aesthetics.</p>
+                    <h4 className="text-slate-800 dark:text-white font-semibold tracking-tight mb-1 text-lg">Cinematic Vision</h4>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">Using light and shadow to create dramatic, movie-like aesthetics.</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
@@ -243,8 +243,8 @@ const About = () => {
                     <Heart className="w-6 h-6 text-gold" />
                   </div>
                   <div>
-                    <h4 className="text-gray-900 dark:text-white font-semibold mb-1 text-lg">Candid Moments</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Capturing raw, unposed emotions as they naturally unfold.</p>
+                    <h4 className="text-slate-800 dark:text-white font-semibold tracking-tight mb-1 text-lg">Candid Moments</h4>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">Capturing raw, unposed emotions as they naturally unfold.</p>
                   </div>
                 </div>
               </div>
@@ -269,10 +269,10 @@ const About = () => {
               className="lg:col-span-1 flex flex-col h-full"
             >
               <div className="mb-8">
-                <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+                <h2 className="font-serif text-4xl md:text-5xl font-bold text-slate-800 dark:text-white tracking-tight mb-4">
                   Our <span className="text-gradient">Values</span>
                 </h2>
-                <p className="text-gray-600 dark:text-gray-400 text-lg">
+                <p className="text-slate-500 dark:text-slate-400 text-lg">
                   The principles that guide our work and relationships
                 </p>
               </div>
@@ -297,7 +297,7 @@ const About = () => {
                   initial={{ opacity: 0, x: 30 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.15 }}
-                  className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-6 rounded-2xl flex flex-col sm:flex-row gap-6 items-center sm:items-start group hover:bg-white/5 transition-colors duration-300"
+                  className="bg-white/80 dark:bg-black/30 backdrop-blur-xl border border-black/[0.03] dark:border-white/5 shadow-[0_8px_30px_rgb(0,0,0,0.02)] p-6 rounded-2xl flex flex-col sm:flex-row gap-6 items-center sm:items-start group hover:bg-white/5 transition-colors duration-300"
                 >
                   {/* Image Thumbnail */}
                   <div className="relative w-full sm:w-48 h-48 sm:h-36 shrink-0 rounded-xl overflow-hidden border border-white/10">
@@ -315,8 +315,8 @@ const About = () => {
                   
                   {/* Text Content */}
                   <div className="flex-grow text-center sm:text-left sm:py-2">
-                    <h3 className="font-serif text-2xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-gold transition-colors">{value.title}</h3>
-                    <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{value.description}</p>
+                    <h3 className="font-serif text-2xl font-bold text-slate-800 dark:text-white mb-3 group-hover:text-gold transition-colors">{value.title}</h3>
+                    <p className="text-slate-600 dark:text-slate-300 leading-relaxed">{value.description}</p>
                   </div>
                 </motion.div>
               ))}
@@ -334,10 +334,10 @@ const About = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            <h2 className="font-serif text-4xl md:text-5xl font-bold text-slate-800 dark:text-white tracking-tight mb-4">
               Professional <span className="text-gradient">Equipment</span>
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
+            <p className="text-slate-500 dark:text-slate-400 text-lg max-w-2xl mx-auto">
               We use industry-leading equipment to ensure the highest quality results
             </p>
           </motion.div>
@@ -370,7 +370,7 @@ const About = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-6 rounded-xl text-center group"
+                className="bg-white/80 dark:bg-black/30 backdrop-blur-xl border border-black/[0.03] dark:border-white/5 shadow-[0_8px_30px_rgb(0,0,0,0.02)] p-6 rounded-xl text-center group"
               >
                 <div className="relative w-full h-48 mb-6 rounded-lg overflow-hidden border border-white/10">
                   <Image
@@ -381,7 +381,7 @@ const About = () => {
                     unoptimized
                   />
                 </div>
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2 text-lg">{equipment.name}</h3>
+                <h3 className="font-semibold text-slate-800 dark:text-white mb-2 text-lg">{equipment.name}</h3>
                 <p className="text-gold text-sm font-medium">{equipment.type}</p>
               </motion.div>
             ))}
@@ -396,12 +396,12 @@ const About = () => {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-12 rounded-2xl"
+            className="bg-white/80 dark:bg-black/30 backdrop-blur-xl border border-black/[0.03] dark:border-white/5 shadow-[0_8px_30px_rgb(0,0,0,0.02)] p-12 rounded-2xl"
           >
-            <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+            <h2 className="font-serif text-4xl md:text-5xl font-bold text-slate-800 dark:text-white tracking-tight mb-6">
               Let's Create <span className="text-gradient">Beautiful Memories</span> Together
             </h2>
-            <p className="text-gray-700 dark:text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
+            <p className="text-slate-600 dark:text-slate-300 text-lg mb-8 max-w-2xl mx-auto">
               Ready to discuss your photography needs? We'd love to hear about your vision and help bring it to life.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

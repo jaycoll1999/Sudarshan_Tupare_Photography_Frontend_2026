@@ -53,7 +53,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`} suppressHydrationWarning>
-      <body className="font-sans bg-gray-50 text-gray-900 dark:bg-charcoal dark:text-white antialiased transition-colors duration-300">
+      <body className="font-sans bg-slate-50/50 text-slate-800 dark:bg-charcoal dark:text-white antialiased transition-colors duration-300">
         <ThemeProvider>
           {children}
         </ThemeProvider>

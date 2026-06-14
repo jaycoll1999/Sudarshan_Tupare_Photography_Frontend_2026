@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import { Camera, Upload, Moon, Sun, Trash2, Eye, LogOut, Users, Calendar, Image as ImageIcon, Lock, Mail, Check, X, Plus, MessageSquare, UserCircle, Activity, BarChart, Shield, Clock } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Camera, Upload, Moon, Sun, Trash2, Eye, LogOut, Users, Calendar, Image as ImageIcon, Lock, Mail, Check, X, Plus, MessageSquare, UserCircle, Activity, BarChart, Shield, Clock, Send } from 'lucide-react'
 import Image from 'next/image'
 
 const Admin = () => {
@@ -22,6 +22,9 @@ const Admin = () => {
 
   const [bookings, setBookings] = useState<any[]>([])
   const [contacts, setContacts] = useState<any[]>([])
+  const [replyingContact, setReplyingContact] = useState<any | null>(null)
+  const [replyText, setReplyText] = useState('')
+  const [isSendingReply, setIsSendingReply] = useState(false)
   
   // Data for gallery
   const [gallery, setGallery] = useState<any[]>([])
@@ -224,6 +227,38 @@ const Admin = () => {
     }
   }
 
+  const submitReply = async () => {
+    if (!replyingContact || !replyText.trim()) return
+    setIsSendingReply(true)
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://sudarshan-tupare-photography-backend-2026.onrender.com';
+    try {
+      const response = await fetch(`${API_URL}/contact/${replyingContact.id}/reply`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ reply: replyText })
+      })
+
+      if (response.ok) {
+        const updatedContact = await response.json()
+        setContacts(contacts.map(contact => 
+          contact.id === replyingContact.id ? updatedContact : contact
+        ))
+        setReplyingContact(null)
+        setReplyText('')
+      } else {
+        alert('Failed to send reply. Please try again.')
+      }
+    } catch (error) {
+      console.error('Error sending reply:', error)
+      alert('An error occurred while sending the reply.')
+    } finally {
+      setIsSendingReply(false)
+    }
+  }
+
   if (!token) {
     return (
     <div className={isDarkMode ? "dark" : ""}>
@@ -234,7 +269,7 @@ const Admin = () => {
           transition={{ duration: 0.5 }}
           className="w-full max-w-md"
         >
-          <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-8 rounded-2xl">
+          <div className="bg-white/80 dark:bg-black/20 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-gray-100 dark:border-white/10 backdrop-blur-xl p-8 rounded-2xl">
             <div className="text-center mb-8">
               <div className="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-4">
                 <Lock className="w-8 h-8 text-charcoal" />
@@ -256,7 +291,7 @@ const Admin = () => {
                     value={loginData.email}
                     onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
                     className="w-full pl-10 pr-4 py-3 bg-white dark:bg-black/50 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
-                    placeholder="stphotography2130@gmail.com"
+                    placeholder="Enter your email address"
                     required
                   />
                 </div>
@@ -305,7 +340,7 @@ const Admin = () => {
     <div className={isDarkMode ? "dark" : ""}>
     <div className="min-h-screen bg-gray-50 dark:bg-charcoal">
       {/* Header */}
-      <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
+      <div className="bg-white/80 dark:bg-black/20 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-gray-100 dark:border-white/10 backdrop-blur-xl border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-3">
@@ -371,7 +406,7 @@ const Admin = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               
               {/* Profile Card */}
-              <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md rounded-2xl p-6 lg:col-span-1 border border-gold/10 relative overflow-hidden">
+              <div className="bg-white/80 dark:bg-black/20 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-gray-100 dark:border-white/10 backdrop-blur-xl rounded-2xl p-6 lg:col-span-1 border border-gold/10 relative overflow-hidden">
                 <div className="absolute top-0 right-0 p-4 opacity-10">
                   <Shield className="w-24 h-24 text-gold" />
                 </div>
@@ -406,7 +441,7 @@ const Admin = () => {
 
               {/* Metrics Cards */}
               <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-6">
-                <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md rounded-2xl p-6 border border-gray-200 dark:border-white/5 flex flex-col justify-center">
+                <div className="bg-white/80 dark:bg-black/20 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-gray-100 dark:border-white/10 backdrop-blur-xl rounded-2xl p-6 border border-gray-200 dark:border-white/5 flex flex-col justify-center">
                   <div className="flex items-center justify-between mb-4">
                     <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center">
                       <Calendar className="w-6 h-6 text-blue-400" />
@@ -417,7 +452,7 @@ const Admin = () => {
                   <p className="text-xs text-green-400 mt-2 flex items-center gap-1"><Activity className="w-3 h-3" /> Active requests</p>
                 </div>
 
-                <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md rounded-2xl p-6 border border-gray-200 dark:border-white/5 flex flex-col justify-center">
+                <div className="bg-white/80 dark:bg-black/20 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-gray-100 dark:border-white/10 backdrop-blur-xl rounded-2xl p-6 border border-gray-200 dark:border-white/5 flex flex-col justify-center">
                   <div className="flex items-center justify-between mb-4">
                     <div className="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center">
                       <MessageSquare className="w-6 h-6 text-purple-400" />
@@ -428,7 +463,7 @@ const Admin = () => {
                   <p className="text-xs text-green-400 mt-2 flex items-center gap-1"><Activity className="w-3 h-3" /> Messages received</p>
                 </div>
 
-                <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md rounded-2xl p-6 border border-gray-200 dark:border-white/5 flex flex-col justify-center">
+                <div className="bg-white/80 dark:bg-black/20 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-gray-100 dark:border-white/10 backdrop-blur-xl rounded-2xl p-6 border border-gray-200 dark:border-white/5 flex flex-col justify-center">
                   <div className="flex items-center justify-between mb-4">
                     <div className="w-12 h-12 bg-gold/10 rounded-xl flex items-center justify-center">
                       <ImageIcon className="w-6 h-6 text-gold" />
@@ -442,7 +477,7 @@ const Admin = () => {
             </div>
 
             {/* Activity Feed */}
-            <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md rounded-2xl p-6 border border-gray-200 dark:border-white/5">
+            <div className="bg-white/80 dark:bg-black/20 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-gray-100 dark:border-white/10 backdrop-blur-xl rounded-2xl p-6 border border-gray-200 dark:border-white/5">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="font-serif text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
                   <Activity className="w-6 h-6 text-gold" />
@@ -459,7 +494,7 @@ const Admin = () => {
                 .sort((a, b) => b.date.getTime() - a.date.getTime())
                 .slice(0, 5)
                 .map((activity, idx) => (
-                  <div key={idx} className="flex items-start gap-4 p-4 rounded-xl bg-gray-50 dark:bg-black/20 hover:bg-gray-100 dark:hover:bg-white dark:bg-black/40 transition-colors border border-gray-200 dark:border-white/5">
+                  <div key={idx} className="flex items-start gap-4 p-4 rounded-xl bg-gray-50 dark:bg-black/20 hover:bg-gray-100 dark:hover:bg-white/5 transition-colors border border-gray-200 dark:border-white/5">
                     <div className={`p-3 rounded-lg shrink-0 ${activity.type === 'booking' ? 'bg-blue-500/10 text-blue-400' : 'bg-purple-500/10 text-purple-400'}`}>
                       {activity.type === 'booking' ? <Calendar className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
                     </div>
@@ -501,7 +536,7 @@ const Admin = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md rounded-2xl p-6">
+            <div className="bg-white/80 dark:bg-black/20 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-gray-100 dark:border-white/10 backdrop-blur-xl rounded-2xl p-6">
               <h2 className="font-serif text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
                 <Calendar className="w-6 h-6 text-gold" />
                 Booking Requests
@@ -584,7 +619,7 @@ const Admin = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md rounded-2xl p-6">
+            <div className="bg-white/80 dark:bg-black/20 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-gray-100 dark:border-white/10 backdrop-blur-xl rounded-2xl p-6">
               <h2 className="font-serif text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
                 <MessageSquare className="w-6 h-6 text-gold" />
                 Contact Inquiries
@@ -598,6 +633,7 @@ const Admin = () => {
                       <th className="text-left py-3 px-4 text-gray-700 dark:text-gray-300 font-medium">Email</th>
                       <th className="text-left py-3 px-4 text-gray-700 dark:text-gray-300 font-medium w-1/2">Message Details</th>
                       <th className="text-left py-3 px-4 text-gray-700 dark:text-gray-300 font-medium">Date Received</th>
+                      <th className="text-right py-3 px-4 text-gray-700 dark:text-gray-300 font-medium">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -605,17 +641,39 @@ const Admin = () => {
                       <tr key={contact.id} className="border-b border-gray-200 dark:border-gray-800">
                         <td className="py-3 px-4 text-gray-900 dark:text-white font-medium">{contact.name}</td>
                         <td className="py-3 px-4 text-gray-700 dark:text-gray-300">{contact.email}</td>
-                        <td className="py-3 px-4 text-gray-700 dark:text-gray-300 max-w-md whitespace-pre-wrap text-sm">
-                          {contact.message}
+                        <td className="py-3 px-4 text-gray-700 dark:text-gray-300 max-w-md text-sm">
+                          <div className="whitespace-pre-wrap">{contact.message}</div>
+                          {contact.reply && (
+                            <div className="mt-2 text-xs bg-gold/10 text-gold p-3 rounded-lg border border-gold/20">
+                              <p className="font-semibold mb-1">Reply Sent {contact.replied_at ? `on ${new Date(contact.replied_at).toLocaleString()}` : ''}:</p>
+                              <p className="whitespace-pre-wrap">{contact.reply}</p>
+                            </div>
+                          )}
                         </td>
                         <td className="py-3 px-4 text-gray-600 dark:text-gray-400 text-sm">
                           {new Date(contact.created_at).toLocaleString()}
+                        </td>
+                        <td className="py-3 px-4 text-right">
+                          {contact.reply ? (
+                            <span className="inline-flex items-center gap-1 text-xs font-semibold text-green-500 bg-green-500/10 px-2.5 py-1 rounded-full">
+                              <Check className="w-3.5 h-3.5" />
+                              Replied
+                            </span>
+                          ) : (
+                            <button
+                              onClick={() => setReplyingContact(contact)}
+                              className="px-3 py-1.5 bg-gold hover:bg-gold-light text-charcoal rounded-lg text-xs font-semibold shadow-sm hover:shadow transition-all inline-flex items-center gap-1.5"
+                            >
+                              <MessageSquare className="w-3.5 h-3.5" />
+                              Reply
+                            </button>
+                          )}
                         </td>
                       </tr>
                     ))}
                     {contacts.length === 0 && (
                       <tr>
-                        <td colSpan={4} className="text-center py-6 text-gray-500 dark:text-gray-500">No messages found</td>
+                        <td colSpan={5} className="text-center py-6 text-gray-500 dark:text-gray-500">No messages found</td>
                       </tr>
                     )}
                   </tbody>
@@ -632,7 +690,7 @@ const Admin = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md rounded-2xl p-6">
+            <div className="bg-white/80 dark:bg-black/20 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-gray-100 dark:border-white/10 backdrop-blur-xl rounded-2xl p-6">
               <h2 className="font-serif text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
                 <ImageIcon className="w-6 h-6 text-gold" />
                 Gallery Management
@@ -661,7 +719,7 @@ const Admin = () => {
                   {gallery
                     .filter(item => selectedGalleryCategory === 'All' || item.category === selectedGalleryCategory)
                     .map((item) => (
-                    <div key={item.id} className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md rounded-lg overflow-hidden">
+                    <div key={item.id} className="bg-white/80 dark:bg-black/20 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-gray-100 dark:border-white/10 backdrop-blur-xl rounded-lg overflow-hidden">
                       <div className="aspect-video relative">
                         {(item.image_url || item.image).match(/\.(mp4|webm|mov)$/i) ? (
                           <video
@@ -724,7 +782,7 @@ const Admin = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md rounded-2xl p-6">
+            <div className="bg-white/80 dark:bg-black/20 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-gray-100 dark:border-white/10 backdrop-blur-xl rounded-2xl p-6">
               <h2 className="font-serif text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
                 <Upload className="w-6 h-6 text-gold" />
                 Upload New Photo
@@ -809,6 +867,82 @@ const Admin = () => {
             </div>
           </motion.div>
         )}
+        <AnimatePresence>
+          {replyingContact && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+              <motion.div
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.95, opacity: 0 }}
+                transition={{ type: 'spring', damping: 25, stiffness: 350 }}
+                className="bg-white dark:bg-charcoal border border-gray-200 dark:border-white/10 p-6 rounded-2xl max-w-lg w-full shadow-2xl relative text-left"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  onClick={() => {
+                    setReplyingContact(null);
+                    setReplyText('');
+                  }}
+                  className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors"
+                >
+                  <X size={20} />
+                </button>
+                
+                <h3 className="font-serif text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                  Reply to Inquiry
+                </h3>
+                
+                <div className="mb-4 text-sm text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-black/20 p-3 rounded-lg border border-gray-100 dark:border-white/5">
+                  <p><strong>From:</strong> {replyingContact.name} ({replyingContact.email})</p>
+                  <p className="mt-1"><strong>Inquiry:</strong> {replyingContact.message}</p>
+                </div>
+                
+                <div className="mb-6">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Your Reply *
+                  </label>
+                  <textarea
+                    value={replyText}
+                    onChange={(e) => setReplyText(e.target.value)}
+                    rows={6}
+                    required
+                    placeholder="Type your email reply here..."
+                    className="w-full px-4 py-3 bg-white dark:bg-black/50 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors resize-none"
+                  />
+                </div>
+                
+                <div className="flex gap-4">
+                  <button
+                    onClick={() => {
+                      setReplyingContact(null);
+                      setReplyText('');
+                    }}
+                    className="flex-1 py-3 px-4 bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-700 dark:text-white font-medium rounded-xl transition-all border border-black/5 dark:border-white/5"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={submitReply}
+                    disabled={isSendingReply || !replyText.trim()}
+                    className="flex-1 py-3 px-4 bg-gold hover:bg-gold-light disabled:opacity-50 text-charcoal font-medium rounded-xl shadow-lg shadow-gold/15 flex items-center justify-center gap-2 transition-all"
+                  >
+                    {isSendingReply ? (
+                      <>
+                        <div className="w-5 h-5 border-2 border-charcoal border-t-transparent rounded-full animate-spin mr-2" />
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        <Send size={18} className="mr-2" />
+                        Send Reply
+                      </>
+                    )}
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
     </div>

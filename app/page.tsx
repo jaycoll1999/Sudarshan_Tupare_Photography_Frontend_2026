@@ -84,7 +84,7 @@ const Home = () => {
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-charcoal">
+    <div className="min-h-screen bg-slate-50/50 dark:bg-charcoal">
       <Navbar />
 
       {/* Hero Section */}
@@ -186,7 +186,7 @@ const Home = () => {
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-gray-900 dark:text-white z-20"
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-slate-800 dark:text-white z-20"
         >
           <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
             <div className="w-1 h-3 bg-white/50 rounded-full mt-2 animate-bounce" />
@@ -198,7 +198,7 @@ const Home = () => {
       <FeaturedWork />
 
       {/* Services Preview */}
-      <section className="py-20 px-4 bg-gray-100/50 dark:bg-black/30">
+      <section className="py-20 px-4 bg-slate-100/30 dark:bg-black/15">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -206,10 +206,10 @@ const Home = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            <h2 className="font-serif text-4xl md:text-5xl font-bold text-slate-800 dark:text-white tracking-tight mb-4">
               Our <span className="text-gradient">Services</span>
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
+            <p className="text-slate-500 dark:text-slate-400 text-lg max-w-2xl mx-auto">
               Professional photography services tailored to your unique needs
             </p>
           </motion.div>
@@ -222,7 +222,7 @@ const Home = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 whileHover={{ y: -8 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-6 rounded-lg flex flex-col transition-shadow duration-500 hover:shadow-[0_8px_30px_rgba(212,175,55,0.15)]"
+                className="group bg-white/80 dark:bg-black/30 backdrop-blur-xl border border-black/[0.03] dark:border-white/5 shadow-[0_8px_30px_rgb(0,0,0,0.02)] p-6 rounded-lg flex flex-col transition-shadow duration-500 hover:shadow-[0_8px_30px_rgba(212,175,55,0.15)]"
               >
                 <div className="relative h-64 w-full rounded-lg overflow-hidden mb-6">
                   <Image
@@ -234,8 +234,8 @@ const Home = () => {
                   />
                 </div>
                 <service.icon className="w-12 h-12 text-gold mb-4" />
-                <h3 className="font-serif text-xl font-semibold text-gray-900 dark:text-white mb-3">{service.title}</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4 text-sm flex-grow">{service.description}</p>
+                <h3 className="font-serif text-xl font-semibold text-slate-800 dark:text-white mb-3">{service.title}</h3>
+                <p className="text-slate-500 dark:text-slate-400 mb-4 text-sm flex-grow">{service.description}</p>
                 <p className="text-gold font-semibold">{service.price}</p>
               </motion.div>
             ))}
@@ -259,10 +259,10 @@ const Home = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            <h2 className="font-serif text-4xl md:text-5xl font-bold text-slate-800 dark:text-white tracking-tight mb-4">
               Client <span className="text-gradient">Testimonials</span>
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
+            <p className="text-slate-500 dark:text-slate-400 text-lg max-w-2xl mx-auto">
               What our clients say about their experience with us
             </p>
           </motion.div>
@@ -274,16 +274,16 @@ const Home = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-6 rounded-lg"
+                className="bg-white/80 dark:bg-black/30 backdrop-blur-xl border border-black/[0.03] dark:border-white/5 shadow-[0_8px_30px_rgb(0,0,0,0.02)] p-6 rounded-lg"
               >
                 <div className="flex mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
                     <Star key={i} className="w-5 h-5 text-gold fill-current" />
                   ))}
                 </div>
-                <p className="text-gray-700 dark:text-gray-300 mb-4 italic">"{testimonial.text}"</p>
+                <p className="text-slate-600 dark:text-slate-300 mb-4 italic">"{testimonial.text}"</p>
                 <div>
-                  <p className="text-gray-900 dark:text-white font-semibold">{testimonial.name}</p>
+                  <p className="text-slate-800 dark:text-white font-semibold tracking-tight">{testimonial.name}</p>
                   <p className="text-gold text-sm">{testimonial.event}</p>
                 </div>
               </motion.div>
@@ -302,12 +302,12 @@ const Home = () => {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-12 rounded-2xl"
+            className="bg-white/80 dark:bg-black/30 backdrop-blur-xl border border-black/[0.03] dark:border-white/5 shadow-[0_8px_30px_rgb(0,0,0,0.02)] p-12 rounded-2xl"
           >
-            <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+            <h2 className="font-serif text-4xl md:text-5xl font-bold text-slate-800 dark:text-white tracking-tight mb-6">
               Ready to Capture Your <span className="text-gradient">Timeless Moments?</span>
             </h2>
-            <p className="text-gray-700 dark:text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
+            <p className="text-slate-600 dark:text-slate-300 text-lg mb-8 max-w-2xl mx-auto">
               Let's create beautiful memories together. Contact us today to discuss your photography needs and book your session.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

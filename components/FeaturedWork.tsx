@@ -58,10 +58,10 @@ export default function FeaturedWork() {
           >
             Portfolio Highlights
           </motion.span>
-          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-5">
+          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-slate-800 dark:text-white mb-5">
             Featured <span className="text-gradient">Work</span>
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
+          <p className="text-slate-500 dark:text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">
             A glimpse into our recent photography sessions — each frame crafted with passion and precision
           </p>
         </motion.div>
@@ -84,7 +84,7 @@ export default function FeaturedWork() {
                   src={project.src}
                   alt={project.title}
                   fill
-                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                  className="object-cover transition-transform duration-[1200ms] cubic-bezier(0.16, 1, 0.3, 1) group-hover:scale-105"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   unoptimized={true}
                 />

@@ -1,13 +1,22 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { Mail, Phone, MapPin, MessageCircle, Send, Clock, Instagram, Facebook, Camera } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Mail, Phone, MapPin, MessageCircle, Send, Clock, Instagram, Facebook, Camera, X, Copy, Check } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import WhatsAppButton from '@/components/WhatsAppButton'
 
 const Contact = () => {
+  const [activeModal, setActiveModal] = useState<string | null>(null)
+  const [copiedText, setCopiedText] = useState(false)
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text)
+    setCopiedText(true)
+    setTimeout(() => setCopiedText(false), 2000)
+  }
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -103,9 +112,61 @@ const Contact = () => {
     { icon: MessageCircle, href: 'https://wa.me/919637577691', label: 'WhatsApp' }
   ]
 
+  interface ModalAction {
+    label: string
+    href: string
+    primary: boolean
+    external?: boolean
+    isWhatsApp?: boolean
+  }
+
+  interface ModalContent {
+    title: string
+    value: string
+    icon: typeof Phone | typeof Mail | typeof MapPin
+    actions: ModalAction[]
+  }
+
+  const getModalContent = (): ModalContent | null => {
+    switch (activeModal) {
+      case 'Phone':
+        return {
+          title: 'Phone Details',
+          value: '+91 96375 77691',
+          icon: Phone,
+          actions: [
+            { label: 'Call Now', href: 'tel:+919637577691', primary: true },
+            { label: 'Chat on WhatsApp', href: 'https://wa.me/919637577691', primary: false, isWhatsApp: true }
+          ]
+        }
+      case 'Email':
+        return {
+          title: 'Email Address',
+          value: 'stphotography2130@gmail.com',
+          icon: Mail,
+          actions: [
+            { label: 'Send Email', href: 'mailto:stphotography2130@gmail.com', primary: true }
+          ]
+        }
+      case 'Studio Address':
+        return {
+          title: 'Studio Location',
+          value: 'Pune, Maharashtra, India',
+          icon: MapPin,
+          actions: [
+            { label: 'Open in Google Maps', href: 'https://maps.google.com/?q=Pune,+Maharashtra,+India', primary: true, external: true }
+          ]
+        }
+      default:
+        return null
+    }
+  }
+
+  const modalData = getModalContent()
+
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-charcoal">
+      <div className="min-h-screen bg-slate-50/50 dark:bg-charcoal">
         <Navbar />
         <section className="pt-32 pb-20 px-4 min-h-screen flex items-center justify-center">
           <motion.div
@@ -114,7 +175,7 @@ const Contact = () => {
             transition={{ duration: 0.5 }}
             className="max-w-2xl mx-auto text-center"
           >
-            <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-12 rounded-2xl">
+            <div className="bg-white/80 dark:bg-black/30 backdrop-blur-xl border border-black/[0.03] dark:border-white/5 shadow-[0_8px_30px_rgb(0,0,0,0.02)] p-12 rounded-2xl">
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
@@ -124,10 +185,10 @@ const Contact = () => {
                 <Send className="w-10 h-10 text-charcoal" />
               </motion.div>
               
-              <h2 className="font-serif text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              <h2 className="font-serif text-4xl font-bold text-slate-800 dark:text-white tracking-tight mb-4">
                 Message <span className="text-gradient">Sent!</span>
               </h2>
-              <p className="text-gray-700 dark:text-gray-300 text-lg mb-8">
+              <p className="text-slate-600 dark:text-slate-300 text-lg mb-8">
                 Thank you for reaching out! We've received your message and will get back to you within 24 hours.
               </p>
               
@@ -156,7 +217,7 @@ const Contact = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-charcoal">
+    <div className="min-h-screen bg-slate-50/50 dark:bg-charcoal">
       <Navbar />
       
       {/* Header */}
@@ -168,10 +229,10 @@ const Contact = () => {
             transition={{ duration: 0.6 }}
             className="text-center"
           >
-            <h1 className="font-serif text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+            <h1 className="font-serif text-5xl md:text-6xl font-bold text-slate-800 dark:text-white tracking-tight mb-6">
               Get in <span className="text-gradient">Touch</span>
             </h1>
-            <p className="text-gray-600 dark:text-gray-400 text-lg max-w-3xl mx-auto">
+            <p className="text-slate-500 dark:text-slate-400 text-lg max-w-3xl mx-auto">
               Have questions about our photography services? Want to discuss your upcoming event? 
               We'd love to hear from you. Reach out through any of the channels below.
             </p>
@@ -184,20 +245,22 @@ const Contact = () => {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
             {contactInfo.map((info, index) => (
-              <motion.a
+              <motion.div
                 key={index}
-                href={info.href}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-8 rounded-2xl text-center hover:scale-105 transition-transform duration-300 group"
+                onClick={() => setActiveModal(info.label)}
+                className="bg-white/80 dark:bg-black/30 backdrop-blur-xl border border-black/[0.03] dark:border-white/5 shadow-[0_8px_30px_rgb(0,0,0,0.02)] p-8 rounded-2xl text-center group cursor-pointer"
               >
                 <div className="w-16 h-16 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-gold/20 transition-colors">
                   <info.icon className="w-8 h-8 text-gold" />
                 </div>
-                <h3 className="text-gray-900 dark:text-white font-semibold mb-2">{info.label}</h3>
-                <p className="text-gray-700 dark:text-gray-300">{info.value}</p>
-              </motion.a>
+                <h3 className="text-slate-800 dark:text-white font-semibold tracking-tight mb-2">{info.label}</h3>
+                <p className="text-slate-600 dark:text-slate-300">{info.value}</p>
+              </motion.div>
             ))}
           </div>
 
@@ -208,13 +271,13 @@ const Contact = () => {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="font-serif text-3xl font-bold text-gray-900 dark:text-white mb-6">
+              <h2 className="font-serif text-3xl font-bold text-slate-800 dark:text-white tracking-tight mb-6">
                 Send us a <span className="text-gradient">Message</span>
               </h2>
               
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label htmlFor="name" className="block text-gray-900 dark:text-white font-medium mb-2">
+                  <label htmlFor="name" className="block text-slate-800 dark:text-white font-medium mb-2">
                     Your Name *
                   </label>
                   <input
@@ -224,13 +287,13 @@ const Contact = () => {
                     value={formData.name}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 bg-white dark:bg-black/50 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
+                    className="w-full px-4 py-3 bg-white/50 dark:bg-black/40 backdrop-blur-md border border-black/5 dark:border-white/10 rounded-xl text-slate-800 dark:text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
                     placeholder="Enter your full name"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-gray-900 dark:text-white font-medium mb-2">
+                  <label htmlFor="email" className="block text-slate-800 dark:text-white font-medium mb-2">
                     Email Address *
                   </label>
                   <input
@@ -240,13 +303,13 @@ const Contact = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 bg-white dark:bg-black/50 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
+                    className="w-full px-4 py-3 bg-white/50 dark:bg-black/40 backdrop-blur-md border border-black/5 dark:border-white/10 rounded-xl text-slate-800 dark:text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
                     placeholder="Enter your email address"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="subject" className="block text-gray-900 dark:text-white font-medium mb-2">
+                  <label htmlFor="subject" className="block text-slate-800 dark:text-white font-medium mb-2">
                     Subject *
                   </label>
                   <input
@@ -256,13 +319,13 @@ const Contact = () => {
                     value={formData.subject}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 bg-white dark:bg-black/50 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
+                    className="w-full px-4 py-3 bg-white/50 dark:bg-black/40 backdrop-blur-md border border-black/5 dark:border-white/10 rounded-xl text-slate-800 dark:text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
                     placeholder="Enter the subject"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-gray-900 dark:text-white font-medium mb-2">
+                  <label htmlFor="message" className="block text-slate-800 dark:text-white font-medium mb-2">
                     Message *
                   </label>
                   <textarea
@@ -272,7 +335,7 @@ const Contact = () => {
                     onChange={handleInputChange}
                     required
                     rows={5}
-                    className="w-full px-4 py-3 bg-white dark:bg-black/50 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors resize-none"
+                    className="w-full px-4 py-3 bg-white/50 dark:bg-black/40 backdrop-blur-md border border-black/5 dark:border-white/10 rounded-xl text-slate-800 dark:text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors resize-none"
                     placeholder="Tell us about your photography needs..."
                   />
                 </div>
@@ -306,20 +369,20 @@ const Contact = () => {
             >
               {/* Business Hours */}
               <div>
-                <h2 className="font-serif text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                <h2 className="font-serif text-3xl font-bold text-slate-800 dark:text-white tracking-tight mb-6">
                   Business <span className="text-gradient">Hours</span>
                 </h2>
-                <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-6 rounded-2xl">
+                <div className="bg-white/80 dark:bg-black/30 backdrop-blur-xl border border-black/[0.03] dark:border-white/5 shadow-[0_8px_30px_rgb(0,0,0,0.02)] p-6 rounded-2xl">
                   <div className="space-y-3">
                     {businessHours.map((schedule, index) => (
                       <div key={index} className="flex justify-between items-center">
-                        <span className="text-gray-700 dark:text-gray-300">{schedule.day}</span>
+                        <span className="text-slate-600 dark:text-slate-300">{schedule.day}</span>
                         <span className="text-gold font-medium">{schedule.hours}</span>
                       </div>
                     ))}
                   </div>
                   <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                    <p className="text-gray-600 dark:text-gray-400 text-sm">
+                    <p className="text-slate-500 dark:text-slate-400 text-sm">
                       <Clock className="w-4 h-4 inline mr-2" />
                       Response time: Within 24 hours
                     </p>
@@ -329,11 +392,11 @@ const Contact = () => {
 
               {/* Social Media */}
               <div>
-                <h2 className="font-serif text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                <h2 className="font-serif text-3xl font-bold text-slate-800 dark:text-white tracking-tight mb-6">
                   Follow <span className="text-gradient">Us</span>
                 </h2>
-                <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-6 rounded-2xl">
-                  <p className="text-gray-700 dark:text-gray-300 mb-4">
+                <div className="bg-white/80 dark:bg-black/30 backdrop-blur-xl border border-black/[0.03] dark:border-white/5 shadow-[0_8px_30px_rgb(0,0,0,0.02)] p-6 rounded-2xl">
+                  <p className="text-slate-600 dark:text-slate-300 mb-4">
                     Stay updated with our latest work and behind-the-scenes content
                   </p>
                   <div className="flex gap-4">
@@ -343,7 +406,7 @@ const Contact = () => {
                         href={social.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center hover:bg-gold hover:text-charcoal transition-all duration-300"
+                        className="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center hover:bg-gold hover:text-charcoal hover:scale-110 active:scale-90 transition-all duration-300"
                         aria-label={social.label}
                       >
                         <social.icon className="w-6 h-6 text-gold" />
@@ -355,28 +418,28 @@ const Contact = () => {
 
               {/* Quick Actions */}
               <div>
-                <h2 className="font-serif text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                <h2 className="font-serif text-3xl font-bold text-slate-800 dark:text-white tracking-tight mb-6">
                   Quick <span className="text-gradient">Actions</span>
                 </h2>
                 <div className="space-y-4">
                   <a
                     href="/booking"
-                    className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-4 rounded-lg flex items-center justify-between hover:scale-105 transition-transform duration-300"
+                    className="bg-white/80 dark:bg-black/30 backdrop-blur-xl border border-black/[0.03] dark:border-white/5 shadow-[0_8px_30px_rgb(0,0,0,0.02)] p-4 rounded-lg flex items-center justify-between hover:scale-105 active:scale-95 transition-transform duration-300"
                   >
                     <div className="flex items-center gap-3">
                       <Camera className="w-6 h-6 text-gold" />
-                      <span className="text-gray-900 dark:text-white">Book a Photoshoot</span>
+                      <span className="text-slate-800 dark:text-white">Book a Photoshoot</span>
                     </div>
                     <span className="text-gold">→</span>
                   </a>
                   
                   <a
                     href="/portfolio"
-                    className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-4 rounded-lg flex items-center justify-between hover:scale-105 transition-transform duration-300"
+                    className="bg-white/80 dark:bg-black/30 backdrop-blur-xl border border-black/[0.03] dark:border-white/5 shadow-[0_8px_30px_rgb(0,0,0,0.02)] p-4 rounded-lg flex items-center justify-between hover:scale-105 active:scale-95 transition-transform duration-300"
                   >
                     <div className="flex items-center gap-3">
                       <Camera className="w-6 h-6 text-gold" />
-                      <span className="text-gray-900 dark:text-white">View Portfolio</span>
+                      <span className="text-slate-800 dark:text-white">View Portfolio</span>
                     </div>
                     <span className="text-gold">→</span>
                   </a>
@@ -389,6 +452,87 @@ const Contact = () => {
 
       <Footer />
       <WhatsAppButton />
+
+      <AnimatePresence>
+        {activeModal && modalData && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+            onClick={() => setActiveModal(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.8, y: 20, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.8, y: 20, opacity: 0 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 350 }}
+              className="bg-white dark:bg-charcoal border border-black/5 dark:border-white/10 p-8 rounded-3xl max-w-md w-full shadow-2xl relative text-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setActiveModal(null)}
+                className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors"
+                aria-label="Close modal"
+              >
+                <X size={20} />
+              </button>
+
+              {/* Icon */}
+              <div className="w-16 h-16 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-4 border border-gold/20">
+                <modalData.icon className="w-8 h-8 text-gold" />
+              </div>
+
+              {/* Content */}
+              <h3 className="font-serif text-2xl font-bold text-slate-800 dark:text-white mb-2">
+                {modalData.title}
+              </h3>
+              <p className="text-slate-600 dark:text-slate-300 text-lg font-medium break-all select-all mb-6">
+                {modalData.value}
+              </p>
+
+              {/* Copy & Actions */}
+              <div className="space-y-3">
+                <button
+                  onClick={() => copyToClipboard(modalData.value)}
+                  className="w-full py-3 px-4 bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-700 dark:text-white font-medium rounded-xl flex items-center justify-center gap-2 transition-all border border-black/5 dark:border-white/5"
+                >
+                  {copiedText ? (
+                    <>
+                      <Check size={18} className="text-green-500" />
+                      <span>Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy size={18} />
+                      <span>Copy to Clipboard</span>
+                    </>
+                  )}
+                </button>
+
+                {modalData.actions.map((action, i) => (
+                  <a
+                    key={i}
+                    href={action.href}
+                    target={action.external || action.isWhatsApp ? '_blank' : undefined}
+                    rel={action.external || action.isWhatsApp ? 'noopener noreferrer' : undefined}
+                    className={`block w-full py-3 px-4 rounded-xl font-medium transition-all ${
+                      action.primary
+                        ? 'bg-gold hover:bg-gold-light text-charcoal shadow-lg shadow-gold/15'
+                        : action.isWhatsApp
+                        ? 'bg-green-600 hover:bg-green-500 text-white shadow-lg shadow-green-600/15'
+                        : 'bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-700 dark:text-white border border-black/5 dark:border-white/5'
+                    }`}
+                  >
+                    {action.label}
+                  </a>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

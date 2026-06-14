@@ -44,7 +44,7 @@ const Navbar = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isTransparent ? 'bg-transparent' : 'bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md shadow-lg bg-gray-50 dark:bg-charcoal/90'
+        isTransparent ? 'bg-transparent' : 'bg-white/80 dark:bg-charcoal/90 backdrop-blur-xl border-b border-black/[0.03] dark:border-white/5 shadow-[0_8px_30px_rgb(0,0,0,0.02)]'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -53,7 +53,7 @@ const Navbar = () => {
           <Link href="/" className="flex items-center space-x-2 group">
             <Camera className="w-8 h-8 text-gold group-hover:scale-110 transition-transform" />
             <div>
-              <h1 className={`font-serif text-xl font-bold ${!isTransparent ? 'text-gray-900 dark:text-white' : 'text-white'}`}>Sidography</h1>
+              <h1 className={`font-serif text-xl font-bold ${!isTransparent ? 'text-slate-800 dark:text-white' : 'text-white'}`}>Sidography</h1>
               <p className="text-xs text-gold">Photography & Films</p>
             </div>
           </Link>
@@ -64,7 +64,7 @@ const Navbar = () => {
               <Link
                 key={item.name}
                 href={item.href}
-                className={`transition-colors duration-300 text-sm font-medium tracking-wide ${!isTransparent ? 'text-gray-700 dark:text-gray-300 hover:text-gold' : 'text-gray-200 hover:text-white'}`}
+                className={`transition-colors duration-300 text-sm font-medium tracking-wide ${!isTransparent ? 'text-slate-600 dark:text-slate-300 hover:text-gold' : 'text-gray-200 hover:text-white'}`}
               >
                 {item.name}
               </Link>
@@ -75,7 +75,7 @@ const Navbar = () => {
             {mounted && (
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 transition-colors"
+                className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 text-slate-600 dark:text-slate-300 transition-colors"
                 aria-label="Toggle Theme"
               >
                 {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
@@ -87,7 +87,7 @@ const Navbar = () => {
             {mounted && (
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 transition-colors"
+                className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 text-slate-600 dark:text-slate-300 transition-colors"
               >
                 {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
               </button>
@@ -117,7 +117,7 @@ const Navbar = () => {
                 key={item.name}
                 href={item.href}
                 onClick={() => setIsOpen(false)}
-                className="block py-2 text-gray-700 dark:text-gray-300 hover:text-gold transition-colors duration-300"
+                className="block py-2 text-slate-600 dark:text-slate-300 hover:text-gold transition-colors duration-300"
               >
                 {item.name}
               </Link>
