@@ -102,7 +102,7 @@ export default function FeaturedWork() {
                     {project.category}
                   </span>
                   {/* Title */}
-                  <h3 className="text-gray-900 dark:text-white font-semibold text-lg md:text-xl leading-snug mb-3 transform translate-y-1 group-hover:translate-y-0 transition-transform duration-300 ease-out">
+                  <h3 className="text-white font-semibold text-lg md:text-xl leading-snug mb-3 transform translate-y-1 group-hover:translate-y-0 transition-transform duration-300 ease-out">
                     {project.title}
                   </h3>
 
@@ -122,7 +122,7 @@ export default function FeaturedWork() {
 
                 {/* Top-right corner accent on hover */}
                 <div className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 ease-out delay-100">
-                  <ArrowRight size={16} className="text-gray-900 dark:text-white -rotate-45" />
+                  <ArrowRight size={16} className="text-white -rotate-45" />
                 </div>
               </div>
             </motion.div>

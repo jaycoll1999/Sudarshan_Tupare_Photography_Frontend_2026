@@ -136,7 +136,7 @@ const Booking = () => {
                 Booking <span className="text-gradient">Confirmed!</span>
               </h2>
               <p className="text-gray-700 dark:text-gray-300 text-lg mb-8">
-                Thank you for choosing Sudarshan Tupare Photography! We've received your booking request and will contact you within 24 hours to confirm the details.
+                Thank you for choosing Sidography Photography & Films! We've received your booking request and will contact you within 24 hours to confirm the details.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">

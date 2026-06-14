@@ -6,12 +6,17 @@ import { Menu, X, Camera } from 'lucide-react'
 import Link from 'next/link'
 import { useTheme } from 'next-themes'
 import { Sun, Moon } from 'lucide-react'
+import { usePathname } from 'next/navigation'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
+  const pathname = usePathname()
+  
+  const isDarkHeroPage = pathname === '/' || pathname === '/about'
+  const isTransparent = !scrolled && !isOpen && isDarkHeroPage
 
   useEffect(() => {
     setMounted(true)
@@ -39,7 +44,7 @@ const Navbar = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled || isOpen ? 'bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md shadow-lg bg-gray-50 dark:bg-charcoal/90' : 'bg-transparent'
+        isTransparent ? 'bg-transparent' : 'bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md shadow-lg bg-gray-50 dark:bg-charcoal/90'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -48,8 +53,8 @@ const Navbar = () => {
           <Link href="/" className="flex items-center space-x-2 group">
             <Camera className="w-8 h-8 text-gold group-hover:scale-110 transition-transform" />
             <div>
-              <h1 className="font-serif text-xl font-bold text-gray-900 dark:text-white">Sudarshan Tupare</h1>
-              <p className="text-xs text-gold">Photography</p>
+              <h1 className={`font-serif text-xl font-bold ${!isTransparent ? 'text-gray-900 dark:text-white' : 'text-white'}`}>Sidography</h1>
+              <p className="text-xs text-gold">Photography & Films</p>
             </div>
           </Link>
 
@@ -59,7 +64,7 @@ const Navbar = () => {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-gray-700 dark:text-gray-300 hover:text-gold transition-colors duration-300 text-sm font-medium tracking-wide"
+                className={`transition-colors duration-300 text-sm font-medium tracking-wide ${!isTransparent ? 'text-gray-700 dark:text-gray-300 hover:text-gold' : 'text-gray-200 hover:text-white'}`}
               >
                 {item.name}
               </Link>

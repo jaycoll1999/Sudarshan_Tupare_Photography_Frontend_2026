@@ -35,7 +35,7 @@ function getVideosFromFolder(folderName: string): string[] {
 }
 
 export const metadata = {
-  title: 'Portfolio | Sudarshan Tupare Photography',
+  title: 'Portfolio | Sidography Photography & Films',
   description: 'Explore our professional photography portfolio across various styles and occasions.',
 }
 

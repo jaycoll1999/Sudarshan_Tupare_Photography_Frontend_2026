@@ -1,4 +1,4 @@
-# Sudarshan Tupare Photography Website
+# Sidography Photography & Films Website
 
 A premium, modern photography business website built with Next.js, Tailwind CSS, and Framer Motion.
 
@@ -308,4 +308,4 @@ This website is built with scalability in mind. Regular updates recommended for:
 
 ---
 
-**Built with ❤️ for Sudarshan Tupare Photography**
+**Built with ❤️ for Sidography Photography & Films**

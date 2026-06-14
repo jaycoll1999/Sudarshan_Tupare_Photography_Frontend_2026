@@ -17,9 +17,9 @@ const About = () => {
 
   const teamMembers = [
     {
-      name: 'Sudarshan Tupare',
+      name: 'Sidography',
       role: 'Founder & Lead Photographer',
-      bio: 'With over 8 years of experience in photography, Sudarshan specializes in wedding and portrait photography. His artistic vision and technical excellence have earned him numerous awards and recognition in the industry.',
+      bio: 'With over 4 years of experience in photography, Sudarshan specializes in wedding and portrait photography. His artistic vision and technical excellence have earned him numerous awards and recognition in the industry.',
       image: '/images/sudarshan_hero.jpeg',
       specialties: ['Wedding Photography', 'Portrait Photography', 'Event Coverage']
     }
@@ -60,8 +60,9 @@ const About = () => {
             className="object-cover object-[50%_15%]"
             unoptimized
           />
-          <div className="absolute inset-0 bg-white dark:bg-black/50" />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-charcoal/50 to-charcoal" />
+          <div className="absolute inset-0 bg-black/30" />
+          <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/70 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-gray-50 to-transparent dark:from-charcoal" />
         </div>
         
         <motion.div
@@ -70,10 +71,10 @@ const About = () => {
           transition={{ duration: 1 }}
           className="relative z-10 text-center px-4 max-w-4xl mx-auto"
         >
-          <h1 className="font-serif text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 text-shadow-lg">
-            About <span className="text-gradient">Sudarshan Tupare</span>
+          <h1 className="font-serif text-5xl md:text-6xl font-bold text-white mb-6 text-shadow-lg">
+            About <span className="text-gradient">Sidography</span>
           </h1>
-          <p className="text-xl text-gray-800 dark:text-gray-200 text-shadow">
+          <p className="text-xl text-gray-200 text-shadow">
             Crafting timeless visual stories through the art of photography
           </p>
         </motion.div>
@@ -93,10 +94,10 @@ const About = () => {
               </h2>
               <div className="space-y-4 text-gray-700 dark:text-gray-300">
                 <p>
-                  Founded in 2016, Sudarshan Tupare Photography began as a passion project driven by a love for capturing life's most precious moments. What started as a hobby quickly evolved into a professional photography studio dedicated to excellence.
+                  Founded in 2020, Sidography Photography & Films began as a passion project driven by a love for capturing life's most precious moments. What started as a hobby quickly evolved into a professional photography studio dedicated to excellence.
                 </p>
                 <p>
-                  Based in Mumbai, we specialize in wedding photography, portrait sessions, and event coverage. Our approach combines artistic vision with technical expertise to create images that not only document moments but evoke emotions.
+                  Based in Pune, we specialize in wedding photography, portrait sessions, and event coverage. Our approach combines artistic vision with technical expertise to create images that not only document moments but evoke emotions.
                 </p>
                 <p>
                   Over the years, we've had the privilege of working with hundreds of clients, each with their unique story to tell. From intimate weddings to grand celebrations, from professional headshots to creative portraits, we bring the same level of dedication and creativity to every project.
@@ -344,7 +345,7 @@ const About = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { 
-                name: 'Canon EOS R5', 
+                name: 'Sony Alpha 1', 
                 type: 'Primary Camera',
                 image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=800'
               },

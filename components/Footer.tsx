@@ -35,8 +35,8 @@ const Footer = () => {
             <div className="flex items-center space-x-3 mb-4">
               <Camera className="w-10 h-10 text-gold" />
               <div>
-                <h3 className="font-serif text-2xl font-bold text-gray-900 dark:text-white">Sudarshan Tupare</h3>
-                <p className="text-gold text-sm">Photography</p>
+                <h3 className="font-serif text-2xl font-bold text-gray-900 dark:text-white">Sidography</h3>
+                <p className="text-gold text-sm">Photography & Films</p>
               </div>
             </div>
             <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-md">
@@ -111,7 +111,7 @@ const Footer = () => {
         >
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 md:mb-0">
-              © {currentYear} Sudarshan Tupare Photography. All rights reserved.
+              © {currentYear} Sidography Photography & Films. All rights reserved.
             </p>
             <div className="flex space-x-6">
               <Link href="/privacy" className="text-gray-600 dark:text-gray-400 hover:text-gold text-sm transition-colors">

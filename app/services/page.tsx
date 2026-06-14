@@ -297,18 +297,27 @@ const Services = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {[
-              { step: '01', title: 'Consultation', description: 'We discuss your vision, preferences, and requirements to create the perfect photography plan.' },
-              { step: '02', title: 'Booking', description: 'Finalize the package, sign the agreement, and pay the advance to secure your date.' },
-              { step: '03', title: 'Photoshoot', description: 'Our professional team captures your moments with creativity and technical excellence.' },
-              { step: '04', title: 'Delivery', description: 'Receive your beautifully edited photos within the agreed timeline via online gallery.' }
+              { step: '01', title: 'Consultation', description: 'We discuss your vision, preferences, and requirements to create the perfect photography plan.', image: '/images/process/consultation.png' },
+              { step: '02', title: 'Booking', description: 'Finalize the package, sign the agreement, and pay the advance to secure your date.', image: '/images/process/booking.png' },
+              { step: '03', title: 'Photoshoot', description: 'Our professional team captures your moments with creativity and technical excellence.', image: '/images/process/photoshoot.png' },
+              { step: '04', title: 'Delivery', description: 'Receive your beautifully edited photos within the agreed timeline via online gallery.', image: '/images/process/delivery.png' }
             ].map((item, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="text-center"
+                className="text-center group"
               >
+                <div className="relative h-48 w-full rounded-lg overflow-hidden mb-6">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    unoptimized
+                  />
+                </div>
                 <div className="text-4xl font-bold text-gold mb-4">{item.step}</div>
                 <h3 className="font-serif text-xl font-semibold text-gray-900 dark:text-white mb-3">{item.title}</h3>
                 <p className="text-gray-600 dark:text-gray-400 text-sm">{item.description}</p>

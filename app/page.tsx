@@ -89,7 +89,7 @@ const Home = () => {
 
       {/* Hero Section */}
       <section className="relative h-screen flex items-end justify-center overflow-hidden pb-32">
-        <div className="absolute inset-0 z-0 bg-white dark:bg-black">
+        <div className="absolute inset-0 z-0 bg-black">
           <AnimatePresence mode="popLayout">
             <motion.div
               key={currentMediaIndex}
@@ -102,7 +102,7 @@ const Home = () => {
               {heroMedia[currentMediaIndex].type === 'image' ? (
                 <Image
                   src={heroMedia[currentMediaIndex].src as string}
-                  alt="Sudarshan Tupare Photography"
+                  alt="Sidography Photography & Films"
                   fill
                   className="object-cover object-[50%_15%]"
                   priority
@@ -152,17 +152,17 @@ const Home = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="font-serif text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-6 text-shadow-lg"
+            className="font-serif text-5xl md:text-7xl font-bold text-white mb-6 text-shadow-lg"
           >
-            Sudarshan Tupare
-            <span className="block text-gold text-3xl md:text-4xl mt-2">Photography</span>
+            Sidography
+            <span className="block text-gold text-3xl md:text-4xl mt-2">Photography & Films</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.4 }}
-            className="text-xl md:text-2xl text-gray-800 dark:text-gray-200 mb-8 text-shadow"
+            className="text-xl md:text-2xl text-gray-200 mb-8 text-shadow"
           >
             Capturing Timeless Moments
           </motion.p>

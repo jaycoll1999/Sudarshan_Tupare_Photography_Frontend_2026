@@ -240,7 +240,7 @@ const Admin = () => {
                 <Lock className="w-8 h-8 text-charcoal" />
               </div>
               <h1 className="font-serif text-3xl font-bold text-gray-900 dark:text-white mb-2">Admin Login</h1>
-              <p className="text-gray-600 dark:text-gray-400">Sudarshan Tupare Photography</p>
+              <p className="text-gray-600 dark:text-gray-400">Sidography Photography & Films</p>
             </div>
 
             <form onSubmit={handleLogin} className="space-y-6">
@@ -312,7 +312,7 @@ const Admin = () => {
               <Camera className="w-8 h-8 text-gold" />
               <div>
                 <h1 className="font-serif text-xl font-bold text-gray-900 dark:text-white">Admin Panel</h1>
-                <p className="text-gold text-sm">Sudarshan Tupare Photography</p>
+                <p className="text-gold text-sm">Sidography Photography & Films</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
