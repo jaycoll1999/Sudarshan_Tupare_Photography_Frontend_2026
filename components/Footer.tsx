@@ -22,7 +22,7 @@ const Footer = () => {
   ]
 
   return (
-    <footer className="bg-black border-t border-gold/20">
+    <footer className="bg-white dark:bg-black border-t border-gold/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
@@ -35,11 +35,11 @@ const Footer = () => {
             <div className="flex items-center space-x-3 mb-4">
               <Camera className="w-10 h-10 text-gold" />
               <div>
-                <h3 className="font-serif text-2xl font-bold text-white">Sudarshan Tupare</h3>
+                <h3 className="font-serif text-2xl font-bold text-gray-900 dark:text-white">Sudarshan Tupare</h3>
                 <p className="text-gold text-sm">Photography</p>
               </div>
             </div>
-            <p className="text-gray-400 mb-6 max-w-md">
+            <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-md">
               Capturing timeless moments with artistic vision and technical excellence. 
               Specializing in weddings, portraits, and events that tell your unique story.
             </p>
@@ -48,7 +48,7 @@ const Footer = () => {
                 <a
                   key={social.label}
                   href={social.href}
-                  className="text-gray-400 hover:text-gold transition-colors duration-300"
+                  className="text-gray-600 dark:text-gray-400 hover:text-gold transition-colors duration-300"
                   aria-label={social.label}
                 >
                   <social.icon className="w-5 h-5" />
@@ -63,13 +63,13 @@ const Footer = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <h4 className="font-serif text-lg font-semibold text-white mb-4">Quick Links</h4>
+            <h4 className="font-serif text-lg font-semibold text-gray-900 dark:text-white mb-4">Quick Links</h4>
             <ul className="space-y-2">
               {footerLinks.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-gray-400 hover:text-gold transition-colors duration-300 text-sm"
+                    className="text-gray-600 dark:text-gray-400 hover:text-gold transition-colors duration-300 text-sm"
                   >
                     {link.name}
                   </Link>
@@ -84,19 +84,19 @@ const Footer = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <h4 className="font-serif text-lg font-semibold text-white mb-4">Get in Touch</h4>
+            <h4 className="font-serif text-lg font-semibold text-gray-900 dark:text-white mb-4">Get in Touch</h4>
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <Phone className="w-4 h-4 text-gold" />
-                <span className="text-gray-400 text-sm">+91 96375 77691</span>
+                <span className="text-gray-600 dark:text-gray-400 text-sm">+91 96375 77691</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="w-4 h-4 text-gold" />
-                <span className="text-gray-400 text-sm">stphotography2130@gmail.com</span>
+                <span className="text-gray-600 dark:text-gray-400 text-sm">stphotography2130@gmail.com</span>
               </div>
               <div className="flex items-center space-x-3">
                 <MapPin className="w-4 h-4 text-gold" />
-                <span className="text-gray-400 text-sm">Pune, India</span>
+                <span className="text-gray-600 dark:text-gray-400 text-sm">Pune, India</span>
               </div>
             </div>
           </motion.div>
@@ -107,17 +107,17 @@ const Footer = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="border-t border-gray-800 mt-12 pt-8"
+          className="border-t border-gray-200 dark:border-gray-800 mt-12 pt-8"
         >
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm mb-4 md:mb-0">
+            <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 md:mb-0">
               © {currentYear} Sudarshan Tupare Photography. All rights reserved.
             </p>
             <div className="flex space-x-6">
-              <Link href="/privacy" className="text-gray-400 hover:text-gold text-sm transition-colors">
+              <Link href="/privacy" className="text-gray-600 dark:text-gray-400 hover:text-gold text-sm transition-colors">
                 Privacy Policy
               </Link>
-              <Link href="/terms" className="text-gray-400 hover:text-gold text-sm transition-colors">
+              <Link href="/terms" className="text-gray-600 dark:text-gray-400 hover:text-gold text-sm transition-colors">
                 Terms of Service
               </Link>
             </div>

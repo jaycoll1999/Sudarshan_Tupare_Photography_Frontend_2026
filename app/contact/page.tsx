@@ -105,7 +105,7 @@ const Contact = () => {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-charcoal">
+      <div className="min-h-screen bg-gray-50 dark:bg-charcoal">
         <Navbar />
         <section className="pt-32 pb-20 px-4 min-h-screen flex items-center justify-center">
           <motion.div
@@ -114,7 +114,7 @@ const Contact = () => {
             transition={{ duration: 0.5 }}
             className="max-w-2xl mx-auto text-center"
           >
-            <div className="glass-effect p-12 rounded-2xl">
+            <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-12 rounded-2xl">
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
@@ -124,10 +124,10 @@ const Contact = () => {
                 <Send className="w-10 h-10 text-charcoal" />
               </motion.div>
               
-              <h2 className="font-serif text-4xl font-bold text-white mb-4">
+              <h2 className="font-serif text-4xl font-bold text-gray-900 dark:text-white mb-4">
                 Message <span className="text-gradient">Sent!</span>
               </h2>
-              <p className="text-gray-300 text-lg mb-8">
+              <p className="text-gray-700 dark:text-gray-300 text-lg mb-8">
                 Thank you for reaching out! We've received your message and will get back to you within 24 hours.
               </p>
               
@@ -156,7 +156,7 @@ const Contact = () => {
   }
 
   return (
-    <div className="min-h-screen bg-charcoal">
+    <div className="min-h-screen bg-gray-50 dark:bg-charcoal">
       <Navbar />
       
       {/* Header */}
@@ -168,10 +168,10 @@ const Contact = () => {
             transition={{ duration: 0.6 }}
             className="text-center"
           >
-            <h1 className="font-serif text-5xl md:text-6xl font-bold text-white mb-6">
+            <h1 className="font-serif text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
               Get in <span className="text-gradient">Touch</span>
             </h1>
-            <p className="text-gray-400 text-lg max-w-3xl mx-auto">
+            <p className="text-gray-600 dark:text-gray-400 text-lg max-w-3xl mx-auto">
               Have questions about our photography services? Want to discuss your upcoming event? 
               We'd love to hear from you. Reach out through any of the channels below.
             </p>
@@ -190,13 +190,13 @@ const Contact = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="glass-effect p-8 rounded-2xl text-center hover:scale-105 transition-transform duration-300 group"
+                className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-8 rounded-2xl text-center hover:scale-105 transition-transform duration-300 group"
               >
                 <div className="w-16 h-16 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-gold/20 transition-colors">
                   <info.icon className="w-8 h-8 text-gold" />
                 </div>
-                <h3 className="text-white font-semibold mb-2">{info.label}</h3>
-                <p className="text-gray-300">{info.value}</p>
+                <h3 className="text-gray-900 dark:text-white font-semibold mb-2">{info.label}</h3>
+                <p className="text-gray-700 dark:text-gray-300">{info.value}</p>
               </motion.a>
             ))}
           </div>
@@ -208,13 +208,13 @@ const Contact = () => {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="font-serif text-3xl font-bold text-white mb-6">
+              <h2 className="font-serif text-3xl font-bold text-gray-900 dark:text-white mb-6">
                 Send us a <span className="text-gradient">Message</span>
               </h2>
               
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label htmlFor="name" className="block text-white font-medium mb-2">
+                  <label htmlFor="name" className="block text-gray-900 dark:text-white font-medium mb-2">
                     Your Name *
                   </label>
                   <input
@@ -224,13 +224,13 @@ const Contact = () => {
                     value={formData.name}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 bg-black/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
+                    className="w-full px-4 py-3 bg-white dark:bg-black/50 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
                     placeholder="Enter your full name"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-white font-medium mb-2">
+                  <label htmlFor="email" className="block text-gray-900 dark:text-white font-medium mb-2">
                     Email Address *
                   </label>
                   <input
@@ -240,13 +240,13 @@ const Contact = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 bg-black/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
+                    className="w-full px-4 py-3 bg-white dark:bg-black/50 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
                     placeholder="Enter your email address"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="subject" className="block text-white font-medium mb-2">
+                  <label htmlFor="subject" className="block text-gray-900 dark:text-white font-medium mb-2">
                     Subject *
                   </label>
                   <input
@@ -256,13 +256,13 @@ const Contact = () => {
                     value={formData.subject}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 bg-black/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
+                    className="w-full px-4 py-3 bg-white dark:bg-black/50 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
                     placeholder="Enter the subject"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-white font-medium mb-2">
+                  <label htmlFor="message" className="block text-gray-900 dark:text-white font-medium mb-2">
                     Message *
                   </label>
                   <textarea
@@ -272,7 +272,7 @@ const Contact = () => {
                     onChange={handleInputChange}
                     required
                     rows={5}
-                    className="w-full px-4 py-3 bg-black/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors resize-none"
+                    className="w-full px-4 py-3 bg-white dark:bg-black/50 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors resize-none"
                     placeholder="Tell us about your photography needs..."
                   />
                 </div>
@@ -306,20 +306,20 @@ const Contact = () => {
             >
               {/* Business Hours */}
               <div>
-                <h2 className="font-serif text-3xl font-bold text-white mb-6">
+                <h2 className="font-serif text-3xl font-bold text-gray-900 dark:text-white mb-6">
                   Business <span className="text-gradient">Hours</span>
                 </h2>
-                <div className="glass-effect p-6 rounded-2xl">
+                <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-6 rounded-2xl">
                   <div className="space-y-3">
                     {businessHours.map((schedule, index) => (
                       <div key={index} className="flex justify-between items-center">
-                        <span className="text-gray-300">{schedule.day}</span>
+                        <span className="text-gray-700 dark:text-gray-300">{schedule.day}</span>
                         <span className="text-gold font-medium">{schedule.hours}</span>
                       </div>
                     ))}
                   </div>
-                  <div className="mt-4 pt-4 border-t border-gray-700">
-                    <p className="text-gray-400 text-sm">
+                  <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <p className="text-gray-600 dark:text-gray-400 text-sm">
                       <Clock className="w-4 h-4 inline mr-2" />
                       Response time: Within 24 hours
                     </p>
@@ -329,11 +329,11 @@ const Contact = () => {
 
               {/* Social Media */}
               <div>
-                <h2 className="font-serif text-3xl font-bold text-white mb-6">
+                <h2 className="font-serif text-3xl font-bold text-gray-900 dark:text-white mb-6">
                   Follow <span className="text-gradient">Us</span>
                 </h2>
-                <div className="glass-effect p-6 rounded-2xl">
-                  <p className="text-gray-300 mb-4">
+                <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-6 rounded-2xl">
+                  <p className="text-gray-700 dark:text-gray-300 mb-4">
                     Stay updated with our latest work and behind-the-scenes content
                   </p>
                   <div className="flex gap-4">
@@ -355,28 +355,28 @@ const Contact = () => {
 
               {/* Quick Actions */}
               <div>
-                <h2 className="font-serif text-3xl font-bold text-white mb-6">
+                <h2 className="font-serif text-3xl font-bold text-gray-900 dark:text-white mb-6">
                   Quick <span className="text-gradient">Actions</span>
                 </h2>
                 <div className="space-y-4">
                   <a
                     href="/booking"
-                    className="glass-effect p-4 rounded-lg flex items-center justify-between hover:scale-105 transition-transform duration-300"
+                    className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-4 rounded-lg flex items-center justify-between hover:scale-105 transition-transform duration-300"
                   >
                     <div className="flex items-center gap-3">
                       <Camera className="w-6 h-6 text-gold" />
-                      <span className="text-white">Book a Photoshoot</span>
+                      <span className="text-gray-900 dark:text-white">Book a Photoshoot</span>
                     </div>
                     <span className="text-gold">→</span>
                   </a>
                   
                   <a
                     href="/portfolio"
-                    className="glass-effect p-4 rounded-lg flex items-center justify-between hover:scale-105 transition-transform duration-300"
+                    className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-4 rounded-lg flex items-center justify-between hover:scale-105 transition-transform duration-300"
                   >
                     <div className="flex items-center gap-3">
                       <Camera className="w-6 h-6 text-gold" />
-                      <span className="text-white">View Portfolio</span>
+                      <span className="text-gray-900 dark:text-white">View Portfolio</span>
                     </div>
                     <span className="text-gold">→</span>
                   </a>

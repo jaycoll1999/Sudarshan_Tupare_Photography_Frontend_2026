@@ -77,16 +77,16 @@ export default async function PortfolioPage() {
   const allMedia = [...allImages, ...allVideos, ...backendMedia]
 
   return (
-    <main className="min-h-screen bg-charcoal">
+    <main className="min-h-screen bg-gray-50 dark:bg-charcoal">
       <Navbar />
       
       {/* Section Header */}
       <section className="pt-32 pb-12 px-4">
         <div className="max-w-7xl mx-auto text-center">
-          <h1 className="font-serif text-5xl md:text-6xl font-bold text-white mb-6">
+          <h1 className="font-serif text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
             Our <span className="text-gradient">Portfolio</span>
           </h1>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
             Explore our work across different photography styles. Each click captures a story, a moment, and an emotion frozen in time.
           </p>
         </div>

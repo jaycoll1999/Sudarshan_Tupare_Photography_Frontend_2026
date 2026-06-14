@@ -44,15 +44,19 @@ export const metadata: Metadata = {
   },
 }
 
+import { ThemeProvider } from './providers'
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
-      <body className="font-sans bg-charcoal text-white antialiased">
-        {children}
+    <html lang="en" className={`${inter.variable} ${playfair.variable}`} suppressHydrationWarning>
+      <body className="font-sans bg-gray-50 text-gray-900 dark:bg-charcoal dark:text-white antialiased transition-colors duration-300">
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )

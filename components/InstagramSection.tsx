@@ -28,7 +28,7 @@ const instagramItems: InstagramItem[] = [
 
 export default function InstagramSection() {
   return (
-    <section className="relative py-24 px-4 overflow-hidden bg-black/50">
+    <section className="relative py-24 px-4 overflow-hidden bg-white dark:bg-black/50">
       {/* Ambient Glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-purple-600/10 via-pink-600/10 to-orange-600/10 rounded-full blur-[100px] pointer-events-none" />
 
@@ -42,7 +42,7 @@ export default function InstagramSection() {
             transition={{ duration: 0.5 }}
             className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 rounded-2xl mb-6 shadow-lg shadow-pink-500/20"
           >
-            <Instagram size={32} className="text-white" />
+            <Instagram size={32} className="text-gray-900 dark:text-white" />
           </motion.div>
 
           <motion.h2
@@ -50,7 +50,7 @@ export default function InstagramSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="font-serif text-4xl md:text-5xl font-bold text-white mb-4"
+            className="font-serif text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4"
           >
             Follow Us on <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-orange-500">Instagram</span>
           </motion.h2>
@@ -60,7 +60,7 @@ export default function InstagramSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-gray-400 text-lg max-w-2xl mx-auto mb-8 leading-relaxed"
+            className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto mb-8 leading-relaxed"
           >
             Stay updated with our latest work, behind-the-scenes moments, and photography tips.
           </motion.p>
@@ -75,7 +75,7 @@ export default function InstagramSection() {
               href="https://www.instagram.com/sidography.co.in?igsh=MTh2OWViYnl5YTk2Yg=="
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-white text-black font-semibold px-8 py-3.5 rounded-full hover:scale-105 hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-pink-500 hover:to-purple-600 hover:text-white transition-all duration-300 shadow-lg shadow-white/5"
+              className="inline-flex items-center gap-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-semibold px-8 py-3.5 rounded-full hover:scale-105 hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-pink-500 hover:to-purple-600 hover:text-white dark:hover:text-white transition-all duration-300 shadow-lg shadow-black/5 dark:shadow-white/5"
             >
               <Instagram size={20} />
               <span>Follow @sidography.co.in</span>
@@ -92,7 +92,7 @@ export default function InstagramSection() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.05 }}
-              className="relative aspect-square rounded-2xl overflow-hidden group cursor-pointer shadow-lg bg-gray-900"
+              className="relative aspect-square rounded-2xl overflow-hidden group cursor-pointer shadow-lg bg-gray-200 dark:bg-gray-900"
             >
               {item.type === 'video' ? (
                 <>
@@ -104,8 +104,8 @@ export default function InstagramSection() {
                     loop
                     playsInline
                   />
-                  <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-black/50 flex items-center justify-center backdrop-blur-sm">
-                    <Play size={12} className="text-white fill-white" />
+                  <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-white dark:bg-black/50 flex items-center justify-center backdrop-blur-sm">
+                    <Play size={12} className="text-gray-900 dark:text-white fill-white" />
                   </div>
                 </>
               ) : (
@@ -122,8 +122,8 @@ export default function InstagramSection() {
               {/* Hover Overlay */}
               <div className="absolute inset-0 bg-gradient-to-tr from-purple-600/40 via-pink-600/40 to-orange-600/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[1px]">
                 <div className="text-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                  <Instagram size={32} className="text-white mx-auto mb-2 drop-shadow-lg" />
-                  <p className="text-white text-xs font-semibold uppercase tracking-wider drop-shadow-lg">{item.category}</p>
+                  <Instagram size={32} className="text-gray-900 dark:text-white mx-auto mb-2 drop-shadow-lg" />
+                  <p className="text-gray-900 dark:text-white text-xs font-semibold uppercase tracking-wider drop-shadow-lg">{item.category}</p>
                 </div>
               </div>
             </motion.div>

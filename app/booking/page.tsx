@@ -113,7 +113,7 @@ const Booking = () => {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-charcoal">
+      <div className="min-h-screen bg-gray-50 dark:bg-charcoal">
         <Navbar />
         <section className="pt-32 pb-20 px-4 min-h-screen flex items-center justify-center">
           <motion.div
@@ -122,7 +122,7 @@ const Booking = () => {
             transition={{ duration: 0.5 }}
             className="max-w-2xl mx-auto text-center"
           >
-            <div className="glass-effect p-12 rounded-2xl">
+            <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-12 rounded-2xl">
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
@@ -132,10 +132,10 @@ const Booking = () => {
                 <CheckCircle className="w-10 h-10 text-charcoal" />
               </motion.div>
               
-              <h2 className="font-serif text-4xl font-bold text-white mb-4">
+              <h2 className="font-serif text-4xl font-bold text-gray-900 dark:text-white mb-4">
                 Booking <span className="text-gradient">Confirmed!</span>
               </h2>
-              <p className="text-gray-300 text-lg mb-8">
+              <p className="text-gray-700 dark:text-gray-300 text-lg mb-8">
                 Thank you for choosing Sudarshan Tupare Photography! We've received your booking request and will contact you within 24 hours to confirm the details.
               </p>
               
@@ -165,7 +165,7 @@ const Booking = () => {
   }
 
   return (
-    <div className="min-h-screen bg-charcoal">
+    <div className="min-h-screen bg-gray-50 dark:bg-charcoal">
       <Navbar />
       
       {/* Header */}
@@ -177,10 +177,10 @@ const Booking = () => {
             transition={{ duration: 0.6 }}
             className="text-center"
           >
-            <h1 className="font-serif text-5xl md:text-6xl font-bold text-white mb-6">
+            <h1 className="font-serif text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
               Book Your <span className="text-gradient">Photoshoot</span>
             </h1>
-            <p className="text-gray-400 text-lg max-w-3xl mx-auto">
+            <p className="text-gray-600 dark:text-gray-400 text-lg max-w-3xl mx-auto">
               Ready to capture your special moments? Fill out the form below and we'll get back to you within 24 hours to discuss your photography needs.
             </p>
           </motion.div>
@@ -194,13 +194,13 @@ const Booking = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="glass-effect p-8 rounded-2xl"
+            className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-8 rounded-2xl"
           >
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Personal Information */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="name" className="block text-white font-medium mb-2">
+                  <label htmlFor="name" className="block text-gray-900 dark:text-white font-medium mb-2">
                     Full Name *
                   </label>
                   <input
@@ -210,13 +210,13 @@ const Booking = () => {
                     value={formData.name}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 bg-black/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
+                    className="w-full px-4 py-3 bg-white dark:bg-black/50 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
                     placeholder="Enter your full name"
                   />
                 </div>
                 
                 <div>
-                  <label htmlFor="email" className="block text-white font-medium mb-2">
+                  <label htmlFor="email" className="block text-gray-900 dark:text-white font-medium mb-2">
                     Email Address *
                   </label>
                   <input
@@ -226,7 +226,7 @@ const Booking = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 bg-black/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
+                    className="w-full px-4 py-3 bg-white dark:bg-black/50 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
                     placeholder="Enter your email address"
                   />
                 </div>
@@ -234,7 +234,7 @@ const Booking = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="phone" className="block text-white font-medium mb-2">
+                  <label htmlFor="phone" className="block text-gray-900 dark:text-white font-medium mb-2">
                     Phone Number *
                   </label>
                   <input
@@ -244,13 +244,13 @@ const Booking = () => {
                     value={formData.phone}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 bg-black/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
+                    className="w-full px-4 py-3 bg-white dark:bg-black/50 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
                     placeholder="Enter your phone number"
                   />
                 </div>
                 
                 <div>
-                  <label htmlFor="eventType" className="block text-white font-medium mb-2">
+                  <label htmlFor="eventType" className="block text-gray-900 dark:text-white font-medium mb-2">
                     Event Type *
                   </label>
                   <select
@@ -259,7 +259,7 @@ const Booking = () => {
                     value={formData.eventType}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 bg-black/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-gold transition-colors"
+                    className="w-full px-4 py-3 bg-white dark:bg-black/50 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:border-gold transition-colors"
                   >
                     <option value="">Select Event Type</option>
                     {eventTypes.map(type => (
@@ -271,7 +271,7 @@ const Booking = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="eventDate" className="block text-white font-medium mb-2">
+                  <label htmlFor="eventDate" className="block text-gray-900 dark:text-white font-medium mb-2">
                     Event Date *
                   </label>
                   <input
@@ -282,12 +282,12 @@ const Booking = () => {
                     onChange={handleInputChange}
                     required
                     min={new Date().toISOString().split('T')[0]}
-                    className="w-full px-4 py-3 bg-black/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-gold transition-colors"
+                    className="w-full px-4 py-3 bg-white dark:bg-black/50 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:border-gold transition-colors"
                   />
                 </div>
                 
                 <div>
-                  <label htmlFor="eventLocation" className="block text-white font-medium mb-2">
+                  <label htmlFor="eventLocation" className="block text-gray-900 dark:text-white font-medium mb-2">
                     Event Location *
                   </label>
                   <input
@@ -297,14 +297,14 @@ const Booking = () => {
                     value={formData.eventLocation}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 bg-black/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
+                    className="w-full px-4 py-3 bg-white dark:bg-black/50 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
                     placeholder="Enter event location"
                   />
                 </div>
               </div>
 
               <div>
-                <label htmlFor="package" className="block text-white font-medium mb-2">
+                <label htmlFor="package" className="block text-gray-900 dark:text-white font-medium mb-2">
                   Preferred Package
                 </label>
                 <select
@@ -312,7 +312,7 @@ const Booking = () => {
                   name="package"
                   value={formData.package}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-black/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-gold transition-colors"
+                  className="w-full px-4 py-3 bg-white dark:bg-black/50 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:border-gold transition-colors"
                 >
                   <option value="">Select Package</option>
                   {packages.map(pkg => (
@@ -322,7 +322,7 @@ const Booking = () => {
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-white font-medium mb-2">
+                <label htmlFor="message" className="block text-gray-900 dark:text-white font-medium mb-2">
                   Additional Message
                 </label>
                 <textarea
@@ -331,7 +331,7 @@ const Booking = () => {
                   value={formData.message}
                   onChange={handleInputChange}
                   rows={4}
-                  className="w-full px-4 py-3 bg-black/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors resize-none"
+                  className="w-full px-4 py-3 bg-white dark:bg-black/50 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors resize-none"
                   placeholder="Tell us more about your event, special requirements, or any questions you have..."
                 />
               </div>
@@ -370,7 +370,7 @@ const Booking = () => {
       </section>
 
       {/* Quick Contact */}
-      <section className="py-20 px-4 bg-black/30">
+      <section className="py-20 px-4 bg-gray-100/50 dark:bg-black/30">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -378,41 +378,41 @@ const Booking = () => {
             transition={{ duration: 0.6 }}
             className="text-center"
           >
-            <h2 className="font-serif text-4xl font-bold text-white mb-6">
+            <h2 className="font-serif text-4xl font-bold text-gray-900 dark:text-white mb-6">
               Need Help? <span className="text-gradient">Contact Us Directly</span>
             </h2>
-            <p className="text-gray-400 text-lg mb-8 max-w-2xl mx-auto">
+            <p className="text-gray-600 dark:text-gray-400 text-lg mb-8 max-w-2xl mx-auto">
               Prefer to speak with us directly? We're available via phone, email, or WhatsApp to answer your questions.
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
               <a
                 href="tel:+919637577691"
-                className="glass-effect p-6 rounded-lg hover:scale-105 transition-transform duration-300"
+                className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-6 rounded-lg hover:scale-105 transition-transform duration-300"
               >
                 <Phone className="w-8 h-8 text-gold mx-auto mb-3" />
-                <h3 className="text-white font-semibold mb-2">Phone</h3>
-                <p className="text-gray-400 text-sm">+91 9637577691 </p>
+                <h3 className="text-gray-900 dark:text-white font-semibold mb-2">Phone</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">+91 9637577691 </p>
               </a>
               
               <a
                 href="mailto:stphotography2130@gmail.com"
-                className="glass-effect p-6 rounded-lg hover:scale-105 transition-transform duration-300"
+                className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-6 rounded-lg hover:scale-105 transition-transform duration-300"
               >
                 <Mail className="w-8 h-8 text-gold mx-auto mb-3" />
-                <h3 className="text-white font-semibold mb-2">Email</h3>
-                <p className="text-gray-400 text-sm">stphotography2130@gmail.com</p>
+                <h3 className="text-gray-900 dark:text-white font-semibold mb-2">Email</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">stphotography2130@gmail.com</p>
               </a>
               
               <a
                 href="https://wa.me/919637577691"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="glass-effect p-6 rounded-lg hover:scale-105 transition-transform duration-300"
+                className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-6 rounded-lg hover:scale-105 transition-transform duration-300"
               >
                 <MessageCircle className="w-8 h-8 text-gold mx-auto mb-3" />
-                <h3 className="text-white font-semibold mb-2">WhatsApp</h3>
-                <p className="text-gray-400 text-sm">Chat with us</p>
+                <h3 className="text-gray-900 dark:text-white font-semibold mb-2">WhatsApp</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">Chat with us</p>
               </a>
             </div>
           </motion.div>

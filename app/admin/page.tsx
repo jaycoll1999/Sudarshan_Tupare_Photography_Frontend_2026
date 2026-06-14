@@ -2,18 +2,19 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Camera, Upload, Trash2, Eye, LogOut, Users, Calendar, Image as ImageIcon, Lock, Mail, Check, X, Plus, MessageSquare, UserCircle, Activity, BarChart, Shield, Clock } from 'lucide-react'
+import { Camera, Upload, Moon, Sun, Trash2, Eye, LogOut, Users, Calendar, Image as ImageIcon, Lock, Mail, Check, X, Plus, MessageSquare, UserCircle, Activity, BarChart, Shield, Clock } from 'lucide-react'
 import Image from 'next/image'
 
 const Admin = () => {
   const [token, setToken] = useState('')
+  const [isDarkMode, setIsDarkMode] = useState(false)
   const [loginData, setLoginData] = useState({ email: '', password: '' })
   const [loginError, setLoginError] = useState('')
   const [activeTab, setActiveTab] = useState('profile')
   const [adminProfile, setAdminProfile] = useState<any>(null)
   const [uploadData, setUploadData] = useState({
     title: '',
-    category: 'Babyshoot',
+    category: '',
     description: ''
   })
   const [uploadFile, setUploadFile] = useState<File | null>(null)
@@ -170,7 +171,7 @@ const Admin = () => {
       const newPortfolio = await portfolioRes.json();
       
       setGallery([newPortfolio, ...gallery]);
-      setUploadData({ title: '', category: 'Babyshoot', description: '' });
+      setUploadData({ title: '', category: '', description: '' });
       setUploadFile(null);
       alert('Successfully uploaded!');
     } catch (error) {
@@ -225,35 +226,36 @@ const Admin = () => {
 
   if (!token) {
     return (
-      <div className="min-h-screen bg-charcoal flex items-center justify-center px-4">
+    <div className={isDarkMode ? "dark" : ""}>
+      <div className="min-h-screen bg-gray-50 dark:bg-charcoal flex items-center justify-center px-4">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
           className="w-full max-w-md"
         >
-          <div className="glass-effect p-8 rounded-2xl">
+          <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-8 rounded-2xl">
             <div className="text-center mb-8">
               <div className="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-4">
                 <Lock className="w-8 h-8 text-charcoal" />
               </div>
-              <h1 className="font-serif text-3xl font-bold text-white mb-2">Admin Login</h1>
-              <p className="text-gray-400">Sudarshan Tupare Photography</p>
+              <h1 className="font-serif text-3xl font-bold text-gray-900 dark:text-white mb-2">Admin Login</h1>
+              <p className="text-gray-600 dark:text-gray-400">Sudarshan Tupare Photography</p>
             </div>
 
             <form onSubmit={handleLogin} className="space-y-6">
               <div>
-                <label htmlFor="email" className="block text-white font-medium mb-2">
+                <label htmlFor="email" className="block text-gray-900 dark:text-white font-medium mb-2">
                   Email Address
                 </label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-600 dark:text-gray-400" />
                   <input
                     type="email"
                     id="email"
                     value={loginData.email}
                     onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
-                    className="w-full pl-10 pr-4 py-3 bg-black/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
+                    className="w-full pl-10 pr-4 py-3 bg-white dark:bg-black/50 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
                     placeholder="stphotography2130@gmail.com"
                     required
                   />
@@ -261,17 +263,17 @@ const Admin = () => {
               </div>
 
               <div>
-                <label htmlFor="password" className="block text-white font-medium mb-2">
+                <label htmlFor="password" className="block text-gray-900 dark:text-white font-medium mb-2">
                   Password
                 </label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-600 dark:text-gray-400" />
                   <input
                     type="password"
                     id="password"
                     value={loginData.password}
                     onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
-                    className="w-full pl-10 pr-4 py-3 bg-black/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
+                    className="w-full pl-10 pr-4 py-3 bg-white dark:bg-black/50 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
                     placeholder="Enter your password"
                     required
                   />
@@ -295,29 +297,39 @@ const Admin = () => {
           </div>
         </motion.div>
       </div>
+    </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-charcoal">
+    <div className={isDarkMode ? "dark" : ""}>
+    <div className="min-h-screen bg-gray-50 dark:bg-charcoal">
       {/* Header */}
-      <div className="glass-effect border-b border-gray-700">
+      <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-3">
               <Camera className="w-8 h-8 text-gold" />
               <div>
-                <h1 className="font-serif text-xl font-bold text-white">Admin Panel</h1>
+                <h1 className="font-serif text-xl font-bold text-gray-900 dark:text-white">Admin Panel</h1>
                 <p className="text-gold text-sm">Sudarshan Tupare Photography</p>
               </div>
             </div>
-            <button
-               onClick={handleLogout}
-              className="flex items-center gap-2 px-4 py-2 bg-red-500/10 text-red-400 rounded-lg hover:bg-red-500/20 transition-colors"
-            >
-              <LogOut className="w-4 h-4" />
-              Logout
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                 onClick={() => setIsDarkMode(!isDarkMode)}
+                className="flex items-center justify-center p-2 bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg transition-colors"
+              >
+                {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              </button>
+              <button
+                 onClick={handleLogout}
+                className="flex items-center gap-2 px-4 py-2 bg-red-500/10 text-red-400 rounded-lg hover:bg-red-500/20 transition-colors"
+              >
+                <LogOut className="w-4 h-4" />
+                Logout
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -338,7 +350,7 @@ const Admin = () => {
               className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-colors ${
                 activeTab === tab.id
                   ? 'bg-gold text-charcoal'
-                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                  : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
               }`}
             >
               <tab.icon className="w-5 h-5" />
@@ -359,29 +371,29 @@ const Admin = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               
               {/* Profile Card */}
-              <div className="glass-effect rounded-2xl p-6 lg:col-span-1 border border-gold/10 relative overflow-hidden">
+              <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md rounded-2xl p-6 lg:col-span-1 border border-gold/10 relative overflow-hidden">
                 <div className="absolute top-0 right-0 p-4 opacity-10">
                   <Shield className="w-24 h-24 text-gold" />
                 </div>
-                <h2 className="font-serif text-xl font-bold text-white mb-6 flex items-center gap-2 relative z-10">
+                <h2 className="font-serif text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2 relative z-10">
                   <UserCircle className="w-6 h-6 text-gold" />
                   Admin Profile
                 </h2>
                 {adminProfile ? (
                   <div className="space-y-4 relative z-10">
                     <div>
-                      <p className="text-gray-400 text-sm">Email Address</p>
-                      <p className="text-white font-medium text-lg">{adminProfile.email}</p>
+                      <p className="text-gray-600 dark:text-gray-400 text-sm">Email Address</p>
+                      <p className="text-gray-900 dark:text-white font-medium text-lg">{adminProfile.email}</p>
                     </div>
                     <div>
-                      <p className="text-gray-400 text-sm">Role Status</p>
+                      <p className="text-gray-600 dark:text-gray-400 text-sm">Role Status</p>
                       <span className="inline-flex items-center px-3 py-1 mt-1 rounded-full text-xs font-medium bg-gold/10 text-gold border border-gold/20 uppercase tracking-wider">
                         {adminProfile.role}
                       </span>
                     </div>
                     <div>
-                      <p className="text-gray-400 text-sm">Account Created</p>
-                      <p className="text-gray-300">{new Date(adminProfile.created_at).toLocaleDateString()}</p>
+                      <p className="text-gray-600 dark:text-gray-400 text-sm">Account Created</p>
+                      <p className="text-gray-700 dark:text-gray-300">{new Date(adminProfile.created_at).toLocaleDateString()}</p>
                     </div>
                   </div>
                 ) : (
@@ -394,45 +406,45 @@ const Admin = () => {
 
               {/* Metrics Cards */}
               <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-6">
-                <div className="glass-effect rounded-2xl p-6 border border-white/5 flex flex-col justify-center">
+                <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md rounded-2xl p-6 border border-gray-200 dark:border-white/5 flex flex-col justify-center">
                   <div className="flex items-center justify-between mb-4">
                     <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center">
                       <Calendar className="w-6 h-6 text-blue-400" />
                     </div>
-                    <span className="text-3xl font-bold text-white">{bookings.length}</span>
+                    <span className="text-3xl font-bold text-gray-900 dark:text-white">{bookings.length}</span>
                   </div>
-                  <h3 className="text-gray-400 font-medium">Total Bookings</h3>
+                  <h3 className="text-gray-600 dark:text-gray-400 font-medium">Total Bookings</h3>
                   <p className="text-xs text-green-400 mt-2 flex items-center gap-1"><Activity className="w-3 h-3" /> Active requests</p>
                 </div>
 
-                <div className="glass-effect rounded-2xl p-6 border border-white/5 flex flex-col justify-center">
+                <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md rounded-2xl p-6 border border-gray-200 dark:border-white/5 flex flex-col justify-center">
                   <div className="flex items-center justify-between mb-4">
                     <div className="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center">
                       <MessageSquare className="w-6 h-6 text-purple-400" />
                     </div>
-                    <span className="text-3xl font-bold text-white">{contacts.length}</span>
+                    <span className="text-3xl font-bold text-gray-900 dark:text-white">{contacts.length}</span>
                   </div>
-                  <h3 className="text-gray-400 font-medium">Inquiries</h3>
+                  <h3 className="text-gray-600 dark:text-gray-400 font-medium">Inquiries</h3>
                   <p className="text-xs text-green-400 mt-2 flex items-center gap-1"><Activity className="w-3 h-3" /> Messages received</p>
                 </div>
 
-                <div className="glass-effect rounded-2xl p-6 border border-white/5 flex flex-col justify-center">
+                <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md rounded-2xl p-6 border border-gray-200 dark:border-white/5 flex flex-col justify-center">
                   <div className="flex items-center justify-between mb-4">
                     <div className="w-12 h-12 bg-gold/10 rounded-xl flex items-center justify-center">
                       <ImageIcon className="w-6 h-6 text-gold" />
                     </div>
-                    <span className="text-3xl font-bold text-white">{gallery.length}</span>
+                    <span className="text-3xl font-bold text-gray-900 dark:text-white">{gallery.length}</span>
                   </div>
-                  <h3 className="text-gray-400 font-medium">Gallery Photos</h3>
+                  <h3 className="text-gray-600 dark:text-gray-400 font-medium">Gallery Photos</h3>
                   <p className="text-xs text-gold mt-2 flex items-center gap-1"><Activity className="w-3 h-3" /> Portfolio size</p>
                 </div>
               </div>
             </div>
 
             {/* Activity Feed */}
-            <div className="glass-effect rounded-2xl p-6 border border-white/5">
+            <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md rounded-2xl p-6 border border-gray-200 dark:border-white/5">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="font-serif text-xl font-bold text-white flex items-center gap-2">
+                <h2 className="font-serif text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
                   <Activity className="w-6 h-6 text-gold" />
                   Recent System Activity
                 </h2>
@@ -447,23 +459,23 @@ const Admin = () => {
                 .sort((a, b) => b.date.getTime() - a.date.getTime())
                 .slice(0, 5)
                 .map((activity, idx) => (
-                  <div key={idx} className="flex items-start gap-4 p-4 rounded-xl bg-black/20 hover:bg-black/40 transition-colors border border-white/5">
+                  <div key={idx} className="flex items-start gap-4 p-4 rounded-xl bg-gray-50 dark:bg-black/20 hover:bg-gray-100 dark:hover:bg-white dark:bg-black/40 transition-colors border border-gray-200 dark:border-white/5">
                     <div className={`p-3 rounded-lg shrink-0 ${activity.type === 'booking' ? 'bg-blue-500/10 text-blue-400' : 'bg-purple-500/10 text-purple-400'}`}>
                       {activity.type === 'booking' ? <Calendar className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
                     </div>
                     <div className="flex-grow">
                       <div className="flex justify-between items-start mb-1">
-                        <h4 className="text-white font-medium">
+                        <h4 className="text-gray-900 dark:text-white font-medium">
                           {activity.type === 'booking' 
                             ? `New Booking Request from ${activity.data.name}`
                             : `New Inquiry from ${activity.data.name}`}
                         </h4>
-                        <span className="text-xs text-gray-500 flex items-center gap-1 shrink-0 ml-4">
+                        <span className="text-xs text-gray-500 dark:text-gray-500 flex items-center gap-1 shrink-0 ml-4">
                           <Clock className="w-3 h-3" />
                           {activity.date.toLocaleDateString()}
                         </span>
                       </div>
-                      <p className="text-sm text-gray-400 line-clamp-1">
+                      <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-1">
                         {activity.type === 'booking' 
                           ? `${activity.data.event_type} on ${activity.data.event_date}`
                           : activity.data.message}
@@ -473,7 +485,7 @@ const Admin = () => {
                 ))}
                 
                 {bookings.length === 0 && contacts.length === 0 && (
-                  <div className="text-center py-8 text-gray-500 border border-dashed border-gray-700 rounded-xl">
+                  <div className="text-center py-8 text-gray-500 dark:text-gray-500 border border-dashed border-gray-200 dark:border-gray-700 rounded-xl">
                     No recent activity found.
                   </div>
                 )}
@@ -489,8 +501,8 @@ const Admin = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="glass-effect rounded-2xl p-6">
-              <h2 className="font-serif text-2xl font-bold text-white mb-6 flex items-center gap-3">
+            <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md rounded-2xl p-6">
+              <h2 className="font-serif text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
                 <Calendar className="w-6 h-6 text-gold" />
                 Booking Requests
               </h2>
@@ -498,28 +510,28 @@ const Admin = () => {
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
-                    <tr className="border-b border-gray-700">
-                      <th className="text-left py-3 px-4 text-gray-300 font-medium">Name</th>
-                      <th className="text-left py-3 px-4 text-gray-300 font-medium">Contact</th>
-                      <th className="text-left py-3 px-4 text-gray-300 font-medium">Event Type & Date</th>
-                      <th className="text-left py-3 px-4 text-gray-300 font-medium">Details</th>
-                      <th className="text-left py-3 px-4 text-gray-300 font-medium">Status</th>
-                      <th className="text-left py-3 px-4 text-gray-300 font-medium">Actions</th>
+                    <tr className="border-b border-gray-200 dark:border-gray-700">
+                      <th className="text-left py-3 px-4 text-gray-700 dark:text-gray-300 font-medium">Name</th>
+                      <th className="text-left py-3 px-4 text-gray-700 dark:text-gray-300 font-medium">Contact</th>
+                      <th className="text-left py-3 px-4 text-gray-700 dark:text-gray-300 font-medium">Event Type & Date</th>
+                      <th className="text-left py-3 px-4 text-gray-700 dark:text-gray-300 font-medium">Details</th>
+                      <th className="text-left py-3 px-4 text-gray-700 dark:text-gray-300 font-medium">Status</th>
+                      <th className="text-left py-3 px-4 text-gray-700 dark:text-gray-300 font-medium">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     {bookings.map((booking) => (
-                      <tr key={booking.id} className="border-b border-gray-800">
-                        <td className="py-3 px-4 text-white">{booking.name}</td>
-                        <td className="py-3 px-4 text-gray-300">
+                      <tr key={booking.id} className="border-b border-gray-200 dark:border-gray-800">
+                        <td className="py-3 px-4 text-gray-900 dark:text-white">{booking.name}</td>
+                        <td className="py-3 px-4 text-gray-700 dark:text-gray-300">
                           <div className="text-sm">{booking.email}</div>
                           <div className="text-sm">{booking.phone}</div>
                         </td>
-                        <td className="py-3 px-4 text-gray-300">
+                        <td className="py-3 px-4 text-gray-700 dark:text-gray-300">
                           <div className="font-medium">{booking.event_type}</div>
                           <div className="text-sm">{booking.event_date}</div>
                         </td>
-                        <td className="py-3 px-4 text-gray-300 max-w-xs whitespace-pre-wrap text-sm">
+                        <td className="py-3 px-4 text-gray-700 dark:text-gray-300 max-w-xs whitespace-pre-wrap text-sm">
                           {booking.message}
                         </td>
                         <td className="py-3 px-4">
@@ -555,7 +567,7 @@ const Admin = () => {
                     ))}
                     {bookings.length === 0 && (
                       <tr>
-                        <td colSpan={6} className="text-center py-6 text-gray-500">No bookings found</td>
+                        <td colSpan={6} className="text-center py-6 text-gray-500 dark:text-gray-500">No bookings found</td>
                       </tr>
                     )}
                   </tbody>
@@ -572,8 +584,8 @@ const Admin = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="glass-effect rounded-2xl p-6">
-              <h2 className="font-serif text-2xl font-bold text-white mb-6 flex items-center gap-3">
+            <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md rounded-2xl p-6">
+              <h2 className="font-serif text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
                 <MessageSquare className="w-6 h-6 text-gold" />
                 Contact Inquiries
               </h2>
@@ -581,29 +593,29 @@ const Admin = () => {
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
-                    <tr className="border-b border-gray-700">
-                      <th className="text-left py-3 px-4 text-gray-300 font-medium">Name</th>
-                      <th className="text-left py-3 px-4 text-gray-300 font-medium">Email</th>
-                      <th className="text-left py-3 px-4 text-gray-300 font-medium w-1/2">Message Details</th>
-                      <th className="text-left py-3 px-4 text-gray-300 font-medium">Date Received</th>
+                    <tr className="border-b border-gray-200 dark:border-gray-700">
+                      <th className="text-left py-3 px-4 text-gray-700 dark:text-gray-300 font-medium">Name</th>
+                      <th className="text-left py-3 px-4 text-gray-700 dark:text-gray-300 font-medium">Email</th>
+                      <th className="text-left py-3 px-4 text-gray-700 dark:text-gray-300 font-medium w-1/2">Message Details</th>
+                      <th className="text-left py-3 px-4 text-gray-700 dark:text-gray-300 font-medium">Date Received</th>
                     </tr>
                   </thead>
                   <tbody>
                     {contacts.map((contact) => (
-                      <tr key={contact.id} className="border-b border-gray-800">
-                        <td className="py-3 px-4 text-white font-medium">{contact.name}</td>
-                        <td className="py-3 px-4 text-gray-300">{contact.email}</td>
-                        <td className="py-3 px-4 text-gray-300 max-w-md whitespace-pre-wrap text-sm">
+                      <tr key={contact.id} className="border-b border-gray-200 dark:border-gray-800">
+                        <td className="py-3 px-4 text-gray-900 dark:text-white font-medium">{contact.name}</td>
+                        <td className="py-3 px-4 text-gray-700 dark:text-gray-300">{contact.email}</td>
+                        <td className="py-3 px-4 text-gray-700 dark:text-gray-300 max-w-md whitespace-pre-wrap text-sm">
                           {contact.message}
                         </td>
-                        <td className="py-3 px-4 text-gray-400 text-sm">
+                        <td className="py-3 px-4 text-gray-600 dark:text-gray-400 text-sm">
                           {new Date(contact.created_at).toLocaleString()}
                         </td>
                       </tr>
                     ))}
                     {contacts.length === 0 && (
                       <tr>
-                        <td colSpan={4} className="text-center py-6 text-gray-500">No messages found</td>
+                        <td colSpan={4} className="text-center py-6 text-gray-500 dark:text-gray-500">No messages found</td>
                       </tr>
                     )}
                   </tbody>
@@ -620,8 +632,8 @@ const Admin = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="glass-effect rounded-2xl p-6">
-              <h2 className="font-serif text-2xl font-bold text-white mb-6 flex items-center gap-3">
+            <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md rounded-2xl p-6">
+              <h2 className="font-serif text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
                 <ImageIcon className="w-6 h-6 text-gold" />
                 Gallery Management
               </h2>
@@ -636,7 +648,7 @@ const Admin = () => {
                       className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                         selectedGalleryCategory === category
                           ? 'bg-gold text-charcoal scale-105'
-                          : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                          : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                       }`}
                     >
                       {category}
@@ -649,7 +661,7 @@ const Admin = () => {
                   {gallery
                     .filter(item => selectedGalleryCategory === 'All' || item.category === selectedGalleryCategory)
                     .map((item) => (
-                    <div key={item.id} className="glass-effect rounded-lg overflow-hidden">
+                    <div key={item.id} className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md rounded-lg overflow-hidden">
                       <div className="aspect-video relative">
                         {(item.image_url || item.image).match(/\.(mp4|webm|mov)$/i) ? (
                           <video
@@ -670,10 +682,10 @@ const Admin = () => {
                         )}
                       </div>
                       <div className="p-4">
-                        <h3 className="text-white font-semibold mb-2">{item.title}</h3>
-                        <p className="text-gray-400 text-sm mb-3">{item.category}</p>
+                        <h3 className="text-gray-900 dark:text-white font-semibold mb-2">{item.title}</h3>
+                        <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">{item.category}</p>
                         <div className="flex justify-between items-center">
-                          <span className="text-gray-500 text-xs">
+                          <span className="text-gray-500 dark:text-gray-500 text-xs">
                             {item.created_at ? new Date(item.created_at).toLocaleDateString() : item.uploadedAt}
                           </span>
                           <button
@@ -690,13 +702,13 @@ const Admin = () => {
                 </div>
 
                 {gallery.length === 0 && (
-                  <div className="text-center py-12 text-gray-500">
+                  <div className="text-center py-12 text-gray-500 dark:text-gray-500">
                     No images found in the gallery. Use the Upload tab to add some.
                   </div>
                 )}
                 
                 {gallery.length > 0 && gallery.filter(item => selectedGalleryCategory === 'All' || item.category === selectedGalleryCategory).length === 0 && (
-                  <div className="text-center py-12 text-gray-500">
+                  <div className="text-center py-12 text-gray-500 dark:text-gray-500">
                     No images found for this category.
                   </div>
                 )}
@@ -712,15 +724,15 @@ const Admin = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="glass-effect rounded-2xl p-6">
-              <h2 className="font-serif text-2xl font-bold text-white mb-6 flex items-center gap-3">
+            <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md rounded-2xl p-6">
+              <h2 className="font-serif text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
                 <Upload className="w-6 h-6 text-gold" />
                 Upload New Photo
               </h2>
               
               <form onSubmit={handleUpload} className="space-y-6">
                 <div>
-                  <label htmlFor="title" className="block text-white font-medium mb-2">
+                  <label htmlFor="title" className="block text-gray-900 dark:text-white font-medium mb-2">
                     Photo Title
                   </label>
                   <input
@@ -728,22 +740,24 @@ const Admin = () => {
                     id="title"
                     value={uploadData.title}
                     onChange={(e) => setUploadData({ ...uploadData, title: e.target.value })}
-                    className="w-full px-4 py-3 bg-black/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
+                    className="w-full px-4 py-3 bg-white dark:bg-black/50 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
                     placeholder="Enter photo title"
                     required
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="category" className="block text-white font-medium mb-2">
+                  <label htmlFor="category" className="block text-gray-900 dark:text-white font-medium mb-2">
                     Category
                   </label>
                   <select
                     id="category"
                     value={uploadData.category}
                     onChange={(e) => setUploadData({ ...uploadData, category: e.target.value })}
-                    className="w-full px-4 py-3 bg-black/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-gold transition-colors"
+                    className="w-full px-4 py-3 bg-white dark:bg-black/50 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:border-gold transition-colors"
+                    required
                   >
+                    <option value="" disabled>Select Category</option>
                     {categories.map((cat) => (
                       <option key={cat} value={cat}>{cat}</option>
                     ))}
@@ -751,7 +765,7 @@ const Admin = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="description" className="block text-white font-medium mb-2">
+                  <label htmlFor="description" className="block text-gray-900 dark:text-white font-medium mb-2">
                     Description
                   </label>
                   <textarea
@@ -759,21 +773,21 @@ const Admin = () => {
                     value={uploadData.description}
                     onChange={(e) => setUploadData({ ...uploadData, description: e.target.value })}
                     rows={4}
-                    className="w-full px-4 py-3 bg-black/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors resize-none"
+                    className="w-full px-4 py-3 bg-white dark:bg-black/50 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors resize-none"
                     placeholder="Enter photo description (optional)"
                   />
                 </div>
 
                 <div>
-                  <div className="block text-white font-medium mb-2">
+                  <div className="block text-gray-900 dark:text-white font-medium mb-2">
                     Upload Image
                   </div>
-                  <label className="border-2 border-dashed border-gray-600 rounded-lg p-8 text-center hover:border-gold transition-colors cursor-pointer block">
-                    <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                    <p className="text-gray-300 mb-2">
+                  <label className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8 text-center hover:border-gold transition-colors cursor-pointer block">
+                    <Upload className="w-12 h-12 text-gray-600 dark:text-gray-400 mx-auto mb-4" />
+                    <p className="text-gray-700 dark:text-gray-300 mb-2">
                       {uploadFile ? uploadFile.name : 'Click to select an image'}
                     </p>
-                    <p className="text-gray-500 text-sm">PNG, JPG, GIF up to 10MB</p>
+                    <p className="text-gray-500 dark:text-gray-500 text-sm">PNG, JPG, GIF up to 10MB</p>
                     <input
                       type="file"
                       className="hidden"
@@ -796,6 +810,7 @@ const Admin = () => {
           </motion.div>
         )}
       </div>
+    </div>
     </div>
   )
 }

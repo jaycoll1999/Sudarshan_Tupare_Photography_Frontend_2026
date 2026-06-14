@@ -113,7 +113,7 @@ const Services = () => {
   ]
 
   return (
-    <div className="min-h-screen bg-charcoal">
+    <div className="min-h-screen bg-gray-50 dark:bg-charcoal">
       <Navbar />
       
       {/* Header */}
@@ -125,10 +125,10 @@ const Services = () => {
             transition={{ duration: 0.6 }}
             className="text-center"
           >
-            <h1 className="font-serif text-5xl md:text-6xl font-bold text-white mb-6">
+            <h1 className="font-serif text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
               Services & <span className="text-gradient">Pricing</span>
             </h1>
-            <p className="text-gray-400 text-lg max-w-3xl mx-auto">
+            <p className="text-gray-600 dark:text-gray-400 text-lg max-w-3xl mx-auto">
               Professional photography services tailored to your unique needs and budget. 
               Each package is designed to capture your moments with perfection.
             </p>
@@ -158,7 +158,7 @@ const Services = () => {
                   </div>
                 )}
                 
-                <div className="glass-effect p-8">
+                <div className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-8">
                   {/* Service Header */}
                   <div className="flex items-start justify-between mb-6">
                     <div className="flex items-center gap-4">
@@ -166,8 +166,8 @@ const Services = () => {
                         <service.icon className="w-8 h-8 text-gold" />
                       </div>
                       <div>
-                        <h3 className="font-serif text-2xl font-bold text-white">{service.title}</h3>
-                        <div className="flex items-center gap-4 mt-2 text-sm text-gray-400">
+                        <h3 className="font-serif text-2xl font-bold text-gray-900 dark:text-white">{service.title}</h3>
+                        <div className="flex items-center gap-4 mt-2 text-sm text-gray-600 dark:text-gray-400">
                           <span className="flex items-center gap-1">
                             <Clock className="w-4 h-4" />
                             {service.duration}
@@ -189,26 +189,26 @@ const Services = () => {
                   </div>
 
                   {/* Description */}
-                  <p className="text-gray-300 mb-6">{service.description}</p>
+                  <p className="text-gray-700 dark:text-gray-300 mb-6">{service.description}</p>
 
                   {/* Deliverables */}
                   <div className="mb-6">
-                    <h4 className="font-semibold text-white mb-3">What's Included:</h4>
+                    <h4 className="font-semibold text-gray-900 dark:text-white mb-3">What's Included:</h4>
                     <ul className="space-y-2">
                       {service.deliverables.map((item, itemIndex) => (
                         <li key={itemIndex} className="flex items-start gap-2">
                           <CheckCircle className="w-5 h-5 text-gold mt-0.5 flex-shrink-0" />
-                          <span className="text-gray-300 text-sm">{item}</span>
+                          <span className="text-gray-700 dark:text-gray-300 text-sm">{item}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
 
                   {/* Price and CTA */}
-                  <div className="flex items-center justify-between pt-6 border-t border-gray-700">
+                  <div className="flex items-center justify-between pt-6 border-t border-gray-200 dark:border-gray-700">
                     <div>
-                      <p className="text-3xl font-bold text-white">{service.price}</p>
-                      <p className="text-gray-400 text-sm">plus taxes</p>
+                      <p className="text-3xl font-bold text-gray-900 dark:text-white">{service.price}</p>
+                      <p className="text-gray-600 dark:text-gray-400 text-sm">plus taxes</p>
                     </div>
                     <Link href="/booking" className="btn-primary inline-flex items-center">
                       Book Now
@@ -223,7 +223,7 @@ const Services = () => {
       </section>
 
       {/* Additional Services */}
-      <section className="py-20 px-4 bg-black/30">
+      <section className="py-20 px-4 bg-gray-100/50 dark:bg-black/30">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -231,10 +231,10 @@ const Services = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <h2 className="font-serif text-4xl md:text-5xl font-bold text-white mb-4">
+            <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
               Additional <span className="text-gradient">Services</span>
             </h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
               Enhance your photography experience with our premium add-on services
             </p>
           </motion.div>
@@ -247,7 +247,7 @@ const Services = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 whileHover={{ y: -8 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group glass-effect p-6 rounded-lg flex flex-col transition-shadow duration-500 hover:shadow-[0_8px_30px_rgba(212,175,55,0.15)]"
+                className="group bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-6 rounded-lg flex flex-col transition-shadow duration-500 hover:shadow-[0_8px_30px_rgba(212,175,55,0.15)]"
               >
                 <div className="relative h-48 w-full rounded-lg overflow-hidden mb-4">
                   {service.image.endsWith('.mp4') ? (
@@ -269,8 +269,8 @@ const Services = () => {
                     />
                   )}
                 </div>
-                <h3 className="font-serif text-xl font-semibold text-white mb-3">{service.title}</h3>
-                <p className="text-gray-400 mb-4 text-sm flex-grow">{service.description}</p>
+                <h3 className="font-serif text-xl font-semibold text-gray-900 dark:text-white mb-3">{service.title}</h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-4 text-sm flex-grow">{service.description}</p>
                 <p className="text-gold font-semibold">{service.price}</p>
               </motion.div>
             ))}
@@ -287,10 +287,10 @@ const Services = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
-            <h2 className="font-serif text-4xl md:text-5xl font-bold text-white mb-4">
+            <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
               Our <span className="text-gradient">Process</span>
             </h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
               Simple and transparent process from booking to delivery
             </p>
           </motion.div>
@@ -310,8 +310,8 @@ const Services = () => {
                 className="text-center"
               >
                 <div className="text-4xl font-bold text-gold mb-4">{item.step}</div>
-                <h3 className="font-serif text-xl font-semibold text-white mb-3">{item.title}</h3>
-                <p className="text-gray-400 text-sm">{item.description}</p>
+                <h3 className="font-serif text-xl font-semibold text-gray-900 dark:text-white mb-3">{item.title}</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">{item.description}</p>
               </motion.div>
             ))}
           </div>
@@ -325,12 +325,12 @@ const Services = () => {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="glass-effect p-12 rounded-2xl"
+            className="bg-white dark:bg-black/20 shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 dark:backdrop-blur-md p-12 rounded-2xl"
           >
-            <h2 className="font-serif text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
               Have Questions About Our <span className="text-gradient">Services?</span>
             </h2>
-            <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
+            <p className="text-gray-700 dark:text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
               We're here to help you choose the perfect package for your needs. 
               Contact us for a personalized consultation and custom quotes.
             </p>

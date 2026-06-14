@@ -77,7 +77,7 @@ export default function PortfolioGallery({ categories, allImages }: PortfolioGal
             className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
               selectedCategory === tab.title
                 ? 'bg-gold text-charcoal scale-105'
-                : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-700'
             }`}
           >
             {tab.title}
@@ -88,7 +88,7 @@ export default function PortfolioGallery({ categories, allImages }: PortfolioGal
       {/* Empty State */}
       {filteredImages.length === 0 && (
         <div className="text-center py-20">
-          <p className="text-gray-400 text-lg">No photos found in this category yet.</p>
+          <p className="text-gray-600 dark:text-gray-400 text-lg">No photos found in this category yet.</p>
         </div>
       )}
 
@@ -116,8 +116,8 @@ export default function PortfolioGallery({ categories, allImages }: PortfolioGal
                     preload="metadata"
                   />
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-16 h-16 rounded-full bg-black/60 flex items-center justify-center backdrop-blur-sm border border-white/20">
-                      <Play className="text-white ml-1" size={28} fill="white" />
+                    <div className="w-16 h-16 rounded-full bg-white dark:bg-black/60 flex items-center justify-center backdrop-blur-sm border border-white/20">
+                      <Play className="text-gray-900 dark:text-white ml-1" size={28} fill="white" />
                     </div>
                   </div>
                 </>
@@ -131,8 +131,8 @@ export default function PortfolioGallery({ categories, allImages }: PortfolioGal
                   unoptimized={true}
                 />
               )}
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <span className="text-white font-medium text-lg border-b-2 border-gold pb-1">
+              <div className="absolute inset-0 bg-white dark:bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <span className="text-gray-900 dark:text-white font-medium text-lg border-b-2 border-gold pb-1">
                   {media.category}
                 </span>
               </div>
@@ -148,18 +148,18 @@ export default function PortfolioGallery({ categories, allImages }: PortfolioGal
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4 md:p-10"
+            className="fixed inset-0 z-50 bg-white dark:bg-black/95 flex items-center justify-center p-4 md:p-10"
             onClick={() => setSelectedImageIndex(null)}
           >
             <button
-              className="absolute top-5 right-5 text-white p-2 hover:bg-white/10 rounded-full transition-colors z-50"
+              className="absolute top-5 right-5 text-gray-900 dark:text-white p-2 hover:bg-white/10 rounded-full transition-colors z-50"
               onClick={() => setSelectedImageIndex(null)}
             >
               <X size={32} />
             </button>
 
             <button
-              className="absolute left-5 text-white p-2 hover:bg-white/10 rounded-full transition-colors z-50"
+              className="absolute left-5 text-gray-900 dark:text-white p-2 hover:bg-white/10 rounded-full transition-colors z-50"
               onClick={(e) => {
                 e.stopPropagation()
                 setSelectedImageIndex(selectedImageIndex > 0 ? selectedImageIndex - 1 : filteredImages.length - 1)
@@ -169,7 +169,7 @@ export default function PortfolioGallery({ categories, allImages }: PortfolioGal
             </button>
 
             <button
-              className="absolute right-5 text-white p-2 hover:bg-white/10 rounded-full transition-colors z-50"
+              className="absolute right-5 text-gray-900 dark:text-white p-2 hover:bg-white/10 rounded-full transition-colors z-50"
               onClick={(e) => {
                 e.stopPropagation()
                 setSelectedImageIndex(selectedImageIndex < filteredImages.length - 1 ? selectedImageIndex + 1 : 0)
