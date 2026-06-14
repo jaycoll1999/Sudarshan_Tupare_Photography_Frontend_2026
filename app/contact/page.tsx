@@ -80,8 +80,8 @@ const Contact = () => {
     {
       icon: Mail,
       label: 'Email',
-      value: 'sudarshantupare@gmail.com',
-      href: 'mailto:sudarshantupare@gmail.com'
+      value: 'stphotography2130@gmail.com',
+      href: 'mailto:stphotography2130@gmail.com'
     },
     {
       icon: MapPin,

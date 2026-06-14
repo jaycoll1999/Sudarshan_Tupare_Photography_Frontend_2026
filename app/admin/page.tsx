@@ -13,7 +13,7 @@ const Admin = () => {
   const [adminProfile, setAdminProfile] = useState<any>(null)
   const [uploadData, setUploadData] = useState({
     title: '',
-    category: '',
+    category: 'Babyshoot',
     description: ''
   })
   const [uploadFile, setUploadFile] = useState<File | null>(null)
@@ -170,7 +170,7 @@ const Admin = () => {
       const newPortfolio = await portfolioRes.json();
       
       setGallery([newPortfolio, ...gallery]);
-      setUploadData({ title: '', category: '', description: '' });
+      setUploadData({ title: '', category: 'Babyshoot', description: '' });
       setUploadFile(null);
       alert('Successfully uploaded!');
     } catch (error) {
@@ -254,7 +254,7 @@ const Admin = () => {
                     value={loginData.email}
                     onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
                     className="w-full pl-10 pr-4 py-3 bg-black/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors"
-                    placeholder="Enter your email"
+                    placeholder="stphotography2130@gmail.com"
                     required
                   />
                 </div>
@@ -743,9 +743,7 @@ const Admin = () => {
                     value={uploadData.category}
                     onChange={(e) => setUploadData({ ...uploadData, category: e.target.value })}
                     className="w-full px-4 py-3 bg-black/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-gold transition-colors"
-                    required
                   >
-                    <option value="" disabled>Select Category</option>
                     {categories.map((cat) => (
                       <option key={cat} value={cat}>{cat}</option>
                     ))}

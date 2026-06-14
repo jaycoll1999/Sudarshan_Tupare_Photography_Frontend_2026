@@ -396,12 +396,12 @@ const Booking = () => {
               </a>
               
               <a
-                href="mailto:sudarshantupare@gmail.com"
+                href="mailto:stphotography2130@gmail.com"
                 className="glass-effect p-6 rounded-lg hover:scale-105 transition-transform duration-300"
               >
                 <Mail className="w-8 h-8 text-gold mx-auto mb-3" />
                 <h3 className="text-white font-semibold mb-2">Email</h3>
-                <p className="text-gray-400 text-sm">sudarshantupare@gmail.com</p>
+                <p className="text-gray-400 text-sm">stphotography2130@gmail.com</p>
               </a>
               
               <a
