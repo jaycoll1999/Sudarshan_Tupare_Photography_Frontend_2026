@@ -210,7 +210,10 @@ const Services = () => {
                       <p className="text-3xl font-bold text-slate-800 dark:text-white">{service.price}</p>
                       <p className="text-slate-500 dark:text-slate-400 text-sm">plus taxes</p>
                     </div>
-                    <Link href="/booking" className="btn-primary inline-flex items-center">
+                    <Link 
+                      href={`/booking?type=${encodeURIComponent(service.title)}`} 
+                      className="btn-primary inline-flex items-center"
+                    >
                       Book Now
                       <ArrowRight className="ml-2 w-5 h-5" />
                     </Link>

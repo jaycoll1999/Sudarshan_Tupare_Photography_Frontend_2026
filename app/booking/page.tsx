@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Camera, Calendar, MapPin, Users, CheckCircle, MessageCircle, ArrowRight, Phone, Mail } from 'lucide-react'
 import Navbar from '@/components/Navbar'
@@ -21,6 +21,42 @@ const Booking = () => {
 
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const typeParam = params.get('type');
+      if (typeParam) {
+        const decodedType = decodeURIComponent(typeParam);
+        
+        // Define mapping from service title to eventTypes option
+        const typeMapping: { [key: string]: string } = {
+          'wedding photography': 'Wedding Photography',
+          'pre-wedding shoot': 'Pre-wedding Shoot',
+          'portrait sessions': 'Portrait Session',
+          'portrait session': 'Portrait Session',
+          'event coverage': 'Event Coverage'
+        };
+
+        const matchedType = typeMapping[decodedType.toLowerCase()];
+        if (matchedType) {
+          setFormData(prev => ({ ...prev, eventType: matchedType }));
+          
+          // Map to default package for that service
+          const packageMapping: { [key: string]: string } = {
+            'Wedding Photography': 'Wedding Package - ₹50,000',
+            'Pre-wedding Shoot': 'Pre-wedding Package - ₹25,000',
+            'Portrait Session': 'Portrait Package - ₹15,000',
+            'Event Coverage': 'Event Package - ₹30,000'
+          };
+          const matchedPackage = packageMapping[matchedType];
+          if (matchedPackage) {
+            setFormData(prev => ({ ...prev, package: matchedPackage }));
+          }
+        }
+      }
+    }
+  }, []);
 
   const eventTypes = [
     'Wedding Photography',
