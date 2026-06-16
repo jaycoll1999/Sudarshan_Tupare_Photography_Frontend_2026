@@ -35,7 +35,11 @@ const Booking = () => {
           'pre-wedding shoot': 'Pre-wedding Shoot',
           'portrait sessions': 'Portrait Session',
           'portrait session': 'Portrait Session',
-          'event coverage': 'Event Coverage'
+          'event coverage': 'Event Coverage',
+          'cinematic videography': 'Cinematic Videography',
+          'photo albums': 'Photo Albums',
+          'destination wedding': 'Destination Wedding',
+          'drone photography': 'Drone Photography'
         };
 
         const matchedType = typeMapping[decodedType.toLowerCase()];
@@ -47,7 +51,11 @@ const Booking = () => {
             'Wedding Photography': 'Wedding Package - ₹50,000',
             'Pre-wedding Shoot': 'Pre-wedding Package - ₹25,000',
             'Portrait Session': 'Portrait Package - ₹15,000',
-            'Event Coverage': 'Event Package - ₹30,000'
+            'Event Coverage': 'Event Package - ₹30,000',
+            'Cinematic Videography': 'Custom Package',
+            'Photo Albums': 'Custom Package',
+            'Destination Wedding': 'Custom Package',
+            'Drone Photography': 'Custom Package'
           };
           const matchedPackage = packageMapping[matchedType];
           if (matchedPackage) {
@@ -63,6 +71,10 @@ const Booking = () => {
     'Pre-wedding Shoot',
     'Portrait Session',
     'Event Coverage',
+    'Cinematic Videography',
+    'Photo Albums',
+    'Destination Wedding',
+    'Drone Photography',
     'Corporate Photography',
     'Other'
   ]
