@@ -69,12 +69,12 @@ export default function PortfolioGallery({ categories, allImages }: PortfolioGal
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Category Tabs */}
-      <div className="flex flex-wrap justify-center gap-2 mb-12">
+      <div className="flex overflow-x-auto sm:flex-wrap sm:justify-center gap-2 mb-12 pb-4 sm:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         {categoryTabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setSelectedCategory(tab.title)}
-            className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+            className={`whitespace-nowrap shrink-0 px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
               selectedCategory === tab.title
                 ? 'bg-gold text-charcoal shadow-sm shadow-gold/20 scale-105'
                 : 'bg-white/60 dark:bg-white/5 text-slate-700 dark:text-slate-300 border border-black/5 dark:border-white/5 hover:bg-black/5 dark:hover:bg-white/10'

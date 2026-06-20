@@ -1,13 +1,16 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useTheme } from 'next-themes'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Camera, Upload, Moon, Sun, Trash2, Eye, LogOut, Users, Calendar, Image as ImageIcon, Lock, Mail, Check, X, Plus, MessageSquare, UserCircle, Activity, BarChart, Shield, Clock, Send } from 'lucide-react'
 import Image from 'next/image'
 
 const Admin = () => {
+  const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
   const [token, setToken] = useState('')
-  const [isDarkMode, setIsDarkMode] = useState(false)
+  const isDarkMode = mounted && theme === 'dark'
   const [loginData, setLoginData] = useState({ email: '', password: '' })
   const [loginError, setLoginError] = useState('')
   const [activeTab, setActiveTab] = useState('profile')
@@ -33,6 +36,7 @@ const Admin = () => {
   const categories = ['Babyshoot', 'Candid', 'Cinematic', 'Engagement', 'Maternity Shoot', 'Model Photoshoot', 'Pre Wedding']
 
   useEffect(() => {
+    setMounted(true)
     // Check local storage for token on mount
     const savedToken = localStorage.getItem('adminToken')
     if (savedToken) {
@@ -261,7 +265,7 @@ const Admin = () => {
 
   if (!token) {
     return (
-    <div className={isDarkMode ? "dark" : ""}>
+    <div className="w-full">
       <div className="min-h-screen bg-gray-50 dark:bg-charcoal flex items-center justify-center px-4">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
@@ -337,7 +341,7 @@ const Admin = () => {
   }
 
   return (
-    <div className={isDarkMode ? "dark" : ""}>
+    <div className="w-full">
     <div className="min-h-screen bg-gray-50 dark:bg-charcoal">
       {/* Header */}
       <div className="bg-white/80 dark:bg-black/20 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-gray-100 dark:border-white/10 backdrop-blur-xl border-b border-gray-200 dark:border-gray-700">
@@ -352,7 +356,7 @@ const Admin = () => {
             </div>
             <div className="flex items-center gap-2">
               <button
-                 onClick={() => setIsDarkMode(!isDarkMode)}
+                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
                 className="flex items-center justify-center p-2 bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg transition-colors"
               >
                 {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
