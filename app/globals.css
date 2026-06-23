@@ -42,9 +42,14 @@
   }
 
   input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.3);
+    opacity: 0.7;
+    cursor: pointer;
+  }
+
+  .dark input[type="date"]::-webkit-calendar-picker-indicator {
     filter: invert(1);
     opacity: 1;
-    cursor: pointer;
   }
 }
 
