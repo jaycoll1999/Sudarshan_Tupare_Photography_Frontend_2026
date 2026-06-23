@@ -89,8 +89,8 @@ const Contact = () => {
     {
       icon: Mail,
       label: 'Email',
-      value: 'stphotography2130@gmail.com',
-      href: 'mailto:stphotography2130@gmail.com'
+      value: 'sidographyfilms@gmail.com',
+      href: 'mailto:sidographyfilms@gmail.com'
     },
     {
       icon: MapPin,
@@ -142,10 +142,10 @@ const Contact = () => {
       case 'Email':
         return {
           title: 'Email Address',
-          value: 'stphotography2130@gmail.com',
+          value: 'sidographyfilms@gmail.com',
           icon: Mail,
           actions: [
-            { label: 'Send Email', href: 'mailto:stphotography2130@gmail.com', primary: true }
+            { label: 'Send Email', href: 'mailto:sidographyfilms@gmail.com', primary: true }
           ]
         }
       case 'Studio Address':

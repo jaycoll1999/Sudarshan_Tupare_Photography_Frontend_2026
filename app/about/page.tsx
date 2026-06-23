@@ -413,7 +413,7 @@ const About = () => {
                 Call Us
               </a>
               <a
-                href="mailto:stphotography2130@gmail.com"
+                href="mailto:sidographyfilms@gmail.com"
                 className="btn-secondary inline-flex items-center justify-center"
               >
                 <Mail className="w-5 h-5 mr-2" />

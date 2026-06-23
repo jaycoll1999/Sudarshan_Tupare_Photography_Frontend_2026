@@ -444,12 +444,12 @@ const Booking = () => {
               </a>
               
               <a
-                href="mailto:stphotography2130@gmail.com"
+                href="mailto:sidographyfilms@gmail.com"
                 className="bg-white/80 dark:bg-black/30 backdrop-blur-xl border border-black/[0.03] dark:border-white/5 shadow-[0_8px_30px_rgb(0,0,0,0.02)] p-6 rounded-lg hover:scale-105 transition-transform duration-300"
               >
                 <Mail className="w-8 h-8 text-gold mx-auto mb-3" />
                 <h3 className="text-slate-800 dark:text-white font-semibold tracking-tight mb-2">Email</h3>
-                <p className="text-slate-500 dark:text-slate-400 text-sm">stphotography2130@gmail.com</p>
+                <p className="text-slate-500 dark:text-slate-400 text-sm">sidographyfilms@gmail.com</p>
               </a>
               
               <a
