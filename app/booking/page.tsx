@@ -322,16 +322,19 @@ const Booking = () => {
                   <label htmlFor="eventDate" className="block text-slate-800 dark:text-white font-medium mb-2">
                     Event Date *
                   </label>
-                  <input
-                    type="date"
-                    id="eventDate"
-                    name="eventDate"
-                    value={formData.eventDate}
-                    onChange={handleInputChange}
-                    required
-                    min={new Date().toISOString().split('T')[0]}
-                    className="w-full px-4 py-3 bg-white/50 dark:bg-black/40 backdrop-blur-md border border-black/5 dark:border-white/10 rounded-xl text-slate-800 dark:text-white focus:outline-none focus:border-gold transition-colors"
-                  />
+                  <div className="relative">
+                    <input
+                      type="date"
+                      id="eventDate"
+                      name="eventDate"
+                      value={formData.eventDate}
+                      onChange={handleInputChange}
+                      required
+                      min={new Date().toISOString().split('T')[0]}
+                      className="w-full pl-4 pr-10 py-3 bg-white/50 dark:bg-black/40 backdrop-blur-md border border-black/5 dark:border-white/10 rounded-xl text-slate-800 dark:text-white focus:outline-none focus:border-gold transition-colors"
+                    />
+                    <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gold pointer-events-none" />
+                  </div>
                 </div>
                 
                 <div>
