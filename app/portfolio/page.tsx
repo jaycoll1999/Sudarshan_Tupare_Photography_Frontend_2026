@@ -7,6 +7,8 @@ import Footer from '@/components/Footer'
 import WhatsAppButton from '@/components/WhatsAppButton'
 import ChatbotButton from '@/components/ChatbotButton'
 
+export const dynamic = 'force-dynamic';
+
 function getImagesFromFolder(folderName: string): string[] {
   const folderPath = path.join(process.cwd(), 'public', 'images', 'portfolio', folderName)
   try {
