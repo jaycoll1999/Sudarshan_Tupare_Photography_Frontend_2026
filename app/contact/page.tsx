@@ -6,6 +6,7 @@ import { Mail, Phone, MapPin, MessageCircle, Send, Clock, Instagram, Facebook, C
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import WhatsAppButton from '@/components/WhatsAppButton'
+import ChatbotButton from '@/components/ChatbotButton'
 
 const Contact = () => {
   const [activeModal, setActiveModal] = useState<string | null>(null)
@@ -212,6 +213,7 @@ const Contact = () => {
         </section>
         <Footer />
         <WhatsAppButton />
+        <ChatbotButton />
       </div>
     )
   }
@@ -452,6 +454,7 @@ const Contact = () => {
 
       <Footer />
       <WhatsAppButton />
+      <ChatbotButton />
 
       <AnimatePresence>
         {activeModal && modalData && (

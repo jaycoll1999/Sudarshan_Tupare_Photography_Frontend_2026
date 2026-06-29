@@ -5,6 +5,7 @@ import PortfolioGallery from '@/components/portfolio/PortfolioGallery'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import WhatsAppButton from '@/components/WhatsAppButton'
+import ChatbotButton from '@/components/ChatbotButton'
 
 function getImagesFromFolder(folderName: string): string[] {
   const folderPath = path.join(process.cwd(), 'public', 'images', 'portfolio', folderName)
@@ -101,6 +102,7 @@ export default async function PortfolioPage() {
 
       <Footer />
       <WhatsAppButton />
+      <ChatbotButton />
     </main>
   )
 }

@@ -6,6 +6,7 @@ import { Camera, Calendar, MapPin, Users, CheckCircle, MessageCircle, ArrowRight
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import WhatsAppButton from '@/components/WhatsAppButton'
+import ChatbotButton from '@/components/ChatbotButton'
 
 const Booking = () => {
   const [formData, setFormData] = useState({
@@ -208,6 +209,7 @@ const Booking = () => {
         </section>
         <Footer />
         <WhatsAppButton />
+        <ChatbotButton />
       </div>
     )
   }
@@ -472,6 +474,7 @@ const Booking = () => {
 
       <Footer />
       <WhatsAppButton />
+      <ChatbotButton />
     </div>
   )
 }

@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import WhatsAppButton from '@/components/WhatsAppButton'
+import ChatbotButton from '@/components/ChatbotButton'
 
 const About = () => {
   const achievements = [
@@ -426,6 +427,7 @@ const About = () => {
 
       <Footer />
       <WhatsAppButton />
+      <ChatbotButton />
     </div>
   )
 }

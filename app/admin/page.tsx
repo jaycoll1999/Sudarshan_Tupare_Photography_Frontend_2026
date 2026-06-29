@@ -29,6 +29,10 @@ const Admin = () => {
   const [replyText, setReplyText] = useState('')
   const [isSendingReply, setIsSendingReply] = useState(false)
   
+  const [replyingBooking, setReplyingBooking] = useState<any | null>(null)
+  const [bookingReplyText, setBookingReplyText] = useState('')
+  const [isSendingBookingReply, setIsSendingBookingReply] = useState(false)
+  
   // Data for gallery
   const [gallery, setGallery] = useState<any[]>([])
   const [selectedGalleryCategory, setSelectedGalleryCategory] = useState('All')
@@ -260,6 +264,38 @@ const Admin = () => {
       alert('An error occurred while sending the reply.')
     } finally {
       setIsSendingReply(false)
+    }
+  }
+
+  const submitBookingReply = async () => {
+    if (!replyingBooking || !bookingReplyText.trim()) return
+    setIsSendingBookingReply(true)
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://sudarshan-tupare-photography-backend-2026.onrender.com';
+    try {
+      const response = await fetch(`${API_URL}/booking/${replyingBooking.id}/reply`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ reply: bookingReplyText })
+      })
+
+      if (response.ok) {
+        const updatedBooking = await response.json()
+        setBookings(bookings.map(booking => 
+          booking.id === replyingBooking.id ? updatedBooking : booking
+        ))
+        setReplyingBooking(null)
+        setBookingReplyText('')
+      } else {
+        alert('Failed to send reply. Please try again.')
+      }
+    } catch (error) {
+      console.error('Error sending reply:', error)
+      alert('An error occurred while sending the reply.')
+    } finally {
+      setIsSendingBookingReply(false)
     }
   }
 
@@ -570,8 +606,14 @@ const Admin = () => {
                           <div className="font-medium">{booking.event_type}</div>
                           <div className="text-sm">{booking.event_date}</div>
                         </td>
-                        <td className="py-3 px-4 text-gray-700 dark:text-gray-300 max-w-xs whitespace-pre-wrap text-sm">
-                          {booking.message}
+                        <td className="py-3 px-4 text-gray-700 dark:text-gray-300 max-w-xs text-sm">
+                          <div className="whitespace-pre-wrap">{booking.message}</div>
+                          {booking.reply && (
+                            <div className="mt-2 text-xs bg-gold/10 text-gold p-3 rounded-lg border border-gold/20">
+                              <p className="font-semibold mb-1">Reply Sent {booking.replied_at ? `on ${new Date(booking.replied_at).toLocaleString()}` : ''}:</p>
+                              <p className="whitespace-pre-wrap">{booking.reply}</p>
+                            </div>
+                          )}
                         </td>
                         <td className="py-3 px-4">
                           <span className={`px-3 py-1 rounded-full text-xs font-medium ${
@@ -592,6 +634,13 @@ const Admin = () => {
                               title="Confirm"
                             >
                               <Check className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={() => setReplyingBooking(booking)}
+                              className="p-2 bg-blue-500/10 text-blue-400 rounded hover:bg-blue-500/20 transition-colors"
+                              title="Reply"
+                            >
+                              <MessageSquare className="w-4 h-4" />
                             </button>
                             <button
                               onClick={() => updateBookingStatus(booking.id, 'cancelled')}
@@ -871,7 +920,83 @@ const Admin = () => {
             </div>
           </motion.div>
         )}
+        
         <AnimatePresence>
+          {replyingBooking && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+              <motion.div
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.95, opacity: 0 }}
+                transition={{ type: 'spring', damping: 25, stiffness: 350 }}
+                className="bg-white dark:bg-charcoal border border-gray-200 dark:border-white/10 p-6 rounded-2xl max-w-lg w-full shadow-2xl relative text-left"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  onClick={() => {
+                    setReplyingBooking(null);
+                    setBookingReplyText('');
+                  }}
+                  className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors"
+                >
+                  <X size={20} />
+                </button>
+                
+                <h3 className="font-serif text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                  Reply to Booking Request
+                </h3>
+                
+                <div className="mb-4 text-sm text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-black/20 p-3 rounded-lg border border-gray-100 dark:border-white/5">
+                  <p><strong>To:</strong> {replyingBooking.name} ({replyingBooking.email})</p>
+                  <p className="mt-1"><strong>Event:</strong> {replyingBooking.event_type} on {replyingBooking.event_date}</p>
+                  <p className="mt-1"><strong>Message:</strong> {replyingBooking.message}</p>
+                </div>
+                
+                <div className="mb-6">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Your Reply *
+                  </label>
+                  <textarea
+                    value={bookingReplyText}
+                    onChange={(e) => setBookingReplyText(e.target.value)}
+                    rows={6}
+                    required
+                    placeholder="Type your email reply here..."
+                    className="w-full px-4 py-3 bg-white dark:bg-black/50 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:border-gold transition-colors resize-none"
+                  />
+                </div>
+                
+                <div className="flex gap-4">
+                  <button
+                    onClick={() => {
+                      setReplyingBooking(null);
+                      setBookingReplyText('');
+                    }}
+                    className="flex-1 py-3 px-4 bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-700 dark:text-white font-medium rounded-xl transition-all border border-black/5 dark:border-white/5"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={submitBookingReply}
+                    disabled={isSendingBookingReply || !bookingReplyText.trim()}
+                    className="flex-1 py-3 px-4 bg-gold hover:bg-gold-light disabled:opacity-50 text-charcoal font-medium rounded-xl shadow-lg shadow-gold/15 flex items-center justify-center gap-2 transition-all"
+                  >
+                    {isSendingBookingReply ? (
+                      <>
+                        <div className="w-5 h-5 border-2 border-charcoal border-t-transparent rounded-full animate-spin mr-2" />
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        <Send size={18} className="mr-2" />
+                        Send Reply
+                      </>
+                    )}
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+          )}
           {replyingContact && (
             <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
               <motion.div

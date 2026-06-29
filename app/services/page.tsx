@@ -7,6 +7,7 @@ import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import WhatsAppButton from '@/components/WhatsAppButton'
+import ChatbotButton from '@/components/ChatbotButton'
 
 const Services = () => {
   const services = [
@@ -361,6 +362,7 @@ const Services = () => {
 
       <Footer />
       <WhatsAppButton />
+      <ChatbotButton />
     </div>
   )
 }
