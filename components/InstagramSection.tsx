@@ -21,7 +21,7 @@ const instagramItems: InstagramItem[] = [
   { category: 'Baby Shoot', title: 'Baby Photography', src: '/images/portfolio/Babyshoot/DSC_3364ED.webp', type: 'image' },
   { category: 'Candid', title: 'Natural Candid', src: '/images/portfolio/Candid/SID_9469ED.webp', type: 'image' },
   { category: 'Engagement', title: 'Ring Ceremony', src: '/images/portfolio/Engagement/DSC08038ED.webp', type: 'image' },
-  { category: 'Cinematic', title: 'Cinematic Wedding Film', src: '/images/portfolio/Cinematic/Teaser.mp4', type: 'video' },
+  { category: 'Cinematic', title: 'Cinematic Wedding Film', src: '/images/portfolio/Cinematic/clent%203.mp4', type: 'video' },
   { category: 'Pre Wedding', title: 'Wedding Romance', src: '/images/portfolio/Pre%20Wedding/DSC_0375ED.webp', type: 'image' },
   { category: 'Model Photoshoot', title: 'Fashion Photography', src: '/images/portfolio/Model%20Photoshoot/_MG_6955ED.webp', type: 'image' },
 ]
