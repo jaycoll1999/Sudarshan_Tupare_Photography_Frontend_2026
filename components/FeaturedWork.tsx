@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowRight, Eye } from 'lucide-react'
+import { ArrowRight, Eye, Play } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -10,15 +10,16 @@ interface FeaturedProject {
   category: string
   title: string
   src: string
+  type?: 'image' | 'video'
 }
 
 const featuredProjects: FeaturedProject[] = [
-  { id: 1, category: 'Pre Wedding', title: 'Pre-Wedding Romance', src: '/images/portfolio/Pre%20Wedding/DSC_0196ED.webp' },
-  { id: 2, category: 'Pre Wedding', title: 'Dreamy Pre-Wedding', src: '/images/portfolio/Pre%20Wedding/SID_1830ED.webp' },
-  { id: 3, category: 'Candid', title: 'Candid Moments', src: '/images/portfolio/Candid/DSC_0489ED.webp' },
-  { id: 4, category: 'Candid', title: 'Natural Emotions', src: '/images/portfolio/Candid/SID_5356ED.webp' },
-  { id: 5, category: 'Engagement', title: 'Engagement Ceremony', src: '/images/portfolio/Engagement/DSC08038ED.webp' },
-  { id: 6, category: 'Engagement', title: 'Ring Ceremony', src: '/images/portfolio/Engagement/DSC08042ED.webp' },
+  { id: 1, category: 'Pre Wedding', title: 'Pre-Wedding Romance', src: '/images/portfolio/Pre%20Wedding/DSC_0196ED.webp', type: 'image' },
+  { id: 2, category: 'Pre Wedding', title: 'Dreamy Pre-Wedding', src: '/images/portfolio/Pre%20Wedding/SID_1830ED.webp', type: 'image' },
+  { id: 3, category: 'Cinematic', title: 'Cinematic Teaser', src: '/images/portfolio/Cinematic/Teaser.mp4', type: 'video' },
+  { id: 4, category: 'Cinematic', title: 'Client Film', src: '/images/portfolio/Cinematic/clent%202.mp4', type: 'video' },
+  { id: 5, category: 'Engagement', title: 'Engagement Ceremony', src: '/images/portfolio/Engagement/DSC08038ED.webp', type: 'image' },
+  { id: 6, category: 'Engagement', title: 'Ring Ceremony', src: '/images/portfolio/Engagement/DSC08042ED.webp', type: 'image' },
 ]
 
 const cardVariants = {
@@ -79,15 +80,34 @@ export default function FeaturedWork() {
               className="group relative"
             >
               <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-lg shadow-black/30 ring-1 ring-white/[0.06]">
-                {/* Image */}
-                <Image
-                  src={project.src}
-                  alt={project.title}
-                  fill
-                  className="object-cover transition-transform duration-[1200ms] cubic-bezier(0.16, 1, 0.3, 1) group-hover:scale-105"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  unoptimized={true}
-                />
+                {/* Media: Video or Image */}
+                {project.type === 'video' ? (
+                  <>
+                    <video
+                      src={project.src}
+                      className="w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-105"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      preload="metadata"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                      <div className="w-14 h-14 rounded-full bg-black/50 flex items-center justify-center backdrop-blur-sm border border-white/20 opacity-80 group-hover:opacity-0 transition-opacity duration-300">
+                        <Play className="text-white ml-1" size={22} fill="white" />
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <Image
+                    src={project.src}
+                    alt={project.title}
+                    fill
+                    className="object-cover transition-transform duration-[1200ms] cubic-bezier(0.16, 1, 0.3, 1) group-hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    unoptimized={true}
+                  />
+                )}
 
                 {/* Default subtle bottom gradient (always visible) */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />

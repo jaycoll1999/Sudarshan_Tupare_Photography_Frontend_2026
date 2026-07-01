@@ -213,7 +213,7 @@ const Contact = () => {
         </section>
         <Footer />
         <WhatsAppButton />
-        <ChatbotButton />
+        {/* ChatbotButton removed from here */}
       </div>
     )
   }

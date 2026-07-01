@@ -31,12 +31,18 @@ export default function PortfolioGallery({ categories, allImages }: PortfolioGal
   const filteredImages = selectedCategory === 'All' 
     ? (() => {
         // Show 2 items per category as a curated preview in "All" tab
+        // Custom order: Pre Wedding first, Cinematic second, then rest
         const grouped: Record<string, MediaItem[]> = {}
         allImages.forEach(img => {
           if (!grouped[img.category]) grouped[img.category] = []
           grouped[img.category].push(img)
         })
-        return Object.values(grouped).flatMap(items => items.slice(0, 2))
+        const priorityOrder = ['Pre Wedding', 'Cinematic', 'Engagement', 'Candid', 'Baby Shoot']
+        const orderedKeys = [
+          ...priorityOrder.filter(k => grouped[k]),
+          ...Object.keys(grouped).filter(k => !priorityOrder.includes(k)),
+        ]
+        return orderedKeys.flatMap(key => grouped[key].slice(0, 2))
       })()
     : allImages.filter(img => img.category === selectedCategory)
 

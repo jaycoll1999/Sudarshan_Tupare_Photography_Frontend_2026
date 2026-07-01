@@ -209,7 +209,7 @@ const Booking = () => {
         </section>
         <Footer />
         <WhatsAppButton />
-        <ChatbotButton />
+        {/* ChatbotButton removed from here */}
       </div>
     )
   }

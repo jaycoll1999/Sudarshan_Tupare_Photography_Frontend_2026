@@ -29,6 +29,13 @@ export const portfolioCategories = [
     coverImage: '/images/portfolio/Engagement/DSC08038ED.webp',
   },
   {
+    id: 'pre-wedding',
+    title: 'Pre Wedding',
+    folder: 'Pre Wedding',
+    description: 'Romance before the wedding bells',
+    coverImage: '/images/portfolio/Pre%20Wedding/DSC_0196ED.webp',
+  },
+  {
     id: 'maternity',
     title: 'Maternity Shoot',
     folder: 'Maternity Shoot',
@@ -42,11 +49,5 @@ export const portfolioCategories = [
     description: 'Fashion and model photography',
     coverImage: '/images/portfolio/Model%20Photoshoot/_MG_6917ED.webp',
   },
-  {
-    id: 'pre-wedding',
-    title: 'Pre Wedding',
-    folder: 'Pre Wedding',
-    description: 'Romance before the wedding bells',
-    coverImage: '/images/portfolio/Pre%20Wedding/DSC_0196ED.webp',
-  },
 ];
+
